@@ -46,7 +46,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()) // Desactiva protección CSRF (no necesaria en APIs REST)
             .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth**").permitAll() // Permite acceso público a rutas de autenticación
+                .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
                 .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
