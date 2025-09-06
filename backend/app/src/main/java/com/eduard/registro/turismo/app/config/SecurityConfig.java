@@ -48,7 +48,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
-                .requestMatchers("/", "/api/public/**").permitAll() // Permite acceso público a rutas públicas
+                .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
             .sessionManagement(session -> session
