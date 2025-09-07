@@ -13,6 +13,7 @@ import com.eduard.registro.turismo.app.security.UserDetailsImpl;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/fotos")
 public class FotoDisplayController {

@@ -12,6 +12,7 @@ import com.eduard.registro.turismo.app.security.UserDetailsImpl;
 
 import java.io.IOException;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/fotos")
 public class FotoUploadController {
