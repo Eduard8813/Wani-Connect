@@ -47,6 +47,21 @@ public class UserProfile {
     @Column(length = 100)
     private String location;
 
+    @Column(length = 100, nullable = false)
+    private String country_of_country;
+
+    @Column(length = 100,nullable = false)
+    private String languague;
+
+    @Column(nullable = false, length = 100)
+    private String interes_Description;
+
+    @Column(length = 100)
+    private String Social;
+
+    @Column(length = 100)
+    private String description;
+    
     @OneToOne // Relación uno a uno con la entidad User
     @JoinColumn(name = "user_id") // Define la columna que actúa como clave foránea
     private User user;
