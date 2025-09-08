@@ -1,15 +1,12 @@
 package com.eduard.registro.turismo.app.model;
 
-import jakarta.persistence.Basic;
 // Anotaciones JPA para definir la persistencia de la entidad
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -48,20 +45,20 @@ public class UserProfile {
     private String location;
 
     @Column(length = 100, nullable = false)
-    private String country_of_country;
+    private String country_of_origin;
 
     @Column(length = 100,nullable = false)
     private String languague;
 
     @Column(nullable = false, length = 100)
-    private String interes_Description;
+    private String interes_Turistico;
 
     @Column(length = 100)
     private String Social;
 
     @Column(length = 100)
     private String description;
-    
+
     @OneToOne // Relación uno a uno con la entidad User
     @JoinColumn(name = "user_id") // Define la columna que actúa como clave foránea
     private User user;
