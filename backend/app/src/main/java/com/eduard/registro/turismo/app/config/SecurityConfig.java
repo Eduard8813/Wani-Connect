@@ -49,8 +49,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
                 .requestMatchers("/api/fotos/subir").permitAll() // Permite acceso público a la ruta de subir fotos
-                .requestMatchers("/api/fotos/mi-foto").permitAll() // Permite acceso público a la ruta de ver su propia foto
-                .requestMatchers("/api/fotos/mostrar/**").permitAll() // Endpoint público
+                .requestMatchers("/api/fotos/mi-foto").authenticated() // Permite acceso solo a usuarios autenticados para ver su propia foto
+                .requestMatchers("/api/fotos/mostrar/**").authenticated() // Endpoint solo para usuarios autenticados
                 .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
