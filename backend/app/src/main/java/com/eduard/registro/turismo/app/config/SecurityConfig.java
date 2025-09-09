@@ -44,14 +44,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // Desactiva protección CSRF (no necesaria en APIs REST)
-           // .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
+            .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
+                .requestMatchers("/api/auth**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
-                .requestMatchers("/api/fotos/subir").permitAll() // Permite acceso público a la ruta de subir fotos
-                .requestMatchers("/api/fotos/mi-foto").permitAll() // Permite acceso público a la ruta de ver su propia foto
-                .requestMatchers("/api/fotos/mostrar/**").permitAll() // Permite acceso público a la ruta de mostrar fotos
-                .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
             .sessionManagement(session -> session
