@@ -27,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
     
     @Override
     public String getUsername() {
-        return user.getEmail(); // O el campo que uses como username
+        return user.getUsername(); // O el campo que uses como username
     }
     
     @Override

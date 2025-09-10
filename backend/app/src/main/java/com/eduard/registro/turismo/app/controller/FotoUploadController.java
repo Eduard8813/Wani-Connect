@@ -30,12 +30,6 @@ public class FotoUploadController {
             @RequestParam("archivo") MultipartFile archivo,
             Authentication authentication) {
 
-        // Validar autenticación
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Error: No autorizado - Token no proporcionado o inválido");
-        }
-
         try {
             // Obtener el username desde el token
             String username = authentication.getName();
