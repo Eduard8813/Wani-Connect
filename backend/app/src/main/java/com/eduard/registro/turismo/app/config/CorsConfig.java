@@ -28,7 +28,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins("**") // Permite peticiones desde este origen (frontend)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                 .allowedHeaders("*") // Permite cualquier encabezado en la solicitud
-                .allowCredentials(true) // Permite el envío de cookies o credenciales en la petición
+                .allowCredentials(false) // Permite el envío de cookies o credenciales en la petición
                 .maxAge(3600); // Tiempo en segundos que el navegador puede cachear esta configuración
     }
 }
