@@ -44,15 +44,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // Desactiva protección CSRF (no necesaria en APIs REST)
-           // .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
+            .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
-                .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
-                .requestMatchers("/api/fotos/subir").permitAll() // Permite acceso público a la ruta de subir fotos
-                .requestMatchers("/api/fotos/**").permitAll() // Permite acceso público a la ruta de mostrar fotos
-                .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
-                .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
-            )
+            .requestMatchers("/error").permitAll() // ¡AGREGAR ESTA LÍNEA!
+            .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/api/user/**").permitAll()
+            .requestMatchers("/api/fotos/subir").permitAll()
+            .requestMatchers("/api/fotos/**").permitAll()
+            .requestMatchers("/", "/public/**").permitAll()
+            .anyRequest().authenticated()
+        )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No se guarda sesión en el servidor
             );
