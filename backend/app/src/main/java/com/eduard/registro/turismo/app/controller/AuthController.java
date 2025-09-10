@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.springframework.transaction.annotation.Transactional;
 // Anotaciones para definir controlador REST y rutas
 import org.springframework.web.bind.annotation.*;
 
@@ -75,34 +75,48 @@ public class AuthController {
      * luego crea el usuario y su perfil asociado.
      */
     @PostMapping("/signup")
+    @Transactional
     public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        // Validación de unicidad de nombre de usuario
-        if (userService.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body("Error: El nombre de usuario ya existe");
+        try {
+            // Validación de unicidad de nombre de usuario
+            if (userService.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body("Error: El nombre de usuario ya existe");
         }
-
+        
         // Validación de unicidad de email
         if (userService.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest().body("Error: El email ya está en uso");
         }
-
+        
         // Crear entidad User con los datos recibidos
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(signUpRequest.getPassword());
         user.setEmail(signUpRequest.getEmail());
         User newUser = userService.createUser(user);
-
+        
         // Crear entidad UserProfile asociada al nuevo usuario
         UserProfile profile = new UserProfile();
         profile.setFirstName(signUpRequest.getFirstName());
         profile.setLastName(signUpRequest.getLastName());
         profile.setPhone(signUpRequest.getPhone());
         profile.setAddress(signUpRequest.getAddress());
+        profile.setBirthDate(signUpRequest.getBirthDate());
+        profile.setGender(signUpRequest.getGender());
+        profile.setLocation(signUpRequest.getLocation());
+        profile.setCountryOfOrigin(signUpRequest.getCountryOfOrigin());
+        profile.setLanguage(signUpRequest.getLanguage());
+        profile.setTouristInterest(signUpRequest.getTouristInterest());
+        profile.setSocial(signUpRequest.getSocial());
+        profile.setDescription(signUpRequest.getDescription());
+        
         profile.setUser(newUser);
         profileService.createProfile(profile);
-
-        // Devuelve mensaje de éxito
+        
         return ResponseEntity.ok("Usuario registrado exitosamente");
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().body("Error al registrar usuario: " + e.getMessage());
     }
+}
+
 }

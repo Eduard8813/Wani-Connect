@@ -1,65 +1,54 @@
 package com.eduard.registro.turismo.app.model;
 
-// Anotaciones JPA para definir la persistencia de la entidad
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-// Lombok genera automáticamente getters, setters, toString, equals y hashCode
+import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDate;
 
-/**
- * Entidad que representa el perfil personal de un usuario.
- * Contiene información como nombre, teléfono y dirección.
- * Se relaciona uno a uno con la entidad User.
- */
-@Data // Lombok genera automáticamente los métodos necesarios para esta clase
-@Entity // Marca esta clase como una entidad JPA
-@Table(name = "user_profiles") // Define el nombre de la tabla en la base de datos
+@Data
+@Entity
+@Table(name = "user_profiles")
 public class UserProfile {
-
-    @Id // Marca este campo como clave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Genera el ID automáticamente usando la estrategia de la base de datos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false) // El nombre es obligatorio
+    
+    @Column(nullable = false, length = 50)
     private String firstName;
-
-    // Campos opcionales del perfil
+    
+    @Column(length = 50)
     private String lastName;
-    private String phone;
-    private String address;
-
-    @Column(name = "Birth_date")
-    private String birthDate;
-
+    
     @Column(length = 20)
+    private String phone;
+    
+    @Column(length = 200)
+    private String address;
+    
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
+    
+    @Column(length = 100s)
     private String gender;
-
+    
     @Column(length = 100)
     private String location;
-
-    @Column(length = 100, nullable = false)
-    private String country_of_origin;
-
-    @Column(length = 100,nullable = false)
-    private String languague;
-
-    @Column(nullable = false, length = 100)
-    private String interes_Turistico;
-
+    
+    @Column(name = "country_of_origin", length = 100)
+    private String countryOfOrigin;
+    
+    @Column(length = 50)
+    private String language;
+    
+    @Column(name = "tourist_interest", length = 200)
+    private String touristInterest;
+    
     @Column(length = 100)
-    private String Social;
-
-    @Column(length = 100)
+    private String social;
+    
+    @Column(length = 500)
     private String description;
 
-    @OneToOne // Relación uno a uno con la entidad User
-    @JoinColumn(name = "user_id") // Define la columna que actúa como clave foránea
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

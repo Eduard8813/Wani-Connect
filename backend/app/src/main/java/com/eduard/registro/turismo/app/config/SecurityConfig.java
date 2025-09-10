@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 // Anotaciones para definir configuración de seguridad en Spring Boot
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -46,11 +47,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()) // Desactiva protección CSRF (no necesaria en APIs REST)
            // .cors(cors -> cors.disable()) // Desactiva CORS si ya lo configuras en CorsConfig
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite solicitudes preflight CORS
                 .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
-                .requestMatchers("/api/fotos/subir").permitAll() // Permite acceso público a la ruta de subir fotos
-                .requestMatchers("/api/fotos/**").permitAll() // Permite acceso público a la ruta de mostrar fotos
-                .requestMatchers("/", "/public/**").permitAll() // Permite acceso público a rutas públicas
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
             .sessionManagement(session -> session
