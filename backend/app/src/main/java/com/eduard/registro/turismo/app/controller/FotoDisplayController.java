@@ -42,12 +42,7 @@ public class FotoDisplayController {
 
     @GetMapping("/mi-foto")
     public ResponseEntity<byte[]> miFoto(Authentication authentication) {
-        // Validar autenticación
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(401)
-                    .body(null);
-        }
-
+        
         try {
             // Obtener el username desde el token
             String username = authentication.getName();
