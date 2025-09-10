@@ -7,6 +7,7 @@ import lombok.Data;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,6 +41,6 @@ public class User {
     @Column(nullable = false) // Fecha de creación obligatoria
     private LocalDateTime createdAt = LocalDateTime.now(); // Se inicializa con la fecha y hora actual
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL) // Relación uno a uno con UserProfile, con cascada total
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Relación uno a uno con UserProfile, con cascada total
     private UserProfile profile;
 }

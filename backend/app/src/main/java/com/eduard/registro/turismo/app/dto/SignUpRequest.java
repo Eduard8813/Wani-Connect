@@ -1,37 +1,53 @@
 package com.eduard.registro.turismo.app.dto;
 
-// Anotaciones de validación para asegurar integridad de datos
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-// Lombok genera automáticamente getters, setters, toString, equals y hashCode
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import java.time.LocalDate;
 
-/**
- * DTO que representa la solicitud de registro de un nuevo usuario.
- * Contiene campos básicos de cuenta y perfil, con validaciones para garantizar calidad de datos.
- */
-@Data // Lombok genera automáticamente los métodos necesarios para esta clase
+@Data
 public class SignUpRequest {
-
-    @NotBlank // Valida que el campo no esté vacío ni contenga solo espacios
-    @Size(min = 4, max = 20) // Restringe el tamaño del nombre de usuario
+    @NotBlank
+    @Size(min = 4, max = 20)
     private String username;
-
-    @NotBlank // Valida que la contraseña no esté vacía
-    @Size(min = 6) // Requiere al menos 6 caracteres para mayor seguridad
+    
+    @NotBlank
+    @Size(min = 6)
     private String password;
-
-    @NotBlank // Valida que el email no esté vacío
-    @Email // Verifica que el formato del email sea válido
+    
+    @NotBlank
+    @Email
     private String email;
-
-    @NotBlank // Valida que el nombre no esté vacío
+    
+    @NotBlank
     private String firstName;
-
-    // Campos opcionales del perfil del usuario
+    
     private String lastName;
     private String phone;
     private String address;
+    
+    // Nuevos campos con validaciones
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Past(message = "La fecha de nacimiento debe estar en el pasado")
+    private LocalDate birthDate;
+    
+    @Pattern(regexp = "^[MF]$", message = "El género debe ser 'M' o 'F'")
+    private String gender;
+    
+    @Size(max = 100, message = "La ubicación no puede exceder los 100 caracteres")
+    private String location;
+    
+    @Size(max = 100, message = "El país de origen no puede exceder los 100 caracteres")
+    private String countryOfOrigin;
+    
+    @Size(max = 50, message = "El idioma no puede exceder los 50 caracteres")
+    private String language;
+    
+    @Size(max = 200, message = "Los intereses turísticos no pueden exceder los 200 caracteres")
+    private String touristInterest;
+    
+    @Size(max = 100, message = "El perfil social no puede exceder los 100 caracteres")
+    private String social;
+    
+    @Size(max = 500, message = "La descripción no puede exceder los 500 caracteres")
+    private String description;
 }

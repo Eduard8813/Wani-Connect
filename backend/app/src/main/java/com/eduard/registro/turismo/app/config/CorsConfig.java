@@ -23,12 +23,11 @@ public class CorsConfig implements WebMvcConfigurer {
      * Se ejecuta automáticamente al iniciar el contexto web.
      */
     @Override
-        public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-            .allowedOrigins("*") // ¡Corregido! Usa "*" en lugar de "**"
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(false) // Compatible con "*"
-            .maxAge(3600);
-}
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Aplica CORS a todas las rutas del backend
+                .allowedOrigins("http://localhost:3000") // Permite peticiones desde cualquier origen (frontend)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
+                .allowedHeaders("*") // Permite cualquier encabezado en la solicitud
+                .allowCredentials(true); // Permite el envío de cookies o credenciales en la petición
+    }
 }
