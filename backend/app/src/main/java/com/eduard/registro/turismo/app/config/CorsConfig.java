@@ -26,6 +26,12 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Aplica CORS a todas las rutas del backend
                 .allowedOrigins("http://127.0.0.1:5500/Index.html") // Permite peticiones desde cualquier origen (frontend)
+                .allowedOrigins(
+                    "http://localhost:3000",
+                    "http://localhost:5500", 
+                    "http://127.0.0.1:5500",
+                    "http://localhost:8080"     
+                ) // Permite peticiones desde múltiples orígenes (frontend)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                 .allowedHeaders("*") // Permite cualquier encabezado en la solicitud
                 .allowCredentials(true); // Permite el envío de cookies o credenciales en la petición
