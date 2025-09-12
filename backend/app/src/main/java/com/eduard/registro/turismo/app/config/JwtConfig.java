@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 // Marca esta clase como parte de la configuración del contexto de Spring
 import org.springframework.context.annotation.Configuration;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 // Anotación de Lombok que genera automáticamente getters, setters, toString, equals y hashCode
 import lombok.Data;
 
@@ -17,14 +19,14 @@ import lombok.Data;
  * Esta clase es clave para mantener la seguridad desacoplada y configurable,
  * facilitando la validación y generación de tokens en tu arquitectura.
  */
-@Data // Lombok genera automáticamente los métodos necesarios para esta clase
-@Configuration // Registra esta clase como un bean de configuración en Spring
-@ConfigurationProperties(prefix = "jwt") // Mapea propiedades que comienzan con "jwt" en application.properties
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
-
-    // Clave secreta usada para firmar y verificar tokens JWT
+    @NotBlank(message = "La clave secreta no puede estar vacía")
+    @Min(value = 32, message = "La clave secreta debe tener al menos 32 caracteres")
     private String secret;
-
-    // Tiempo de expiración del token en milisegundos
-    private long expiration;
+    
+    @Min(value = 3600000, message = "El tiempo de expiración debe ser al menos 1 hora")
+    private long expiration = 86400000; // 24 horas por defecto
 }

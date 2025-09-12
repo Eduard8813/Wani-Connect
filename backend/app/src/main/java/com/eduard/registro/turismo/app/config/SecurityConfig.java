@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite solicitudes preflight CORS
                 .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
+                .requestMatchers(HttpMethod.POST, "/api/fotos/subir").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/fotos/**").permitAll()
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
             .sessionManagement(session -> session

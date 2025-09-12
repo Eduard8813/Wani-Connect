@@ -27,7 +27,7 @@ public class UserProfile {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
     
-    @Column(length = 100s)
+    @Column(length = 10)
     private String gender;
     
     @Column(length = 100)
