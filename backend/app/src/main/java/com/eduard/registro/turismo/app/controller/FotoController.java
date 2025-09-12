@@ -72,7 +72,11 @@ public class FotoController {
     }
     
     @GetMapping("/ver")
-    public ResponseEntity<byte[]> getProfilePhoto(@AuthenticationPrincipal User usuarioAutenticado) {
+    public ResponseEntity<byte[]> getProfilePhoto(@AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
+        // Buscar el usuario autenticado por su nombre
+        User usuarioAutenticado = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                
         Optional<UserPhoto> photoOpt = photoUserRepository.findByUserId(usuarioAutenticado.getId());
         
         if (photoOpt.isEmpty()) {
