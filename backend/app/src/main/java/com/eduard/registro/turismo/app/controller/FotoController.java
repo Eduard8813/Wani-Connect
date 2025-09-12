@@ -27,7 +27,7 @@ public class FotoController {
     @PostMapping("/subir")
     public ResponseEntity<?> saveProfilePhoto(
             @RequestParam("file") MultipartFile file,
-            @AuthenticationPrincipal User usuarioAutenticado) {
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails userDetails) {
         
         try {
             // Validar que se haya enviado un archivo
@@ -39,6 +39,10 @@ public class FotoController {
             if (!file.getContentType().startsWith("image/")) {
                 return ResponseEntity.badRequest().body("Solo se permiten imágenes");
             }
+            
+            // Buscar el usuario autenticado por su nombre
+            User usuarioAutenticado = userRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
             
             // Obtener o crear la foto de perfil
             UserPhoto userPhoto = usuarioAutenticado.getPhoto();
