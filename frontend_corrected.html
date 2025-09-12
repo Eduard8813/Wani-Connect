@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input[type="text"], 
+        input[type="password"], 
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .btn-logout {
+            background-color: #e74c3c;
+            margin-top: 20px;
+        }
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+        .hidden {
+            display: none;
+        }
+        .profile-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .profile-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 50%;
+            border: 4px solid #3498db;
+            margin: 20px auto;
+            display: block;
+        }
+        .message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Perfil de Usuario</h1>
+        
+        <!-- Sección de inicio de sesión -->
+        <div id="loginSection">
+            <h2>Iniciar Sesión</h2>
+            <div id="loginMessage" class="message hidden"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Correo Electrónico:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+        
+        <!-- Sección de perfil (oculta inicialmente) -->
+        <div id="profileSection" class="hidden">
+            <h2>Mi Perfil</h2>
+            <div id="profileMessage" class="message hidden"></div>
+            
+            <div class="profile-section">
+                <h3>Foto de Perfil Actual</h3>
+                <img id="currentProfileImage" class="profile-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNlZWUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+U2luIGltYWdlbjwvdGV4dD48L3N2Zz4=" alt="Foto de perfil">
+            </div>
+            
+            <h3>Actualizar Foto de Perfil</h3>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="profileImage">Seleccionar nueva imagen:</label>
+                    <input type="file" id="profileImage" name="profileImage" accept="image/*" required>
+                </div>
+                <button type="submit">Actualizar Imagen</button>
+                <span id="uploadSpinner" class="loading hidden"></span>
+            </form>
+            
+            <button id="logoutBtn" class="btn-logout">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de la API
+        const API_URL = 'http://localhost:8080';
+        
+        // Elementos del DOM
+        const loginSection = document.getElementById('loginSection');
+        const profileSection = document.getElementById('profileSection');
+        const loginForm = document.getElementById('loginForm');
+        const uploadForm = document.getElementById('uploadForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginMessage = document.getElementById('loginMessage');
+        const profileMessage = document.getElementById('profileMessage');
+        const currentProfileImage = document.getElementById('currentProfileImage');
+        const uploadSpinner = document.getElementById('uploadSpinner');
+        
+        // Al cargar la página, siempre mostrar el formulario de login
+        window.addEventListener('DOMContentLoaded', () => {
+            // Limpiar cualquier token existente para forzar inicio de sesión
+            localStorage.removeItem('jwtToken');
+            showLoginSection();
+        });
+        
+        // Manejar el envío del formulario de login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/auth/signin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Guardar el token en localStorage
+                    localStorage.setItem('jwtToken', data.token);
+                    showMessage(loginMessage, '¡Inicio de sesión exitoso!', 'success');
+                    
+                    // Mostrar la sección de perfil
+                    setTimeout(() => {
+                        showProfileSection();
+                        loadProfileImage();
+                    }, 1000);
+                } else {
+                    showMessage(loginMessage, data.message || 'Error en el inicio de sesión', 'error');
+                }
+            } catch (error) {
+                showMessage(loginMessage, 'Error de conexión: ' + error.message, 'error');
+            }
+        });
+        
+        // Manejar el envío del formulario de carga de imagen
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('profileImage');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage(profileMessage, 'Por favor selecciona una imagen', 'error');
+                return;
+            }
+            
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                showMessage(profileMessage, 'Sesión no válida. Por favor inicia sesión nuevamente', 'error');
+                showLoginSection();
+                return;
+            }
+            
+            // Mostrar spinner de carga
+            uploadSpinner.classList.remove('hidden');
+            
+            const formData = new FormData();
+            formData.append('file', file);  // ✅ CORREGIDO: cambiado de 'archivo' a 'file'
+            
+            try {
+                const response = await fetch(`${API_URL}/api/fotos/subir`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                const data = await response.text();
+                
+                if (response.ok) {
+                    showMessage(profileMessage, '¡Imagen actualizada con éxito!', 'success');
+                    // Recargar la imagen de perfil
+                    loadProfileImage();
+                    // Limpiar el formulario
+                    uploadForm.reset();
+                } else {
+                    showMessage(profileMessage, data || 'Error al actualizar la imagen', 'error');
+                }
+            } catch (error) {
+                showMessage(profileMessage, 'Error de conexión: ' + error.message, 'error');
+            } finally {
+                uploadSpinner.classList.add('hidden');
+            }
+        });
+        
+        // Manejar el cierre de sesión
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('jwtToken');
+            showLoginSection();
+            showMessage(loginMessage, 'Sesión cerrada correctamente', 'success');
+        });
+        
+        // Funciones auxiliares
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.classList.remove('hidden');
+            
+            // Ocultar el mensaje después de 5 segundos
+            setTimeout(() => {
+                element.classList.add('hidden');
+            }, 5000);
+        }
+        
+        function showProfileSection() {
+            loginSection.classList.add('hidden');
+            profileSection.classList.remove('hidden');
+        }
+        
+        function showLoginSection() {
+            profileSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+        }
+        
+        async function loadProfileImage() {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                showLoginSection();
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/fotos/ver`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    currentProfileImage.src = imageUrl;
+                } else if (response.status === 401) {
+                    // Token inválido o expirado
+                    localStorage.removeItem('jwtToken');
+                    showLoginSection();
+                    showMessage(loginMessage, 'Sesión expirada. Por favor inicia sesión nuevamente', 'error');
+                } else {
+                    // Si no hay imagen, mostrar una imagen por defecto
+                    currentProfileImage.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNlZWUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+U2luIGltYWdlbjwvdGV4dD48L3N2Zz4=';
+                }
+            } catch (error) {
+                console.error('Error al cargar la imagen de perfil:', error);
+                currentProfileImage.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNmZmYiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+RXJyb3IgY2FyZ2FuZG88L3RleHQ+PC9zdmc+';
+            }
+        }
+    </script>
+</body>
+</html>
