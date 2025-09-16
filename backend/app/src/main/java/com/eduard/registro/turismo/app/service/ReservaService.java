@@ -83,6 +83,6 @@ public class ReservaService {
         historialRepository.save(historial);
         
         // Enviar correo de confirmación
-        emailService.enviarCorreoConfirmacion(reserva.getIdUsuario(), reserva);
+        emailService.enviarCorreoReserva(reserva.getIdUsuario(), reserva);
     }
 }
