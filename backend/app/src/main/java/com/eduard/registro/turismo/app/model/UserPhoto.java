@@ -2,7 +2,6 @@ package com.eduard.registro.turismo.app.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "user_photos")
@@ -20,6 +19,5 @@ public class UserPhoto {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
-    @JsonBackReference("user-photo")
     private User user;
 }
