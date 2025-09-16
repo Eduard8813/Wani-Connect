@@ -52,12 +52,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
                 .requestMatchers(HttpMethod.POST, "/api/fotos/subir").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/fotos/**").permitAll()
-                .requestMatchers("/", "/public/**").permitAll() // Permite acceso a recursos estáticos
-                 // Permitir acceso a todos los endpoints de la API sin autenticación
-                .requestMatchers("/api/**").permitAll()
-                // Permitir acceso a endpoints de correo
-                .requestMatchers("/email/**").permitAll()
-                // Cualquier otra solicitud requiere autenticación
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
             )
             .sessionManagement(session -> session
