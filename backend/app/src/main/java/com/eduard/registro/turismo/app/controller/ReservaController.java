@@ -1,32 +1,28 @@
 package com.eduard.registro.turismo.app.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.eduard.registro.turismo.app.dto.ConfirmarReservaRequest;
+import com.eduard.registro.turismo.app.dto.ReservaRequest;
 import com.eduard.registro.turismo.app.model.Reserva;
 import com.eduard.registro.turismo.app.service.ReservaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/reservas")
 public class ReservaController {
     @Autowired
     private ReservaService reservaService;
-    
-    @PostMapping
-    public ResponseEntity<Reserva> crearReserva(
-            @RequestParam Long idUsuario,
-            @RequestParam String categoria,
-            @RequestParam int capacidad) {
-        return ResponseEntity.ok(reservaService.crearReserva(idUsuario, categoria, capacidad));
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Reserva> crearReserva(@RequestBody ReservaRequest request) {
+        return ResponseEntity.ok(reservaService.crearReserva(request.getIdUsuario(), request.getCategoria(), request.getCapacidad()));
     }
-    
-    @PostMapping("/confirmar")
-    public ResponseEntity<Void> confirmarReserva(@RequestParam String token) {
-        reservaService.confirmarReserva(token);
+
+    @PostMapping(value = "/confirmar", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> confirmarReserva(@RequestBody ConfirmarReservaRequest request) {
+        reservaService.confirmarReserva(request.getToken());
         return ResponseEntity.ok().build();
     }
 }
