@@ -48,7 +48,7 @@ public class SecurityConfig {
             );
 
         // Agregar filtro JWT solo para rutas que requieren autenticación
-        //http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
