@@ -6,7 +6,7 @@ import com.eduard.registro.turismo.app.model.SitioTuristicos;
 
 import java.util.List;
 
-public interface SitioTuristicoRepository extends JpaRepository<SitioTuristicos, String> {
+public interface SitioTuristicoRepository extends JpaRepository<SitioTuristicos, Long> {
     List<SitioTuristicos> findByTipoLugar(String tipoLugar);
     SitioTuristicos findByCodigoUnico(String codigoUnico);
 }

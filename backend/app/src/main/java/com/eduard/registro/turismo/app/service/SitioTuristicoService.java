@@ -1,6 +1,7 @@
 package com.eduard.registro.turismo.app.service;
 
 import com.eduard.registro.turismo.app.dto.SitioTuristicoDTO;
+import com.eduard.registro.turismo.app.dto.UbicacionSitioDTO;
 import com.eduard.registro.turismo.app.model.ImagenSitio;
 import com.eduard.registro.turismo.app.model.SitioTuristicos;
 import com.eduard.registro.turismo.app.repository.SitioTuristicoRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SitioTuristicoService {
@@ -47,6 +49,22 @@ public class SitioTuristicoService {
     
     @Transactional
     public void eliminarSitioTuristico(String codigoUnico) {
-        repository.deleteById(codigoUnico);
+        SitioTuristicos sitio = repository.findByCodigoUnico(codigoUnico);
+        if (sitio != null) {
+            repository.delete(sitio);
+        }
     }
+
+    public List<UbicacionSitioDTO> obtenerUbicaciones() {
+    List<SitioTuristicos> sitios = repository.findAll();
+    return sitios.stream()
+            .map(sitio -> {
+                UbicacionSitioDTO dto = new UbicacionSitioDTO();
+                dto.setNombre(sitio.getNombre());
+                dto.setLatitud(sitio.getUbicacionGeografica().getLatitud());
+                dto.setLongitud(sitio.getUbicacionGeografica().getLongitud());
+                return dto;
+            })
+            .collect(Collectors.toList());
+}
 }
