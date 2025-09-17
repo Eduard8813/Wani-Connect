@@ -1,12 +1,16 @@
 package com.eduard.registro.turismo.app.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.eduard.registro.turismo.app.dto.SitioTuristicoSinImagenDTO;
+import com.eduard.registro.turismo.app.model.ImagenTuristica;
 import com.eduard.registro.turismo.app.model.SitioTuristico;
+import com.eduard.registro.turismo.app.repository.SitioTuristicoRepository;
 import com.eduard.registro.turismo.app.service.SitioTuristicoService;
 
 import java.io.IOException;
@@ -17,7 +21,9 @@ import java.util.List;
 @RequestMapping("/api/sitios")
 @RequiredArgsConstructor
 public class SitioTuristicoController {
+
     private final SitioTuristicoService sitioService;
+    private final SitioTuristicoRepository sitioTuristicoRepository;
 
     // NO requiere token
     @PostMapping
@@ -26,31 +32,55 @@ public class SitioTuristicoController {
     }
 
     // NO requiere token
-    // Sube una imagen a un sitio usando el codigoUnico
-    @PostMapping("/{codigoUnico}/foto")
-    public ResponseEntity<SitioTuristico> subirFoto(
-            @PathVariable String codigoUnico,
-            @RequestParam("imagen") MultipartFile imagen
-    ) throws IOException {
-        // Lee el archivo y lo convierte a base64
-        String base64 = "data:" + imagen.getContentType() + ";base64," +
-                Base64.getEncoder().encodeToString(imagen.getBytes());
+    @PutMapping("/subir/{codigoUnico:.+}")
+    public ResponseEntity<?> saveSitioPhotoByCodigoUnico(
+        @PathVariable String codigoUnico,
+        @RequestParam("file") MultipartFile file
+    ) {
+        try {
+            if (file == null || file.isEmpty()) {
+                return ResponseEntity.badRequest().body("Debe seleccionar un archivo");
+            }
 
-        SitioTuristico sitioActualizado = sitioService.agregarImagenPorCodigoUnico(codigoUnico, base64);
-        return ResponseEntity.ok(sitioActualizado);
+            if (!file.getContentType().startsWith("image/")) {
+                return ResponseEntity.badRequest().body("Solo se permiten imágenes");
+            }
+
+            SitioTuristico sitio = sitioTuristicoRepository.findByCodigoUnico(codigoUnico)
+                    .orElseThrow(() -> new RuntimeException("Sitio turístico no encontrado"));
+
+            String imageBase64 = Base64.getEncoder().encodeToString(file.getBytes());
+
+            ImagenTuristica imagen = new ImagenTuristica();
+            imagen.setGaleriaImagen(imageBase64);
+            imagen.setSitioTuristico(sitio);
+
+            sitio.getGaleriaImagenes().add(imagen);
+            sitioTuristicoRepository.save(sitio);
+
+            return ResponseEntity.ok().body("Foto del sitio turístico actualizada correctamente");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar la imagen: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error inesperado: " + e.getMessage());
+        }
     }
 
-    // SÍ requiere token
-    @GetMapping
+    // SÍ requiere token — solo datos sin imágenes
+    @GetMapping("/sin-imagen/{codigoUnico}")
     @PreAuthorize("isAuthenticated()")
-    public List<SitioTuristico> listarSitios() {
-        return sitioService.listarTodos();
+    public ResponseEntity<SitioTuristicoSinImagenDTO> verSitioSinImagen(@PathVariable String codigoUnico) {
+        SitioTuristicoSinImagenDTO dto = sitioService.obtenerSitioSinImagenPorCodigoUnico(codigoUnico);
+        return ResponseEntity.ok(dto);
     }
 
-    // SÍ requiere token
-    @GetMapping("/{codigoUnico}")
+    // SÍ requiere token — solo imágenes del sitio
+    @GetMapping("/ver-imagenes/{codigoUnico}")
     @PreAuthorize("isAuthenticated()")
-    public SitioTuristico verSitio(@PathVariable String codigoUnico) {
-        return sitioService.obtenerSitioPorCodigoUnico(codigoUnico);
+    public ResponseEntity<List<String>> verImagenesPorCodigoUnico(@PathVariable String codigoUnico) {
+        List<String> imagenes = sitioService.obtenerImagenesBase64PorCodigoUnico(codigoUnico);
+        return ResponseEntity.ok(imagenes);
     }
 }

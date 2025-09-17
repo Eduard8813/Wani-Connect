@@ -21,24 +21,23 @@ public class SitioTuristico {
     @Column(unique = true)
     private String codigoUnico;
 
-    // Datos simbólicos/culturales
     @Column(length = 1000)
     private String historiaResumida;
     private String eventosHistoricos;
     private String personajesAsociados;
-
-    @ElementCollection
-    private List<String> galeriaImagenes = new ArrayList<>(); // URLs/base64
 
     private String audioguiaUrl;
 
     @ElementCollection
     private List<String> comentarios = new ArrayList<>();
 
-    // Datos funcionales
     private String serviciosDisponibles;
     private String actividadesRecomendadas;
     private String nivelAccesibilidad;
     private String reglasLugar;
     private String enlaceReserva;
+
+    // Relación con imágenes
+    @OneToMany(mappedBy = "sitioTuristico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ImagenTuristica> galeriaImagenes = new ArrayList<>();
 }
