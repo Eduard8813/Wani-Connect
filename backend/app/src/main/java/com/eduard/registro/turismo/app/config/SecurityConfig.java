@@ -50,7 +50,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permite solicitudes preflight CORS
                 .requestMatchers("/api/auth/**").permitAll() // Permite acceso público a rutas de autenticación
                 .requestMatchers("/api/user/**").permitAll() // Permite acceso público a rutas de usuario
-                .requestMatchers("/api/sitios/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/fotos/subir").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/fotos/**").permitAll()
                 .anyRequest().authenticated() // Requiere autenticación para cualquier otra ruta
@@ -70,7 +69,7 @@ public class SecurityConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Algoritmo seguro y ampliamente usdo
+        return new BCryptPasswordEncoder(); // Algoritmo seguro y ampliamente usado
     }
 
     /**
