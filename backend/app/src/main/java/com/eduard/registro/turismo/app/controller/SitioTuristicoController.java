@@ -1,6 +1,7 @@
 package com.eduard.registro.turismo.app.controller;
 
 import com.eduard.registro.turismo.app.dto.SitioTuristicoDTO;
+import com.eduard.registro.turismo.app.dto.UbicacionSitioDTO;
 import com.eduard.registro.turismo.app.model.SitioTuristicos;
 import com.eduard.registro.turismo.app.service.SitioTuristicoService;
 import jakarta.validation.Valid;
@@ -41,4 +42,9 @@ public class SitioTuristicoController {
         service.eliminarSitioTuristico(codigoUnico);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/ubicaciones")
+    public List<UbicacionSitioDTO> obtenerUbicaciones() {
+    return service.obtenerUbicaciones();
+}
 }

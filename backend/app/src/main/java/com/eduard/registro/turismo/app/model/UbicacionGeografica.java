@@ -6,7 +6,7 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 
 @Embeddable
-class UbicacionGeografica {
+public class UbicacionGeografica {
     @NotBlank(message = "La dirección es obligatoria")
     private String direccion;
     
