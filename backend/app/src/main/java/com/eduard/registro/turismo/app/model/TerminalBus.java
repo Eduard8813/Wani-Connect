@@ -1,6 +1,11 @@
 package com.eduard.registro.turismo.app.model;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "terminales_buses")
@@ -21,6 +26,10 @@ public class TerminalBus {
     
     @Embedded
     private UbicacionGeografica ubicacionGeografica;
+    
+    @OneToMany(mappedBy = "terminalBus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference  // Esto maneja la referencia circular
+    private List<BusDisponible> busesDisponibles;
     
     // Getters y Setters
     public Long getId() {
@@ -61,6 +70,14 @@ public class TerminalBus {
 
     public void setUbicacionGeografica(UbicacionGeografica ubicacionGeografica) {
         this.ubicacionGeografica = ubicacionGeografica;
+    }
+
+    public List<BusDisponible> getBusesDisponibles() {
+        return busesDisponibles;
+    }
+
+    public void setBusesDisponibles(List<BusDisponible> busesDisponibles) {
+        this.busesDisponibles = busesDisponibles;
     }
 
     // Generar código único automáticamente

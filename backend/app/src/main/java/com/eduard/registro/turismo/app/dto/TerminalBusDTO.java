@@ -1,16 +1,32 @@
 package com.eduard.registro.turismo.app.dto;
 
-import com.eduard.registro.turismo.app.model.TerminalBus;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import java.util.List;
 
-@Data
+import com.eduard.registro.turismo.app.model.TerminalBus;
+
 public class TerminalBusDTO {
+    private Long id;
+    private String codigoUnico;
+    private String nombre;
+    private String localidad;
+    private UbicacionGeograficaDTO ubicacionGeografica;
+    private List<BusDisponibleDTO> busesDisponibles;
     
-    @Valid
-    private TerminalBus terminalBus;
+    // Constructor, getters y setters
+    public TerminalBusDTO() {}
     
-    @NotBlank(message = "Debe proporcionar al menos una imagen")
-    private String urlImagen;
+    // Constructor que recibe una entidad TerminalBus
+    public TerminalBusDTO(TerminalBus terminal) {
+        this.id = terminal.getId();
+        this.codigoUnico = terminal.getCodigoUnico();
+        this.nombre = terminal.getNombre();
+        this.localidad = terminal.getLocalidad();
+        this.ubicacionGeografica = new UbicacionGeograficaDTO(terminal.getUbicacionGeografica());
+        // Convertir la lista de buses a DTOs
+        this.busesDisponibles = terminal.getBusesDisponibles().stream()
+            .map(BusDisponibleDTO::new)
+            .collect(java.util.stream.Collectors.toList());
+    }
+    
+    // Getters y setters...
 }

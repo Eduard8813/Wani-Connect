@@ -42,6 +42,10 @@ public class TerminalBusService {
         return repository.findByCodigoUnico(codigoUnico);
     }
     
+    public java.util.Optional<TerminalBus> findById(Long id) {
+        return repository.findById(id);
+    }
+    
     public List<UbicacionTerminalDTO> obtenerUbicaciones() {
         List<TerminalBus> terminales = repository.findAll();
         return terminales.stream()
