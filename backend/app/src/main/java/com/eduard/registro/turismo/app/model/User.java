@@ -25,6 +25,10 @@ public class User {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private UserRole role = UserRole.USER;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("user-photo")
@@ -33,4 +37,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("user-profile")
     private UserProfile profile;
+    
+    public enum UserRole {
+        USER, COMPANY
+    }
 }

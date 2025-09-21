@@ -1,6 +1,7 @@
 package com.eduard.registro.turismo.app.security;
 
 import com.eduard.registro.turismo.app.config.JwtConfig;
+import com.eduard.registro.turismo.app.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,27 @@ public class JwtTokenUtil {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+    
+    public String generateTokenWithRole(UserDetails userDetails, User.UserRole role) {
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .claim("role", role.name())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+    
+    public String generateTokenWithCompanyRole(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("role", "COMPANY")
+                .claim("type", "COMPANY")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
     public String extractUsername(String token) {
         try {
@@ -49,6 +71,20 @@ public class JwtTokenUtil {
         } catch (UnsupportedJwtException | MalformedJwtException e) {
             log.error("Token JWT no válido", e);
             throw e;
+        }
+    }
+    
+    public String extractRole(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("role", String.class);
+        } catch (Exception e) {
+            log.error("Error al extraer rol del token", e);
+            return "USER";
         }
     }
 

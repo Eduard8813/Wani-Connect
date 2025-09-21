@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 // Anotaciones para definir controlador REST y rutas
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import com.eduard.registro.turismo.app.dto.SignUpRequest;
 // Entidades del modelo
 import com.eduard.registro.turismo.app.model.User;
 import com.eduard.registro.turismo.app.model.UserProfile;
+import com.eduard.registro.turismo.app.model.Company;
 
 // Utilidades de seguridad para generar y validar JWT
 import com.eduard.registro.turismo.app.security.JwtTokenUtil;
@@ -30,6 +32,7 @@ import com.eduard.registro.turismo.app.security.UserDetailsServiceImpl;
 // Servicios para manejar lógica de negocio
 import com.eduard.registro.turismo.app.service.UserProfileService;
 import com.eduard.registro.turismo.app.service.UserService;
+import com.eduard.registro.turismo.app.service.CompanyService;
 
 // Validación de datos de entrada
 import jakarta.validation.Valid;
@@ -45,10 +48,12 @@ public class AuthController {
 
     // Inyección de dependencias necesarias para autenticación y registro
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final UserProfileService profileService;
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
+    private final CompanyService companyService;
 
     /**
      * Endpoint para iniciar sesión.
@@ -61,14 +66,74 @@ public class AuthController {
             new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
         
-        // Carga los detalles del usuario y genera el token JWT
+        // Carga los detalles del usuario y obtiene el rol
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        final User user = userService.findByUsername(authRequest.getUsername()).orElseThrow();
+        
+        // Si el usuario no tiene rol asignado, asignar USER por defecto
+        if (user.getRole() == null) {
+            user.setRole(User.UserRole.USER);
+            userService.save(user);
+        }
+        
+        final String jwt = jwtTokenUtil.generateTokenWithRole(userDetails, user.getRole());
         
         // Devuelve el token en la respuesta
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
 
+    /**
+     * Endpoint para registrar una cuenta de empresa.
+     */
+    @PostMapping("/signup-company")
+    @Transactional
+    public ResponseEntity<String> registerCompany(@Valid @RequestBody SignUpRequest signUpRequest) {
+        try {
+            if (companyService.existsByUsername(signUpRequest.getUsername())) {
+                return ResponseEntity.badRequest().body("Error: El nombre de usuario ya existe");
+            }
+            
+            if (companyService.existsByEmail(signUpRequest.getEmail())) {
+                return ResponseEntity.badRequest().body("Error: El email ya está en uso");
+            }
+            
+            Company company = new Company();
+            company.setUsername(signUpRequest.getUsername());
+            company.setPassword(signUpRequest.getPassword());
+            company.setEmail(capitalizarPrimeraLetra(signUpRequest.getEmail()));
+            company.setCompanyName(signUpRequest.getFirstName());
+            companyService.createCompany(company);
+            
+            return ResponseEntity.ok("Cuenta de empresa registrada exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error al registrar empresa: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Endpoint para iniciar sesión como empresa.
+     */
+    @PostMapping("/signin-company")
+    public ResponseEntity<AuthResponse> authenticateCompany(@Valid @RequestBody AuthRequest authRequest) {
+        try {
+            // Verificar que la empresa existe
+            Company company = companyService.findByUsername(authRequest.getUsername())
+                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+            
+            // Verificar contraseña
+            if (!passwordEncoder.matches(authRequest.getPassword(), company.getPassword())) {
+                throw new RuntimeException("Credenciales inválidas");
+            }
+            
+            // Generar token con rol COMPANY
+            final String jwt = jwtTokenUtil.generateTokenWithCompanyRole(company.getUsername());
+            
+            return ResponseEntity.ok(new AuthResponse(jwt));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new AuthResponse("Error: " + e.getMessage()));
+        }
+    }
+    
     /**
      * Endpoint para registrar un nuevo usuario.
      * Valida que el nombre de usuario y el email no estén en uso,
@@ -93,6 +158,7 @@ public class AuthController {
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(signUpRequest.getPassword());
         user.setEmail(capitalizarPrimeraLetra(signUpRequest.getEmail()));
+        user.setRole(User.UserRole.USER); // Por defecto es usuario regular
         User newUser = userService.createUser(user);
         
         // Crear entidad UserProfile asociada al nuevo usuario
