@@ -1,5 +1,6 @@
 package com.eduard.registro.turismo.app.controller;
 
+import com.eduard.registro.turismo.app.model.Reserva;
 import com.eduard.registro.turismo.app.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,12 @@ public class TestController {
             @RequestParam String codigo,
             @RequestParam String destino) {
         try {
-            emailService.enviarCorreoReserva(to, codigo, "Terminal Central", "A1", "08:00", "2024-01-01", destino, "Bus");
+            Reserva reserva = new Reserva();
+            reserva.setEmailUsuario(to);
+            reserva.setCodigoUnico(codigo);
+            reserva.setNombreUsuario("Usuario de Prueba");
+            
+            emailService.enviarCorreoReserva(reserva);
             return "Correo enviado exitosamente a " + to;
         } catch (Exception e) {
             return "Error al enviar correo: " + e.getMessage();
