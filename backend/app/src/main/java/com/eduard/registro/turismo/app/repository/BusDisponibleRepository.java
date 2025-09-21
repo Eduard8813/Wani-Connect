@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface BusDisponibleRepository extends JpaRepository<BusDisponible, Long> {
-    
+     
     // Encontrar todos los buses disponibles en una terminal específica
-    List<BusDisponible> findByTerminalBus(TerminalBus terminalBus);
+    List<BusDisponible> findByTerminalBus(TerminalBus terminalBus); 
     
     // Encontrar buses disponibles por ID de terminal
     @Query("SELECT b FROM BusDisponible b WHERE b.terminalBus.id = :terminalId")

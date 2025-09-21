@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class LugarReservaDTO {
     private Long id;
-    private String nombre;
+    private Integer numero;
     private boolean disponible;
-    private Long terminalId;
+    private String tiempoRestante;
+    private Long busId;
+    private String usuarioReserva;
 }

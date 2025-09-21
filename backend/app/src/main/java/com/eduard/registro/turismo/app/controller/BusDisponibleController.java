@@ -1,8 +1,10 @@
 package com.eduard.registro.turismo.app.controller;
 
+import com.eduard.registro.turismo.app.dto.LugarReservaDTO;
 import com.eduard.registro.turismo.app.model.BusDisponible;
 import com.eduard.registro.turismo.app.model.TerminalBus;
 import com.eduard.registro.turismo.app.service.BusDisponibleService;
+import com.eduard.registro.turismo.app.service.ReservaService;
 import com.eduard.registro.turismo.app.service.TerminalBusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class BusDisponibleController {
     
     @Autowired
     private TerminalBusService terminalBusService;
+    
+    @Autowired
+    private ReservaService reservaService;
     
     // Obtener todos los buses disponibles
     @GetMapping
@@ -80,7 +85,18 @@ public class BusDisponibleController {
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
     
-    // Crear un nuevo bus disponible (usando ID de terminal)
+    // Obtener lugares de un bus específico
+    @GetMapping("/{busId}/lugares")
+    public ResponseEntity<List<LugarReservaDTO>> obtenerLugaresPorBus(@PathVariable Long busId) {
+        try {
+            List<LugarReservaDTO> lugares = reservaService.obtenerLugaresPorBus(busId);
+            return new ResponseEntity<>(lugares, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // Crear un nuevo bus disponible (usando ID de terminal) 
     @PostMapping
     public ResponseEntity<BusDisponible> createBus(@Valid @RequestBody BusDisponible bus) {
         BusDisponible newBus = busDisponibleService.save(bus);
@@ -107,10 +123,12 @@ public class BusDisponibleController {
             @RequestParam String numeroBus,
             @RequestParam String destino,
             @RequestParam String horaSalida,
-            @RequestParam int totalLugares) {
+            @RequestParam int totalLugares,
+            @RequestParam int lugaresDisponibles,
+            @RequestParam Double precio) {
         
         BusDisponible newBus = busDisponibleService.createBusForTerminal(
-            terminalId, numeroBus, destino, LocalTime.parse(horaSalida), totalLugares);
+            terminalId, numeroBus, destino, LocalTime.parse(horaSalida), totalLugares, precio);
         
         return new ResponseEntity<>(newBus, HttpStatus.CREATED);
     }
@@ -122,12 +140,14 @@ public class BusDisponibleController {
             @RequestParam String numeroBus,
             @RequestParam String destino,
             @RequestParam String horaSalida,
-            @RequestParam int totalLugares) {
+            @RequestParam int totalLugares,
+            @RequestParam int lugaresDisponibles,
+            @RequestParam Double precio) {
         
         TerminalBus terminal = terminalBusService.obtenerPorCodigoUnico(codigoUnico);
         
         BusDisponible newBus = busDisponibleService.createBusForTerminal(
-            terminal.getId(), numeroBus, destino, LocalTime.parse(horaSalida), totalLugares);
+            terminal.getId(), numeroBus, destino, LocalTime.parse(horaSalida), totalLugares, precio);
         
         return new ResponseEntity<>(newBus, HttpStatus.CREATED);
     }

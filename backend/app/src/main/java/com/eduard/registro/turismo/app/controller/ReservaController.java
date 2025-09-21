@@ -1,5 +1,13 @@
 package com.eduard.registro.turismo.app.controller;
 
+<<<<<<< HEAD
+import com.eduard.registro.turismo.app.dto.ReservaDTO;
+import com.eduard.registro.turismo.app.dto.ReservaRequest;
+import com.eduard.registro.turismo.app.service.ReservaService;
+import com.eduard.registro.turismo.app.security.JwtTokenUtil;
+import jakarta.validation.Valid;
+=======
+>>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,8 +30,13 @@ public class ReservaController {
     private ReservaService reservaService;
     
     @Autowired
+<<<<<<< HEAD
+    private JwtTokenUtil jwtTokenUtil;
+    
+=======
     private UserService usuarioService;
 
+>>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
     @PostMapping
     public ResponseEntity<?> crearReserva(@Valid @RequestBody ReservaDTO reservaDTO,
                                          @RequestHeader("Authorization") String token) {
@@ -83,10 +96,14 @@ public class ReservaController {
         }
     }
     
+<<<<<<< HEAD
+    // ... otros métodos existentes ...
+=======
     private String capitalizarPrimeraLetra(String texto) {
         if (texto == null || texto.isEmpty()) {
             return texto;
         }
         return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
+>>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
 }

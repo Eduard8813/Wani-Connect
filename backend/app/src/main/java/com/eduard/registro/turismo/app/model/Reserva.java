@@ -33,6 +33,68 @@ public class Reserva {
     private boolean validada = false;
 
     // Getters y Setters
+<<<<<<< HEAD
+    @PrePersist
+    public void generarCodigoUnico() {
+        this.codigoUnico = "RES-" + System.currentTimeMillis() + "-" + (int)(Math.random() * 1000);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCodigoUnico() {
+        return codigoUnico;
+    }
+
+    public void setCodigoUnico(String codigoUnico) {
+        this.codigoUnico = codigoUnico;
+    }
+
+    public TerminalBus getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(TerminalBus terminal) {
+        this.terminal = terminal;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getLugarReservado() {
+        return lugarReservado;
+    }
+
+    public void setLugarReservado(String lugarReservado) {
+        this.lugarReservado = lugarReservado;
+    }
+
+    public LocalDateTime getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(LocalDateTime fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public boolean isConfirmada() {
+        return confirmada;
+    }
+
+    public void setConfirmada(boolean confirmada) {
+        this.confirmada = confirmada;
+    }
+=======
     public String getCodigoUnico() { return codigoUnico; }
     public void setCodigoUnico(String codigoUnico) { this.codigoUnico = codigoUnico; }
     public String getEmailUsuario() { return email; }
@@ -49,4 +111,5 @@ public class Reserva {
     public void setValidada(boolean validada) { this.validada = validada; }
     public LocalDateTime getFechaEliminacion() { return fechaEliminacion; }
     public void setFechaEliminacion(LocalDateTime fechaEliminacion) { this.fechaEliminacion = fechaEliminacion; }
+>>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
 }

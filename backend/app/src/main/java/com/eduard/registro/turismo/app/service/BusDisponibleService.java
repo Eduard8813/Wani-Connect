@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class BusDisponibleService {
     
-    @Autowired
+    @Autowired 
     private BusDisponibleRepository busDisponibleRepository;
     
     @Autowired
@@ -92,7 +92,7 @@ public class BusDisponibleService {
     @Transactional
     public BusDisponible createBusForTerminal(TerminalBus terminalBus, String numeroBus, 
                                              String destino, LocalTime horaSalida, 
-                                             int totalLugares) {
+                                             int totalLugares, Double precio) {
         BusDisponible bus = new BusDisponible();
         bus.setTerminalBus(terminalBus);
         bus.setNumeroBus(numeroBus);
@@ -100,6 +100,7 @@ public class BusDisponibleService {
         bus.setHoraSalida(horaSalida);
         bus.setTotalLugares(totalLugares);
         bus.setLugaresDisponibles(totalLugares);
+        bus.setPrecio(precio);
         
         return save(bus);
     }
@@ -108,7 +109,7 @@ public class BusDisponibleService {
 @Transactional
 public BusDisponible createBusForTerminal(Long terminalId, String numeroBus, 
                                          String destino, LocalTime horaSalida, 
-                                         int totalLugares) {
+                                         int totalLugares, Double precio) {
     
     TerminalBus terminalBus = terminalBusService.findById(terminalId)
             .orElseThrow(() -> new RuntimeException("Terminal no encontrada con ID: " + terminalId));
@@ -120,7 +121,7 @@ public BusDisponible createBusForTerminal(Long terminalId, String numeroBus,
     bus.setHoraSalida(horaSalida);
     bus.setTotalLugares(totalLugares);
     bus.setLugaresDisponibles(totalLugares);
-    
+    bus.setPrecio(precio);
     return save(bus);
 }
 }

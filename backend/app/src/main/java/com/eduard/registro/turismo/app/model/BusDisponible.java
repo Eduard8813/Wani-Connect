@@ -39,10 +39,15 @@ public class BusDisponible {
     @Min(value = 0, message = "Los lugares disponibles no pueden ser negativos")
     @Column(nullable = false)
     private Integer lugaresDisponibles;
+
+    @NotNull(message = "El precio es obligatorio")
+    @Min(value = 0, message = "El precio no puede ser negativo")
+    @Column(nullable = false)
+    private Double precio;
     
     // Getters y Setters
     public Long getId() {
-        return id;
+        return id; 
     }
 
     public void setId(Long id) {
@@ -95,5 +100,13 @@ public class BusDisponible {
 
     public void setLugaresDisponibles(Integer lugaresDisponibles) {
         this.lugaresDisponibles = lugaresDisponibles;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }

@@ -5,12 +5,13 @@ import java.time.LocalTime;
 import com.eduard.registro.turismo.app.model.BusDisponible;
 
 public class BusDisponibleDTO {
-    private Long id;
+    private Long id; 
     private String numeroBus;
     private String destino;
     private LocalTime horaSalida;
     private Integer totalLugares;
-    private Integer lugaresDisponibles;
+    private Integer lugaresDisponibles; 
+    private Double precio;
     // Nota: No incluimos la referencia a TerminalBus para evitar la circularidad
     
     // Constructor, getters y setters
@@ -24,6 +25,7 @@ public class BusDisponibleDTO {
         this.horaSalida = bus.getHoraSalida();
         this.totalLugares = bus.getTotalLugares();
         this.lugaresDisponibles = bus.getLugaresDisponibles();
+        this.precio = bus.getPrecio();
     }
     
     // Getters y setters...
@@ -73,5 +75,13 @@ public class BusDisponibleDTO {
 
     public void setLugaresDisponibles(Integer lugaresDisponibles) {
         this.lugaresDisponibles = lugaresDisponibles;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }

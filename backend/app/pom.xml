@@ -144,6 +144,11 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
 
+<<<<<<< HEAD
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+=======
         <!-- Dependencia para generar códigos QR -->
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -155,6 +160,7 @@
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
             <version>3.5.1</version>
+>>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
         </dependency>
 
     </dependencies>
