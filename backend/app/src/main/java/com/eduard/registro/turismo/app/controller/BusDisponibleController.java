@@ -1,10 +1,10 @@
 package com.eduard.registro.turismo.app.controller;
 
-import com.eduard.registro.turismo.app.dto.LugarReservaDTO;
+import com.eduard.registro.turismo.app.dto.LugarBusDTO;
 import com.eduard.registro.turismo.app.model.BusDisponible;
 import com.eduard.registro.turismo.app.model.TerminalBus;
 import com.eduard.registro.turismo.app.service.BusDisponibleService;
-import com.eduard.registro.turismo.app.service.ReservaService;
+import com.eduard.registro.turismo.app.service.ReservaBusService;
 import com.eduard.registro.turismo.app.service.TerminalBusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class BusDisponibleController {
     private TerminalBusService terminalBusService;
     
     @Autowired
-    private ReservaService reservaService;
+    private ReservaBusService reservaBusService;
     
     // Obtener todos los buses disponibles
     @GetMapping
@@ -87,9 +87,9 @@ public class BusDisponibleController {
     
     // Obtener lugares de un bus específico
     @GetMapping("/{busId}/lugares")
-    public ResponseEntity<List<LugarReservaDTO>> obtenerLugaresPorBus(@PathVariable Long busId) {
+    public ResponseEntity<List<LugarBusDTO>> obtenerLugaresPorBus(@PathVariable Long busId) {
         try {
-            List<LugarReservaDTO> lugares = reservaService.obtenerLugaresPorBus(busId);
+            List<LugarBusDTO> lugares = reservaBusService.obtenerLugaresBus(busId);
             return new ResponseEntity<>(lugares, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -15,32 +15,6 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
     
-<<<<<<< HEAD
-    public void enviarCorreoReserva(String destinatario, String codigoReserva, String terminal, 
-                                   String numeroLugar, String horaSalida, String fechaReserva, 
-                                   String destino, String transporte) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(destinatario);
-        message.setSubject("Confirmación de Reserva - Wanni Connect");
-        
-        String contenido = String.format(
-            "Estimado usuario,\n\n" +
-            "Su reserva ha sido confirmada con éxito. Aquí están los detalles:\n\n" +
-            "Código de Reserva: %s\n" +
-            "Terminal: %s\n" +
-            "Destino: %s\n" +
-            "Número de Asiento: %s\n" +
-            "Hora de Salida: %s\n" +
-            "Fecha de Reserva: %s\n" +
-            "Transporte: %s\n\n" +
-            "Por favor, presente este código al embarcar.\n\n" +
-            "Gracias por usar Wanni Connect.",
-            codigoReserva, terminal, destino, numeroLugar, horaSalida, fechaReserva, transporte
-        );
-        
-        message.setText(contenido);
-        mailSender.send(message);
-=======
     @Autowired
     private QRCodeService qrCodeService;
 
@@ -199,6 +173,5 @@ public class EmailService {
         } catch (Exception e) {
             System.err.println("Error al enviar correo de reservas múltiples: " + e.getMessage());
         }
->>>>>>> 8abe2777ba630eb70a61db9da6a988e72d943d7b
     }
 }
