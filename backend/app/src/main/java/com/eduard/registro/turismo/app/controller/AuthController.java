@@ -121,7 +121,7 @@ public class AuthController {
 
     private String capitalizarPrimeraLetra(String texto) {
         if (texto == null || texto.isEmpty()) {
-            return texto;
+            return texto; 
         }
         if (texto.contains("@")) {
             int atIndex = texto.indexOf("@");
