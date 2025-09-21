@@ -58,4 +58,14 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+    /**
+     * Busca un usuario por su nombre de usuario.
+     *
+     * @param username nombre de usuario
+     * @return Optional con el usuario si existe
+     */
+    public java.util.Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

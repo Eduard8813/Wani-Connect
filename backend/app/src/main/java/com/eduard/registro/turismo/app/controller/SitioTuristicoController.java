@@ -1,6 +1,7 @@
 package com.eduard.registro.turismo.app.controller;
 
 import com.eduard.registro.turismo.app.dto.SitioTuristicoDTO;
+import com.eduard.registro.turismo.app.dto.SitioTuristicoDetalleDTO;
 import com.eduard.registro.turismo.app.dto.UbicacionSitioDTO;
 import com.eduard.registro.turismo.app.model.SitioTuristicos;
 import com.eduard.registro.turismo.app.service.SitioTuristicoService;
@@ -32,8 +33,8 @@ public class SitioTuristicoController {
     }
     
     @GetMapping("/{codigoUnico}")
-    public ResponseEntity<SitioTuristicos> obtenerPorCodigoUnico(@PathVariable String codigoUnico) {
-        SitioTuristicos sitio = service.obtenerPorCodigoUnico(codigoUnico);
+    public ResponseEntity<SitioTuristicoDetalleDTO> obtenerPorCodigoUnico(@PathVariable String codigoUnico) {
+        SitioTuristicoDetalleDTO sitio = service.obtenerPorCodigoUnico(codigoUnico);
         return sitio != null ? ResponseEntity.ok(sitio) : ResponseEntity.notFound().build();
     }
     
@@ -45,6 +46,6 @@ public class SitioTuristicoController {
 
     @GetMapping("/ubicaciones")
     public List<UbicacionSitioDTO> obtenerUbicaciones() {
-    return service.obtenerUbicaciones();
-}
+        return service.obtenerUbicaciones();
+    }
 }

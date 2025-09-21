@@ -92,7 +92,7 @@ public class AuthController {
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(signUpRequest.getPassword());
-        user.setEmail(signUpRequest.getEmail());
+        user.setEmail(capitalizarPrimeraLetra(signUpRequest.getEmail()));
         User newUser = userService.createUser(user);
         
         // Crear entidad UserProfile asociada al nuevo usuario
@@ -119,4 +119,16 @@ public class AuthController {
     }
 }
 
+    private String capitalizarPrimeraLetra(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return texto;
+        }
+        if (texto.contains("@")) {
+            int atIndex = texto.indexOf("@");
+            String parteLocal = texto.substring(0, atIndex);
+            String parteDominio = texto.substring(atIndex);
+            return parteLocal.substring(0, 1).toUpperCase() + parteLocal.substring(1).toLowerCase() + parteDominio;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+    }
 }

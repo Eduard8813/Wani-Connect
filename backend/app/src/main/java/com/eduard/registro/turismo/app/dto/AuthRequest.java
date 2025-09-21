@@ -18,5 +18,5 @@ public class AuthRequest {
     private String username;
     
     @NotBlank // Valida que la contraseña no esté vacía ni contenga solo espacios
-    private String password;
+    private String password; 
 }

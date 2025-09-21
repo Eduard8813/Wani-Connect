@@ -10,69 +10,43 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, updatable = false)
+    @Column(nullable = false, unique = true)
     private String codigoUnico;
 
     @ManyToOne
-    @JoinColumn(name = "terminal_id", nullable = false)
-    private TerminalBus terminal;
+    @JoinColumn(name = "sitio_turistico_id", nullable = false)
+    private SitioTuristicos sitioTuristicos;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(nullable = false)
+    private String username;
 
-    private String lugarReservado;
+    @Column(nullable = false)
+    private String email;
 
+    @Column(nullable = false)
     private LocalDateTime fechaReserva;
 
-    private boolean confirmada = false;
+    @Column(name = "fecha_eliminacion")
+    private LocalDateTime fechaEliminacion; // Nuevo campo para programar eliminación
+
+
+    private boolean validada = false;
 
     // Getters y Setters
-    @PrePersist
-    public void generarCodigoUnico() {
-        this.codigoUnico = "RES-" + System.currentTimeMillis() + "-" + (int)(Math.random() * 1000);
-    }
-
-    public String getCodigoUnico() {
-        return codigoUnico;
-    }
-    public LocalDateTime getFechaReserva() {
-        return fechaReserva;
-    }
-    public Long getId() {
-        return id;
-    }
-    public String getLugarReservado() {
-        return lugarReservado;
-    }
-    public TerminalBus getTerminal() {
-        return terminal;
-    }
-    public User getUser() {
-        return user;
-    }
-    public void setCodigoUnico(String codigoUnico) {
-        this.codigoUnico = codigoUnico;
-    }
-    public void setConfirmada(boolean confirmada) {
-        this.confirmada = confirmada;
-    }
-    public void setFechaReserva(LocalDateTime fechaReserva) {
-        this.fechaReserva = fechaReserva;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setLugarReservado(String lugarReservado) {
-        this.lugarReservado = lugarReservado;
-    }
-    public void setTerminal(TerminalBus terminal) {
-        this.terminal = terminal;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-    public boolean isConfirmada() {
-        return confirmada;
-    }
+    public String getCodigoUnico() { return codigoUnico; }
+    public void setCodigoUnico(String codigoUnico) { this.codigoUnico = codigoUnico; }
+    public String getEmailUsuario() { return email; }
+    public void setEmailUsuario(String emailUsuario) { this.email = emailUsuario; }
+    public LocalDateTime getFechaReserva() { return fechaReserva; }
+    public void setFechaReserva(LocalDateTime fechaReserva) { this.fechaReserva = fechaReserva; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombreUsuario() { return username; }
+    public void setNombreUsuario(String nombreUsuario) { this.username = nombreUsuario; }
+    public SitioTuristicos getSitioTuristicos() { return sitioTuristicos; }
+    public void setSitioTuristicos(SitioTuristicos sitioTuristicos) { this.sitioTuristicos = sitioTuristicos; }
+    public boolean isValidada() { return validada; }
+    public void setValidada(boolean validada) { this.validada = validada; }
+    public LocalDateTime getFechaEliminacion() { return fechaEliminacion; }
+    public void setFechaEliminacion(LocalDateTime fechaEliminacion) { this.fechaEliminacion = fechaEliminacion; }
 }

@@ -43,6 +43,42 @@ public class UserController {
     private final UserRepository userRepository;
 
     /**
+     * Endpoint protegido que devuelve información básica del usuario autenticado.
+     * Requiere un token JWT válido para acceder.
+     */
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        // Verificar si el usuario está autenticado
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Error: No autorizado - Token no proporcionado o inválido");
+        }
+
+        try {
+            // Obtener el username del usuario autenticado desde el token
+            String username = authentication.getName();
+            
+            // Buscar el usuario por username
+            var user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+            
+            // Crear respuesta con información básica
+            var userInfo = new java.util.HashMap<String, Object>();
+            userInfo.put("username", user.getUsername());
+            userInfo.put("email", user.getEmail());
+            
+            return ResponseEntity.ok(userInfo);
+            
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al obtener información del usuario: " + e.getMessage());
+        }
+    }
+
+    /**
      * Endpoint protegido que devuelve el perfil del usuario autenticado.
      * Requiere un token JWT válido para acceder.
      */

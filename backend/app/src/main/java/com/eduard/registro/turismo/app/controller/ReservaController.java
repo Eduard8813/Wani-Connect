@@ -1,52 +1,92 @@
 package com.eduard.registro.turismo.app.controller;
 
-import com.eduard.registro.turismo.app.dto.LugarReservaDTO;
-import com.eduard.registro.turismo.app.dto.ReservaDTO;
-import com.eduard.registro.turismo.app.dto.ReservaRequest;
-import com.eduard.registro.turismo.app.service.ReservaService;
-import com.eduard.registro.turismo.app.security.JwtTokenUtil;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import com.eduard.registro.turismo.app.dto.ReservaDTO;
+import com.eduard.registro.turismo.app.model.Reserva;
+import com.eduard.registro.turismo.app.model.User;
+import com.eduard.registro.turismo.app.service.ReservaService;
+import com.eduard.registro.turismo.app.service.UserService;
+import jakarta.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/reservas")
 public class ReservaController {
-    
+
     @Autowired
     private ReservaService reservaService;
     
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    
-    @GetMapping("/lugares/{terminalId}")
-    public List<LugarReservaDTO> obtenerLugaresPorTerminal(@PathVariable Long terminalId) {
-        return reservaService.obtenerLugaresPorTerminal(terminalId);
-    }
-    
+    private UserService usuarioService;
+
     @PostMapping
-    public ResponseEntity<ReservaDTO> crearReserva(
-            @RequestHeader("Authorization") String token,
-            @Valid @RequestBody ReservaRequest reservaRequest) {
-        // Extraer el token del header (quitar "Bearer ")
-        String jwtToken = token.substring(7);
-        
-        // Llamar al servicio con el token
-        ReservaDTO reserva = reservaService.crearReserva(jwtToken, reservaRequest);
-        return ResponseEntity.ok(reserva);
+    public ResponseEntity<?> crearReserva(@Valid @RequestBody ReservaDTO reservaDTO,
+                                         @RequestHeader("Authorization") String token) {
+        try {
+            // Validar token y obtener usuario autenticado
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return ResponseEntity.status(401).body("Token inválido o expirado");
+            }
+            
+            String username = authentication.getName();
+            
+            // Verificar que el usuario del token coincide con el de la reserva
+            if (!username.equals(reservaDTO.getNombreUsuario())) {
+                return ResponseEntity.status(403).body("El usuario de la reserva no coincide con el del token");
+            }
+            
+            // Verificar que el usuario existe y obtener sus datos
+            User usuario = usuarioService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            
+            // Verificar que el email coincide con el del usuario (case-insensitive)
+            if (!usuario.getEmail().equalsIgnoreCase(reservaDTO.getEmailUsuario())) {
+                return ResponseEntity.status(400).body("El email no coincide con el registrado para este usuario");
+            }
+            
+            // Crear reserva
+            Reserva reserva = reservaService.crearReserva(reservaDTO);
+            return ResponseEntity.ok(reserva);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al crear la reserva: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/validar/{codigoUnico}")
+    public ResponseEntity<?> validarReserva(@PathVariable String codigoUnico) {
+        try {
+            boolean validada = reservaService.validarReserva(codigoUnico);
+            
+            if (!validada) {
+                return ResponseEntity.badRequest().body("La reserva no existe o ya fue validada");
+            }
+            
+            // Obtener detalles de la reserva para mostrar fecha de eliminación
+            Reserva reserva = reservaService.findByCodigoUnico(codigoUnico)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+            
+            String mensaje = "Reserva validada correctamente.";
+            if (reserva.getFechaEliminacion() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                mensaje += " Será eliminada automáticamente el " + reserva.getFechaEliminacion().format(formatter);
+            }
+            
+            return ResponseEntity.ok(mensaje);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al validar la reserva: " + e.getMessage());
+        }
     }
     
-    @GetMapping("/usuario/{userId}")
-    public List<ReservaDTO> obtenerReservasPorUsuario(@PathVariable Long userId) {
-        return reservaService.obtenerReservasPorUsuario(userId);
-    }
-    
-    @GetMapping("/codigo/{codigoUnico}")
-    public ResponseEntity<ReservaDTO> obtenerReservaPorCodigo(@PathVariable String codigoUnico) {
-        ReservaDTO reserva = reservaService.obtenerReservaPorCodigo(codigoUnico);
-        return ResponseEntity.ok(reserva);
+    private String capitalizarPrimeraLetra(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return texto;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
 }

@@ -1,6 +1,8 @@
 package com.eduard.registro.turismo.app.service;
 
+import com.eduard.registro.turismo.app.dto.ImagenDTO;
 import com.eduard.registro.turismo.app.dto.SitioTuristicoDTO;
+import com.eduard.registro.turismo.app.dto.SitioTuristicoDetalleDTO;
 import com.eduard.registro.turismo.app.dto.UbicacionSitioDTO;
 import com.eduard.registro.turismo.app.model.ImagenSitio;
 import com.eduard.registro.turismo.app.model.SitioTuristicos;
@@ -43,8 +45,12 @@ public class SitioTuristicoService {
         return repository.findAll();
     }
     
-    public SitioTuristicos obtenerPorCodigoUnico(String codigoUnico) {
-        return repository.findByCodigoUnico(codigoUnico);
+    public SitioTuristicoDetalleDTO obtenerPorCodigoUnico(String codigoUnico) {
+        SitioTuristicos sitio = repository.findByCodigoUnico(codigoUnico);
+        if (sitio == null) {
+            return null;
+        }
+        return convertirADetalleDTO(sitio);
     }
     
     @Transactional
@@ -56,15 +62,59 @@ public class SitioTuristicoService {
     }
 
     public List<UbicacionSitioDTO> obtenerUbicaciones() {
-    List<SitioTuristicos> sitios = repository.findAll();
-    return sitios.stream()
-            .map(sitio -> {
-                UbicacionSitioDTO dto = new UbicacionSitioDTO();
-                dto.setNombre(sitio.getNombre());
-                dto.setLatitud(sitio.getUbicacionGeografica().getLatitud());
-                dto.setLongitud(sitio.getUbicacionGeografica().getLongitud());
-                return dto;
-            })
-            .collect(Collectors.toList());
-}
+        List<SitioTuristicos> sitios = repository.findAll();
+        return sitios.stream()
+                .map(sitio -> {
+                    UbicacionSitioDTO dto = new UbicacionSitioDTO();
+                    dto.setId(sitio.getId());
+                    dto.setNombre(sitio.getNombre());
+                    dto.setLatitud(sitio.getUbicacionGeografica().getLatitud());
+                    dto.setLongitud(sitio.getUbicacionGeografica().getLongitud());
+                    dto.setCodigoUnico(sitio.getCodigoUnico());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public SitioTuristicos obtenerSitioPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sitio turístico no encontrado"));
+    }
+    
+    private SitioTuristicoDetalleDTO convertirADetalleDTO(SitioTuristicos sitio) {
+        SitioTuristicoDetalleDTO dto = new SitioTuristicoDetalleDTO();
+        dto.setId(sitio.getId());
+        dto.setNombre(sitio.getNombre());
+        dto.setTipoLugar(sitio.getTipoLugar());
+        dto.setDireccion(sitio.getUbicacionGeografica().getDireccion());
+        dto.setHorarioAtencion(sitio.getHorarioAtencion());
+        dto.setCostoEntrada(sitio.getCostoEntrada());
+        dto.setHistoriaResumida(sitio.getHistoriaResumida());
+        dto.setEventosHistoricos(sitio.getEventosHistoricos());
+        dto.setPersonajesAsociados(sitio.getPersonajesAsociados());
+        dto.setAudioguias(sitio.getAudioguias());
+        dto.setServiciosDisponibles(sitio.getServiciosDisponibles());
+        dto.setActividadesRecomendadas(sitio.getActividadesRecomendadas());
+        dto.setNivelAccesibilidad(sitio.getNivelAccesibilidad());
+        dto.setReglasLugar(sitio.getReglasLugar());
+        dto.setEnlaceReserva(sitio.getEnlaceReserva());
+        dto.setCodigoUnico(sitio.getCodigoUnico());
+        dto.setLatitud(sitio.getUbicacionGeografica().getLatitud());
+        dto.setLongitud(sitio.getUbicacionGeografica().getLongitud());
+        
+        // Convertir imágenes a DTO
+        if (sitio.getImagenes() != null) {
+            List<ImagenDTO> imagenesDTO = sitio.getImagenes().stream()
+                    .map(imagen -> {
+                        ImagenDTO imagenDTO = new ImagenDTO();
+                        imagenDTO.setId(imagen.getId());
+                        imagenDTO.setUrl(imagen.getUrl());
+                        return imagenDTO;
+                    })
+                    .collect(Collectors.toList());
+            dto.setImagenes(imagenesDTO);
+        }
+        
+        return dto;
+    }
 }

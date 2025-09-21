@@ -1,151 +1,166 @@
 package com.eduard.registro.turismo.app.service;
 
-import com.eduard.registro.turismo.app.dto.LugarReservaDTO;
-import com.eduard.registro.turismo.app.dto.ReservaDTO;
-import com.eduard.registro.turismo.app.dto.ReservaRequest;
-import com.eduard.registro.turismo.app.model.LugarReserva;
-import com.eduard.registro.turismo.app.model.Reserva;
-import com.eduard.registro.turismo.app.model.TerminalBus;
-import com.eduard.registro.turismo.app.model.User;
-import com.eduard.registro.turismo.app.repository.LugarReservaRepository;
-import com.eduard.registro.turismo.app.repository.ReservaRepository;
-import com.eduard.registro.turismo.app.repository.TerminalBusRepository;
-import com.eduard.registro.turismo.app.repository.UserRepository;
-import com.eduard.registro.turismo.app.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.eduard.registro.turismo.app.dto.ReservaDTO;
+import com.eduard.registro.turismo.app.model.Reserva;
+import com.eduard.registro.turismo.app.model.SitioTuristicos;
+import com.eduard.registro.turismo.app.model.User;
+import com.eduard.registro.turismo.app.repository.ReservaRepository;
+import com.eduard.registro.turismo.app.repository.SitioTuristicoRepository;
+import com.eduard.registro.turismo.app.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ReservaService {
-    
+
     @Autowired
     private ReservaRepository reservaRepository;
     
     @Autowired
-    private LugarReservaRepository lugarReservaRepository;
+    private SitioTuristicoRepository sitioTuristicoRepository;
     
     @Autowired
-    private TerminalBusRepository terminalBusRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
+    private UserRepository usuarioRepository;
     
     @Autowired
     private EmailService emailService;
-    
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    
+
     @Transactional
-    public ReservaDTO crearReserva(String token, ReservaRequest reservaRequest) {
-        // 1. Verificar el token y extraer el username
-        String username = jwtTokenUtil.extractUsername(token);
+    public Reserva crearReserva(ReservaDTO reservaDTO) {
+        // Generar código único
+        String codigoUnico = generarCodigoUnico();
         
-        // 2. Obtener el usuario desde la base de datos
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
-        // 3. Obtener el email del usuario
-        String userEmail = user.getEmail();
-        
-        // 4. Obtener terminal
-        TerminalBus terminal = terminalBusRepository.findById(reservaRequest.getTerminalId())
-                .orElseThrow(() -> new RuntimeException("Terminal no encontrada"));
-        
-        // 5. Obtener lugar
-        LugarReserva lugar = lugarReservaRepository.findById(reservaRequest.getLugarId())
-                .orElseThrow(() -> new RuntimeException("Lugar no encontrado"));
-        
-        // 6. Verificar si el lugar está disponible
-        if (!lugar.isDisponible()) {
-            throw new RuntimeException("El lugar no está disponible");
+        // Buscar el sitio turístico
+        Optional<SitioTuristicos> sitioOpt = sitioTuristicoRepository.findById(reservaDTO.getSitioTuristicoId());
+        if (!sitioOpt.isPresent()) {
+            throw new RuntimeException("Sitio turístico no encontrado");
         }
         
-        // 7. Crear reserva
+        // Validar que el usuario existe
+        Optional<User> usuarioOpt = usuarioRepository.findByUsername(reservaDTO.getNombreUsuario());
+        if (!usuarioOpt.isPresent()) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        
+        // Validar que el email coincide con el del usuario
+        User usuario = usuarioOpt.get();
+        if (!usuario.getEmail().equalsIgnoreCase(reservaDTO.getEmailUsuario())) {
+            throw new RuntimeException("El email no coincide con el del usuario");
+        }
+        
+        // Crear reserva
         Reserva reserva = new Reserva();
-        reserva.setUser(user);
-        reserva.setTerminal(terminal);
-        reserva.setLugarReservado(lugar.getNombre());
+        reserva.setCodigoUnico(codigoUnico);
+        reserva.setSitioTuristicos(sitioOpt.get());
+        reserva.setNombreUsuario(reservaDTO.getNombreUsuario());
+        reserva.setEmailUsuario(reservaDTO.getEmailUsuario());
         reserva.setFechaReserva(LocalDateTime.now());
-        reserva.setConfirmada(true);
         
-        // 8. Actualizar disponibilidad del lugar
-        lugar.setDisponible(false);
-        lugarReservaRepository.save(lugar);
-        
-        // 9. Guardar reserva
+        // Guardar reserva primero
         reserva = reservaRepository.save(reserva);
         
-        // 10. Enviar correo al email del usuario desde la base de datos
-        try {
-            emailService.enviarCorreoReserva(userEmail, reserva.getCodigoUnico(), terminal.getNombre());
-            System.out.println("Correo enviado exitosamente a: " + userEmail);
-        } catch (Exception e) {
-            // Manejar error de correo pero continuar con la reserva
-            System.err.println("Error al enviar correo: " + e.getMessage());
-            // Aquí podrías implementar un sistema de reintentos o logging
+        // Enviar correo de forma asíncrona para no bloquear la respuesta
+        enviarCorreoAsincrono(reserva);
+        
+        return reserva;
+    }
+
+    @Async
+    public CompletableFuture<Void> enviarCorreoAsincrono(Reserva reserva) {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                emailService.enviarCorreoReserva(reserva);
+                System.out.println("Correo de reserva enviado exitosamente");
+            } catch (Exception e) {
+                System.err.println("Error al enviar correo de reserva: " + e.getMessage());
+                // No lanzamos la excepción para no afectar la respuesta al cliente
+            }
+        });
+    }
+
+    public boolean validarReserva(String codigoUnico) {
+        Optional<Reserva> reservaOpt = reservaRepository.findByCodigoUnico(codigoUnico);
+        if (!reservaOpt.isPresent()) {
+            return false;
         }
         
-        // 11. Convertir a DTO
-        ReservaDTO dto = new ReservaDTO();
-        dto.setId(reserva.getId());
-        dto.setCodigoUnico(reserva.getCodigoUnico());
-        dto.setTerminalId(terminal.getId());
-        dto.setTerminalNombre(terminal.getNombre());
-        dto.setUserId(user.getId());
-        dto.setUserName(user.getUsername());
-        dto.setLugarReservado(reserva.getLugarReservado());
-        dto.setFechaReserva(reserva.getFechaReserva().toString());
-        dto.setConfirmada(reserva.isConfirmada());
+        Reserva reserva = reservaOpt.get();
+        if (reserva.isValidada()) {
+            return false;
+        }
         
-        return dto;
+        reserva.setValidada(true);
+        reservaRepository.save(reserva);
+        
+        // Enviar correo de validación de forma asíncrona
+        enviarCorreoValidacionAsincrono(reserva);
+        
+        return true;
     }
-    
-    public List<LugarReservaDTO> obtenerLugaresPorTerminal(Long terminalId) {
-        List<LugarReserva> lugares = lugarReservaRepository.findByTerminalId(terminalId);
-        return lugares.stream()
-                .map(this::convertirALugarReservaDTO)
-                .collect(Collectors.toList());
+
+    @Async
+    public CompletableFuture<Void> enviarCorreoValidacionAsincrono(Reserva reserva) {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                emailService.enviarCorreoValidacion(reserva);
+                System.out.println("Correo de validación enviado exitosamente");
+            } catch (Exception e) {
+                System.err.println("Error al enviar correo de validación: " + e.getMessage());
+                // No lanzamos la excepción para no afectar la respuesta al cliente
+            }
+        });
     }
-    
-    public List<ReservaDTO> obtenerReservasPorUsuario(Long userId) {
-        List<Reserva> reservas = reservaRepository.findByUserId(userId);
-        return reservas.stream()
-                .map(this::convertirAReservaDTO)
-                .collect(Collectors.toList());
+
+    public Optional<Reserva> findByCodigoUnico(String codigoUnico) {
+        return reservaRepository.findByCodigoUnico(codigoUnico);
     }
-    
-    public ReservaDTO obtenerReservaPorCodigo(String codigoUnico) {
-        Reserva reserva = reservaRepository.findByCodigoUnico(codigoUnico)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
-        return convertirAReservaDTO(reserva);
+
+    private String generarCodigoUnico() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 8; i++) {
+            sb.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
-    
-    private LugarReservaDTO convertirALugarReservaDTO(LugarReserva lugar) {
-        LugarReservaDTO dto = new LugarReservaDTO();
-        dto.setId(lugar.getId());
-        dto.setNombre(lugar.getNombre());
-        dto.setDisponible(lugar.isDisponible());
-        dto.setTerminalId(lugar.getTerminal().getId());
-        return dto;
+
+    // Método programado que se ejecuta cada minuto para eliminar reservas expiradas
+    // @Scheduled(fixedRate = 60000) // 60 segundos = 1 minuto
+    @Transactional
+    public void eliminarReservasExpiradas() {
+        LocalDateTime ahora = LocalDateTime.now();
+        List<Reserva> reservasParaEliminar = reservaRepository.findReservasParaEliminar(ahora);
+        
+        if (!reservasParaEliminar.isEmpty()) {
+            System.out.println("Eliminando " + reservasParaEliminar.size() + " reservas expiradas...");
+            reservaRepository.deleteAll(reservasParaEliminar);
+            
+            // Opcional: Enviar notificación de eliminación
+            reservasParaEliminar.forEach(reserva -> {
+                enviarCorreoEliminacionAsincrono(reserva);
+            });
+        }
     }
-    
-    private ReservaDTO convertirAReservaDTO(Reserva reserva) {
-        ReservaDTO dto = new ReservaDTO();
-        dto.setId(reserva.getId());
-        dto.setCodigoUnico(reserva.getCodigoUnico());
-        dto.setTerminalId(reserva.getTerminal().getId());
-        dto.setTerminalNombre(reserva.getTerminal().getNombre());
-        dto.setUserId(reserva.getUser().getId());
-        dto.setUserName(reserva.getUser().getUsername());
-        dto.setLugarReservado(reserva.getLugarReservado());
-        dto.setFechaReserva(reserva.getFechaReserva().toString());
-        dto.setConfirmada(reserva.isConfirmada());
-        return dto;
+
+    @Async
+    public CompletableFuture<Void> enviarCorreoEliminacionAsincrono(Reserva reserva) {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                emailService.enviarCorreoEliminacion(reserva);
+                System.out.println("Correo de eliminación enviado exitosamente");
+            } catch (Exception e) {
+                System.err.println("Error al enviar correo de eliminación: " + e.getMessage());
+                // No lanzamos la excepción para no afectar la respuesta al cliente
+            }
+        });
     }
 }

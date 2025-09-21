@@ -30,4 +30,5 @@ public class SitioTuristicoDTO {
     public void setImagenes(List<ImagenSitio> imagenes) {
         this.imagenes = imagenes;
     }
+
 }

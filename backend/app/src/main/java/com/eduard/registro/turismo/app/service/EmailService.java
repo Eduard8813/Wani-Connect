@@ -1,64 +1,177 @@
 package com.eduard.registro.turismo.app.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import com.eduard.registro.turismo.app.model.Reserva;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 
 @Service
 public class EmailService {
-    
+
     @Autowired
     private JavaMailSender mailSender;
     
-    public void enviarCorreoReserva(String to, String codigoReserva, String destino) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Confirmación de Reserva - Sistema de Terminales");
+    @Autowired
+    private QRCodeService qrCodeService;
+
+    public void enviarCorreoReserva(Reserva reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Confirmación de Reserva");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva ha sido creada con éxito.\n" +
+                            "Código de reserva: " + reserva.getCodigoUnico() + "\n\n" +
+                            "Por favor, guarda este código para validar tu reserva en el sitio turístico.");
+            
+            // Enviar el correo con un timeout más largo
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de reserva: " + e.getMessage());
+            throw new RuntimeException("No se pudo enviar el correo de confirmación", e);
+        }
+    }
+
+    public void enviarCorreoValidacion(Reserva reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Reserva Validada");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva con código " + reserva.getCodigoUnico() + " ha sido validada.\n\n" +
+                            "Gracias por visitarnos.");
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de validación: " + e.getMessage());
+            throw new RuntimeException("No se pudo enviar el correo de validación", e);
+        }
+    }
+
+    public void enviarCorreoEliminacion(Reserva reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Reserva Eliminada del Sistema");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva con código " + reserva.getCodigoUnico() + " ha sido eliminada de nuestro sistema después de ser validada.\n\n" +
+                            "Gracias por tu visita.");
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de eliminación: " + e.getMessage());
+            throw new RuntimeException("No se pudo enviar el correo de eliminación", e);
+        }
+    }
+
+    public void enviarCorreoReservaBus(com.eduard.registro.turismo.app.model.ReservaBus reserva) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            
+            helper.setTo(reserva.getEmailUsuario());
+            helper.setSubject("Confirmación de Reserva de Bus");
+            helper.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                          "Tu reserva de bus ha sido creada con éxito.\n" +
+                          "Código de reserva: " + reserva.getCodigoUnico() + "\n" +
+                          "Lugar número: " + reserva.getNumeroLugar() + "\n\n" +
+                          "Presenta el código QR adjunto para validar tu reserva.");
+            
+            // Generar y adjuntar QR
+            byte[] qrCode = qrCodeService.generateQRCode(reserva.getCodigoUnico());
+            helper.addAttachment("reserva-qr.png", new ByteArrayDataSource(qrCode, "image/png"));
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de reserva de bus: " + e.getMessage());
+        }
+    }
+
+    public void enviarCorreoValidacionBus(com.eduard.registro.turismo.app.model.ReservaBus reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Reserva de Bus Validada");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva de bus con código " + reserva.getCodigoUnico() + " ha sido validada.\n" +
+                            "Lugar número: " + reserva.getNumeroLugar() + "\n\n" +
+                            "Gracias por usar nuestro servicio.");
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de validación de bus: " + e.getMessage());
+        }
+    }
+
+    public void enviarCorreoEliminacionBus(com.eduard.registro.turismo.app.model.ReservaBus reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Reserva de Bus Eliminada");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva de bus con código " + reserva.getCodigoUnico() + " ha sido eliminada del sistema.\n" +
+                            "El lugar " + reserva.getNumeroLugar() + " estará disponible en 5 minutos.\n\n" +
+                            "Gracias por tu visita.");
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de eliminación de bus: " + e.getMessage());
+        }
+    }
+    
+    public void enviarCorreoLiberacionBus(com.eduard.registro.turismo.app.model.ReservaBus reserva) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(reserva.getEmailUsuario());
+            message.setSubject("Reserva de Bus Liberada Automáticamente");
+            message.setText("Hola " + reserva.getNombreUsuario() + ",\n\n" +
+                            "Tu reserva de bus con código " + reserva.getCodigoUnico() + " ha sido liberada automáticamente después de 24 horas.\n" +
+                            "El lugar " + reserva.getNumeroLugar() + " ya está disponible para otros usuarios.\n\n" +
+                            "Gracias por usar nuestro servicio.");
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de liberación de bus: " + e.getMessage());
+        }
+    }
+    
+    public void enviarCorreoReservaBusMultiple(java.util.List<com.eduard.registro.turismo.app.model.ReservaBus> reservas) {
+        if (reservas == null || reservas.isEmpty()) return;
         
-        String contenido = buildEmailContent(codigoReserva, destino);
-        message.setText(contenido);
-        
-        mailSender.send(message);
-    }
-    
-    private String buildEmailContent(String codigoReserva, String destino) {
-        return "Estimado/a usuario/a,\n\n" +
-               "Su reserva ha sido confirmada exitosamente.\n\n" +
-               "DETALLES DE LA RESERVA:\n" +
-               "--------------------------------\n" +
-               "Código de reserva: " + codigoReserva + "\n" +
-               "Terminal: " + destino + "\n" +
-               "Fecha: " + java.time.LocalDate.now() + "\n\n" +
-               "INSTRUCCIONES:\n" +
-               "--------------------------------\n" +
-               "1. Presente este código de reserva al llegar a la terminal\n" +
-               "2. Muestre este correo en su dispositivo móvil o impreso\n" +
-               "3. Diríjase al mostrador de atención al cliente\n\n" +
-               "IMPORTANTE:\n" +
-               "--------------------------------\n" +
-               "- Este código es válido solo para la fecha de reserva\n" +
-               "- Llegue con al menos 30 minutos de anticipación\n" +
-               "- Mantenga este correo como comprobante de su reserva\n\n" +
-               "Gracias por confiar en nuestro servicio.\n\n" +
-               "Atentamente,\n" +
-               "El equipo de Terminales de Buses\n\n" +
-               "--------------------------------\n" +
-               "Este es un correo automático, por favor no responda.";
-    }
-    
-    public void enviarCorreoContacto(String to, String asunto, String mensaje) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(asunto);
-        message.setText(mensaje);
-        mailSender.send(message);
-    }
-    
-    public void enviarCorreoNotificacion(String to, String asunto, String mensaje) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(asunto);
-        message.setText(mensaje);
-        mailSender.send(message);
+        try {
+            com.eduard.registro.turismo.app.model.ReservaBus primeraReserva = reservas.get(0);
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            
+            helper.setTo(primeraReserva.getEmailUsuario());
+            helper.setSubject("Confirmación de Reserva de Bus - Múltiples Lugares");
+            
+            StringBuilder lugares = new StringBuilder();
+            for (com.eduard.registro.turismo.app.model.ReservaBus reserva : reservas) {
+                lugares.append("Lugar ").append(reserva.getNumeroLugar())
+                       .append(": ").append(reserva.getCodigoUnico()).append("\n");
+            }
+            
+            helper.setText("Hola " + primeraReserva.getNombreUsuario() + ",\n\n" +
+                          "Tus reservas de bus han sido creadas con éxito.\n\n" +
+                          "Detalles de las reservas:\n" + lugares.toString() + "\n" +
+                          "Presenta los códigos QR adjuntos para validar tus reservas.");
+            
+            // Generar y adjuntar QR para cada reserva
+            for (int i = 0; i < reservas.size(); i++) {
+                com.eduard.registro.turismo.app.model.ReservaBus reserva = reservas.get(i);
+                byte[] qrCode = qrCodeService.generateQRCode(reserva.getCodigoUnico());
+                helper.addAttachment("reserva-lugar-" + reserva.getNumeroLugar() + "-qr.png", 
+                                   new ByteArrayDataSource(qrCode, "image/png"));
+            }
+            
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de reservas múltiples: " + e.getMessage());
+        }
     }
 }

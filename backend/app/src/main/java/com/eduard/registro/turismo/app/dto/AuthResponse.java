@@ -13,7 +13,7 @@ public class AuthResponse {
     // Token JWT generado tras la autenticación
     private String token;
 
-    // Tipo de autenticación, por defecto "Bearer"
+    // Tipo de autenticación, por defecto "Bearer" 
     private String type = "Bearer";
 
     /**

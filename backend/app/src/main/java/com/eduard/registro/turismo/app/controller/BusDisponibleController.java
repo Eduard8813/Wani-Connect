@@ -153,7 +153,7 @@ public class BusDisponibleController {
             BusDisponible updatedBus = busDisponibleService.updateLugaresDisponibles(id, lugaresReservados);
             return new ResponseEntity<>(updatedBus, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);    
         }
     }
 }
