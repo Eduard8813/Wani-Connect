@@ -121,7 +121,7 @@ public class ReservaBusService {
         
         LocalDateTime fechaReserva = LocalDateTime.now();
         
-        // Calcular expiración basada en la hora de salida del bus
+        // Las reservas no validadas expiran en la hora de salida del bus
         LocalDateTime fechaExpiracion;
         LocalDateTime horaSalidaHoy = LocalDateTime.of(fechaReserva.toLocalDate(), bus.getHoraSalida());
         
@@ -217,7 +217,10 @@ public class ReservaBusService {
         }
         
         ReservaBus primeraReserva = reservas.get(0);
-        if (primeraReserva.isValidada() || primeraReserva.getFechaExpiracion().isBefore(LocalDateTime.now())) {
+        LocalDateTime ahora = LocalDateTime.now();
+        
+        // Solo se puede validar si no está validada y no ha expirado
+        if (primeraReserva.isValidada() || primeraReserva.getFechaExpiracion().isBefore(ahora)) {
             return false;
         }
         
@@ -269,17 +272,46 @@ public class ReservaBusService {
     @Transactional
     public void limpiarReservasExpiradas() {
         LocalDateTime ahora = LocalDateTime.now();
-        List<ReservaBus> reservasExpiradas = reservaBusRepository.findReservasExpiradas(ahora);
         
+        // Limpiar reservas no validadas expiradas
+        List<ReservaBus> reservasExpiradas = reservaBusRepository.findReservasExpiradas(ahora);
         for (ReservaBus reserva : reservasExpiradas) {
-            // Liberar el lugar en el bus
             BusDisponible bus = reserva.getBus();
             bus.setLugaresDisponibles(bus.getLugaresDisponibles() + 1);
             busDisponibleRepository.save(bus);
         }
-        
-        // Eliminar reservas expiradas
         reservaBusRepository.deleteAll(reservasExpiradas);
+        
+        // Limpiar reservas validadas que han cumplido 24 horas
+        List<ReservaBus> reservasValidadasExpiradas = reservaBusRepository.findReservasValidadasExpiradas(ahora);
+        for (ReservaBus reserva : reservasValidadasExpiradas) {
+            BusDisponible bus = reserva.getBus();
+            bus.setLugaresDisponibles(bus.getLugaresDisponibles() + 1);
+            busDisponibleRepository.save(bus);
+        }
+        reservaBusRepository.deleteAll(reservasValidadasExpiradas);
+    }
+    
+    @Transactional
+    public boolean liberarBusPorConductor(Long busId) {
+        BusDisponible bus = busDisponibleRepository.findById(busId)
+            .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
+        
+        // Obtener todas las reservas del bus
+        List<ReservaBus> todasReservas = reservaBusRepository.findAllByBusId(busId);
+        
+        if (!todasReservas.isEmpty()) {
+            // Eliminar todas las reservas
+            reservaBusRepository.deleteAll(todasReservas);
+            
+            // Restaurar todos los lugares disponibles
+            bus.setLugaresDisponibles(bus.getTotalLugares());
+            busDisponibleRepository.save(bus);
+            
+            return true;
+        }
+        
+        return false;
     }
     
     public Optional<ReservaBus> findByCodigoUnico(String codigoUnico) {

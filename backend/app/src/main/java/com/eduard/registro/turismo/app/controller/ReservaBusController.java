@@ -13,6 +13,7 @@ import com.eduard.registro.turismo.app.model.BusDisponible;
 import com.eduard.registro.turismo.app.service.ReservaBusService;
 import com.eduard.registro.turismo.app.service.UserService;
 import com.eduard.registro.turismo.app.service.EmailService;
+import com.eduard.registro.turismo.app.security.JwtTokenUtil;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,6 +30,9 @@ public class ReservaBusController {
     
     @Autowired
     private EmailService emailService;
+    
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping
     // cSpell:ignore crear Reserva reserva inválido expirado usuario Usuario encontrado
@@ -141,6 +145,42 @@ public class ReservaBusController {
             return ResponseEntity.ok("Reserva validada correctamente. Confirmación enviada por correo.");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al validar la reserva: " + e.getMessage());
+        }
+    }
+    
+    @PostMapping("/conductor/liberar-bus/{busId}")
+    public ResponseEntity<?> liberarBusPorConductor(@PathVariable Long busId,
+                                                   @RequestHeader("Authorization") String token) {
+        try {
+            // Verificar que el usuario tenga rol de empresa
+            if (!esUsuarioEmpresa(token)) {
+                return ResponseEntity.status(403).body("Acceso denegado. Solo las cuentas de empresa pueden liberar buses.");
+            }
+            
+            boolean liberado = reservaBusService.liberarBusPorConductor(busId);
+            
+            if (liberado) {
+                return ResponseEntity.ok("Bus liberado correctamente. Todas las reservas han sido eliminadas.");
+            } else {
+                return ResponseEntity.ok("No había reservas para liberar en este bus.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al liberar el bus: " + e.getMessage());
+        }
+    }
+    
+    private boolean esUsuarioEmpresa(String authHeader) {
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return false;
+            }
+            
+            String token = authHeader.substring(7);
+            String roleFromToken = jwtTokenUtil.extractRole(token);
+            
+            return "COMPANY".equals(roleFromToken);
+        } catch (Exception e) {
+            return false;
         }
     }
 }

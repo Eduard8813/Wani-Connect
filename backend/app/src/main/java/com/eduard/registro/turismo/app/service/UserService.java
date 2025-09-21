@@ -68,4 +68,14 @@ public class UserService {
     public java.util.Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    
+    /**
+     * Guarda un usuario existente.
+     *
+     * @param user usuario a guardar
+     * @return usuario guardado
+     */
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }

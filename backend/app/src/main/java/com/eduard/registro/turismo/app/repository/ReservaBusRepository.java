@@ -25,6 +25,9 @@ public interface ReservaBusRepository extends JpaRepository<ReservaBus, Long> {
     @Query("SELECT r FROM ReservaBus r WHERE r.fechaExpiracion <= :ahora AND r.validada = false")
     List<ReservaBus> findReservasExpiradas(@Param("ahora") LocalDateTime ahora);
     
+    @Query("SELECT r FROM ReservaBus r WHERE r.validada = true AND r.fechaLiberacion <= :ahora")
+    List<ReservaBus> findReservasValidadasExpiradas(@Param("ahora") LocalDateTime ahora);
+    
     List<ReservaBus> findByNombreUsuario(String nombreUsuario);
     
     @Query("SELECT r FROM ReservaBus r WHERE r.bus.id = :busId")
