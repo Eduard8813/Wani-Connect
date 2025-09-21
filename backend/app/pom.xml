@@ -161,7 +161,7 @@
 
     <!-- Configuración de construcción del proyecto -->
     <build>
-        <plugins>
+        <plugins> 
             <!-- Plugin para empaquetar y ejecutar la app Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
