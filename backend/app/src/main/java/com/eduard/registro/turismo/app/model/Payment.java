@@ -16,14 +16,14 @@ public class Payment {
     private String userEmail;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
     
     private String status; // CREATED, COMPLETED, FAILED, CANCELLED
     private String paypalPaymentId;
     private LocalDateTime createdAt;
     private LocalDateTime completedAt;
-    
+     
     // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -41,7 +41,13 @@ public class Payment {
     public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
     
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public void setUser(User user) { 
+        this.user = user; 
+        // Asegurar la bidireccionalidad
+        if (!user.getPayments().contains(this)) {
+            user.getPayments().add(this);
+        }
+    }
     
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
