@@ -1,7 +1,15 @@
-// src/components/Dashboard.js
-import React from 'react';
+// src/components/Dashboard.js (actualizado)
+import React, { useState } from 'react';
+import ValidarCodigoModal from './ValidarCodigoModal';
 
-const Dashboard = ({ userInfo, userRole, onLogout }) => {
+const Dashboard = ({ userInfo, userRole, onLogout, onValidationSuccess }) => {
+  const [showValidationModal, setShowValidationModal] = useState(false);
+
+  const handleValidationSuccess = (details) => {
+    setShowValidationModal(false);
+    onValidationSuccess(details);
+  };
+
   return (
     <div className="dashboard-container">
       <div className="user-info">
@@ -38,6 +46,18 @@ const Dashboard = ({ userInfo, userRole, onLogout }) => {
               <button className="btn btn-primary">Reservar</button>
             </div>
             
+            <div className="feature-card">
+              <i className="fas fa-check-circle"></i>
+              <h3>Validar Reserva</h3>
+              <p>Valida códigos de reserva para confirmar pasajeros</p>
+              <button 
+                className="btn btn-info" 
+                onClick={() => setShowValidationModal(true)}
+              >
+                Validar Reserva
+              </button>
+            </div>
+            
             {userRole === 'COMPANY' && (
               <div className="feature-card">
                 <i className="fas fa-user-tie"></i>
@@ -49,6 +69,17 @@ const Dashboard = ({ userInfo, userRole, onLogout }) => {
           </div>
         </div>
       </div>
+      
+      {/* Modal de validación de código */}
+      {showValidationModal && (
+        <div className="modal" style={{ display: 'block' }}>
+          <ValidarCodigoModal 
+            onClose={() => setShowValidationModal(false)} 
+            authToken={localStorage.getItem('authToken')}
+            onValidationSuccess={handleValidationSuccess}
+          />
+        </div>
+      )}
     </div>
   );
 };

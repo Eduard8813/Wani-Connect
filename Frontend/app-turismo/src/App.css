@@ -478,3 +478,196 @@ h1 {
 .auth-switch i {
   margin-right: 5px;
 }
+/* Estilos para la vista de validación exitosa */
+.validation-success-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.validation-success-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.success-card {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #2ecc71;
+  margin-bottom: 20px;
+}
+
+.success-card h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.success-card p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.reservation-details-card {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.reservation-details-card h3 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.detail-section {
+  margin-bottom: 30px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h4 {
+  color: #3498db;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.status-active {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+/* Estilos para el modal de validación */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+.validation-method-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.method-btn {
+  padding: 10px 20px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+
+.method-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.method-btn:hover {
+  transform: translateY(-2px);
+}
+
+.validation-section {
+  margin-top: 20px;
+}
+
+.endpoint-status {
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.endpoint-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.endpoint-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+  }
+  
+  .validation-method-selector {
+    flex-direction: column;
+  }
+}

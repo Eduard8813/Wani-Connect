@@ -19,7 +19,7 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
+      const response = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
       // Obtener información del usuario
       let userInfo = { username, email: `${username}@example.com`, role };
       try {
-        const userResponse = await fetch('http://localhost:8080/api/user/me', {
+        const userResponse = await fetch('https://aplicacion-del-hackaton.onrender.com/api/user/me', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

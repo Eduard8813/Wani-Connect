@@ -59,7 +59,7 @@ const CompanyRegister = ({ onLogin, onToggleLogin, onSwitchToUser }) => {
         description: 'Cuenta empresarial'
       };
 
-      const response = await fetch('http://localhost:8080/api/auth/signup-company', {
+      const response = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signup-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ const CompanyRegister = ({ onLogin, onToggleLogin, onSwitchToUser }) => {
       }
 
       // Iniciar sesión automáticamente después del registro
-      const loginResponse = await fetch('http://localhost:8080/api/auth/signin-company', {
+      const loginResponse = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signin-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

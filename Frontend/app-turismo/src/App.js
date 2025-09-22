@@ -5,6 +5,7 @@ import Register from './components/Register';
 import CompanyLogin from './components/CompanyLogin';
 import CompanyRegister from './components/CompanyRegister';
 import Dashboard from './components/Dashboard';
+import ValidationSuccess from './components/ValidationSuccess';
 import './App.css';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
   const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo') || '{}'));
   const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'USER');
   const [authView, setAuthView] = useState('userLogin'); // 'userLogin', 'userRegister', 'companyLogin', 'companyRegister'
+  const [showValidationSuccess, setShowValidationSuccess] = useState(false);
+  const [reservationDetails, setReservationDetails] = useState(null);
 
   useEffect(() => {
     if (authToken) {
@@ -38,20 +41,41 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userRole');
     setAuthView('userLogin');
+    setShowValidationSuccess(false);
+    setReservationDetails(null);
   };
 
   const navigateTo = (view) => {
     setAuthView(view);
   };
 
+  const handleValidationSuccess = (details) => {
+    setReservationDetails(details);
+    setShowValidationSuccess(true);
+  };
+
+  const handleBackFromValidation = () => {
+    setShowValidationSuccess(false);
+    setReservationDetails(null);
+  };
+
   return (
     <div className="app-container">
       {authToken ? (
-        <Dashboard 
-          userInfo={userInfo} 
-          userRole={userRole} 
-          onLogout={handleLogout} 
-        />
+        showValidationSuccess && reservationDetails ? (
+          <ValidationSuccess 
+            reservationDetails={reservationDetails} 
+            onBack={handleBackFromValidation}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <Dashboard 
+            userInfo={userInfo} 
+            userRole={userRole} 
+            onLogout={handleLogout}
+            onValidationSuccess={handleValidationSuccess}
+          />
+        )
       ) : (
         <div className="auth-container">
           {authView === 'userLogin' && (
