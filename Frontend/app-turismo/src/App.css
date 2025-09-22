@@ -327,3 +327,154 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+
+/* Estilos para componentes de empresa */
+.company-login .login-logo,
+.company-register .login-logo {
+  background: linear-gradient(135deg, #f39c12, #d68910);
+}
+
+.company-logo i {
+  font-size: 2.2rem;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.info-box {
+  background: #f8f9fa;
+  border-left: 4px solid #f39c12;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.info-box p {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.info-box ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.info-box li {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* Estilos para botones de cambio de tipo de cuenta */
+.btn-outline-warning {
+  background-color: transparent;
+  color: #f39c12;
+  border: 1px solid #f39c12;
+}
+
+.btn-outline-warning:hover {
+  background-color: #f39c12;
+  color: white;
+}
+
+/* Estilos específicos para login y registro de empresa */
+.company-login h2,
+.company-register h2 {
+  color: #d68910;
+}
+
+.company-login .btn-warning,
+.company-register .btn-warning {
+  background-color: #f39c12;
+  border-color: #f39c12;
+}
+
+.company-login .btn-warning:hover,
+.company-register .btn-warning:hover {
+  background-color: #d68910;
+  border-color: #d68910;
+}
+
+.company-login a,
+.company-register a {
+  color: #f39c12;
+}
+
+/* Estilos para los botones de cambio de tipo de cuenta */
+.auth-switch {
+  margin-top: 20px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* Estilos para botones de cambio */
+.btn-outline-primary {
+  background-color: transparent;
+  color: #3498db;
+  border: 1px solid #3498db;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-outline-warning {
+  background-color: transparent;
+  color: #f39c12;
+  border: 1px solid #f39c12;
+}
+
+.btn-outline-warning:hover {
+  background-color: #f39c12;
+  color: white;
+}
+
+/* Estilos específicos para los botones de cambio */
+.auth-switch .btn {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.auth-switch i {
+  margin-right: 5px;
+}

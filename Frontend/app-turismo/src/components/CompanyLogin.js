@@ -1,7 +1,7 @@
-// src/components/Login.js
+// src/components/CompanyLogin.js
 import React, { useState } from 'react';
 
-const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
+const CompanyLogin = ({ onLogin, onToggleRegister, onSwitchToUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +19,7 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
+      const response = await fetch('http://localhost:8080/api/auth/signin-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,17 +42,17 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
       const token = data.token;
       
       // Extraer rol del token JWT
-      let role = 'USER';
+      let role = 'COMPANY';
       try {
         const tokenParts = token.split('.');
         const payload = JSON.parse(atob(tokenParts[1]));
-        role = payload.role || 'USER';
+        role = payload.role || 'COMPANY';
       } catch (e) {
         console.error('Error al extraer rol del token:', e);
       }
 
       // Obtener información del usuario
-      let userInfo = { username, email: `${username}@example.com`, role };
+      let userInfo = { username, email: `${username}@empresa.com`, role };
       try {
         const userResponse = await fetch('http://localhost:8080/api/user/me', {
           headers: {
@@ -65,7 +65,7 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
           const userData = await userResponse.json();
           userInfo = {
             username: username,
-            email: userData.email || username + '@example.com',
+            email: userData.email || username + '@empresa.com',
             role: role
           };
         }
@@ -83,23 +83,23 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
   };
 
   return (
-    <div className="login-container user-login">
+    <div className="login-container company-login">
       <div className="login-header">
-        <div className="login-logo">
-          <i className="fas fa-user"></i>
+        <div className="login-logo company-logo">
+          <i className="fas fa-building"></i>
         </div>
-        <h2>Wanni Connect</h2>
-        <p>Inicia sesión como usuario para acceder al sistema</p>
+        <h2>Wanni Connect Empresas</h2>
+        <p>Inicia sesión como empresa para acceder al sistema</p>
       </div>
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Usuario:</label>
+          <label htmlFor="username">Usuario de Empresa:</label>
           <input
             type="text"
             id="username"
             className="form-control"
-            placeholder="Nombre de usuario"
+            placeholder="Nombre de usuario de empresa"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -120,11 +120,11 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
         <div className="action-buttons">
           <button 
             type="submit" 
-            className="btn btn-primary" 
+            className="btn btn-warning" 
             disabled={loading}
             style={{ width: '100%' }}
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión como Empresa'}
           </button>
         </div>
       </form>
@@ -132,8 +132,8 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
       <div className="auth-switch">
         <div className="text-center" style={{ marginTop: '15px' }}>
           <small>
-            <a href="#" onClick={onToggleRegister} style={{ color: '#3498db' }}>
-              ¿No tienes cuenta? Regístrate aquí
+            <a href="#" onClick={onToggleRegister} style={{ color: '#f39c12' }}>
+              ¿No tienes cuenta empresarial? Regístrate aquí
             </a>
           </small>
         </div>
@@ -144,10 +144,10 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
         
         <div className="text-center">
           <button 
-            className="btn btn-outline-warning"
-            onClick={onSwitchToCompany}
+            className="btn btn-outline-primary"
+            onClick={onSwitchToUser}
           >
-            <i className="fas fa-building"></i> Acceder como Empresa
+            <i className="fas fa-user"></i> Acceder como Usuario
           </button>
         </div>
       </div>
@@ -161,4 +161,4 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
   );
 };
 
-export default Login;
+export default CompanyLogin;

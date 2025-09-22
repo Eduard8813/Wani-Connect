@@ -1,13 +1,12 @@
-// src/components/Register.js
+// src/components/CompanyRegister.js
 import React, { useState } from 'react';
 
-const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
+const CompanyRegister = ({ onLogin, onToggleLogin, onSwitchToUser }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     email: '',
-    firstName: '',
-    lastName: ''
+    companyName: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +22,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
     const randomNum = Math.floor(Math.random() * 10000);
     setFormData({
       ...formData,
-      username: `usuario${randomNum}`
+      username: `empresa${randomNum}`
     });
   };
 
@@ -32,7 +31,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
     setError('');
     setLoading(true);
 
-    const requiredFields = ['username', 'password', 'email', 'firstName', 'lastName'];
+    const requiredFields = ['username', 'password', 'email', 'companyName'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
@@ -46,21 +45,21 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
         username: formData.username,
         password: formData.password,
         email: formData.email,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        firstName: formData.companyName,
+        lastName: 'Empresa',
         phone: '00000000',
-        address: 'Dirección de usuario',
-        birthDate: '1990-01-01',
+        address: 'Dirección empresarial',
+        birthDate: '2000-01-01',
         gender: 'M',
         location: 'Nicaragua',
         countryOfOrigin: 'Nicaragua',
         language: 'Español',
-        touristInterest: 'Turismo general',
-        social: 'Usuario',
-        description: 'Cuenta de usuario'
+        touristInterest: 'Turismo empresarial',
+        social: 'Empresa',
+        description: 'Cuenta empresarial'
       };
 
-      const response = await fetch('http://localhost:8080/api/auth/signup', {
+      const response = await fetch('http://localhost:8080/api/auth/signup-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +73,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
       }
 
       // Iniciar sesión automáticamente después del registro
-      const loginResponse = await fetch('http://localhost:8080/api/auth/signin', {
+      const loginResponse = await fetch('http://localhost:8080/api/auth/signin-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -93,11 +92,11 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
       const token = loginData.token;
       
       // Extraer rol del token JWT
-      let role = 'USER';
+      let role = 'COMPANY';
       try {
         const tokenParts = token.split('.');
         const payload = JSON.parse(atob(tokenParts[1]));
-        role = payload.role || 'USER';
+        role = payload.role || 'COMPANY';
       } catch (e) {
         console.error('Error al extraer rol del token:', e);
       }
@@ -110,7 +109,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
 
       onLogin(token, userInfo, role);
     } catch (error) {
-      console.error('Error al registrar:', error);
+      console.error('Error al registrar empresa:', error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -118,31 +117,31 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
   };
 
   return (
-    <div className="login-container user-register">
+    <div className="login-container company-register">
       <div className="login-header">
-        <div className="login-logo">
-          <i className="fas fa-user-plus"></i>
+        <div className="login-logo company-logo">
+          <i className="fas fa-building"></i>
         </div>
-        <h2>Registro de Usuario</h2>
-        <p>Crea tu cuenta de usuario para acceder al sistema</p>
+        <h2>Registro de Empresa</h2>
+        <p>Crea tu cuenta empresarial para acceder al sistema</p>
       </div>
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Usuario:</label>
+          <label htmlFor="username">Usuario de Empresa:</label>
           <div className="input-with-button">
             <input
               type="text"
               id="username"
               name="username"
               className="form-control"
-              placeholder="Nombre de usuario"
+              placeholder="Nombre de usuario de empresa"
               value={formData.username}
               onChange={handleChange}
             />
             <button 
               type="button" 
-              className="btn btn-sm btn-info"
+              className="btn btn-sm btn-warning"
               onClick={generateUsername}
             >
               Generar
@@ -164,52 +163,52 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
         </div>
         
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">Email Empresarial:</label>
           <input
             type="email"
             id="email"
             name="email"
             className="form-control"
-            placeholder="tu@email.com"
+            placeholder="email@empresa.com"
             value={formData.email}
             onChange={handleChange}
           />
         </div>
         
         <div className="form-group">
-          <label htmlFor="firstName">Nombre:</label>
+          <label htmlFor="companyName">Nombre de la Empresa:</label>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
+            id="companyName"
+            name="companyName"
             className="form-control"
-            placeholder="Tu nombre"
-            value={formData.firstName}
+            placeholder="Nombre de la empresa"
+            value={formData.companyName}
             onChange={handleChange}
           />
         </div>
         
         <div className="form-group">
-          <label htmlFor="lastName">Apellido:</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            className="form-control"
-            placeholder="Tu apellido"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
+          <label>Información Adicional:</label>
+          <div className="info-box">
+            <p>Al registrarte como empresa, obtendrás acceso a:</p>
+            <ul>
+              <li>Panel de conductor para gestionar buses</li>
+              <li>Liberación de asientos cuando el bus sale</li>
+              <li>Validación de códigos de reserva</li>
+              <li>Acceso a reportes y estadísticas</li>
+            </ul>
+          </div>
         </div>
         
         <div className="action-buttons">
           <button 
             type="submit" 
-            className="btn btn-primary" 
+            className="btn btn-warning" 
             disabled={loading}
             style={{ width: '100%' }}
           >
-            {loading ? 'Registrando...' : 'Registrar Usuario'}
+            {loading ? 'Registrando Empresa...' : 'Registrar Empresa'}
           </button>
         </div>
       </form>
@@ -217,8 +216,8 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
       <div className="auth-switch">
         <div className="text-center" style={{ marginTop: '15px' }}>
           <small>
-            <a href="#" onClick={onToggleLogin} style={{ color: '#3498db' }}>
-              ¿Ya tienes cuenta? Inicia sesión
+            <a href="#" onClick={onToggleLogin} style={{ color: '#f39c12' }}>
+              ¿Ya tienes cuenta empresarial? Inicia sesión
             </a>
           </small>
         </div>
@@ -229,10 +228,10 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
         
         <div className="text-center">
           <button 
-            className="btn btn-outline-warning"
-            onClick={onSwitchToCompany}
+            className="btn btn-outline-primary"
+            onClick={onSwitchToUser}
           >
-            <i className="fas fa-building"></i> Acceder como Empresa
+            <i className="fas fa-user"></i> Acceder como Usuario
           </button>
         </div>
       </div>
@@ -246,4 +245,4 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
   );
 };
 
-export default Register;
+export default CompanyRegister;
