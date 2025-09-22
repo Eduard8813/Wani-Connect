@@ -38,6 +38,9 @@ public class User {
     @JsonManagedReference("user-profile")
     private UserProfile profile;
     
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.List<Payment> payments = new java.util.ArrayList<>();
+    
     public enum UserRole {
         USER, COMPANY
     }
