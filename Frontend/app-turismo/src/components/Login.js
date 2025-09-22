@@ -1,0 +1,174 @@
+// src/components/Login.js
+import React, { useState } from 'react';
+
+const Login = ({ onLogin, onToggleRegister, loginType, onToggleLoginType }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    if (!username || !password) {
+      setError('Por favor, completa todos los campos');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Determinar endpoint según tipo de login
+      const endpoint = loginType === 'company' 
+        ? 'http://localhost:8080/api/auth/signin-company' 
+        : 'http://localhost:8080/api/auth/signin';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!response.ok) {
+        let errorMessage = `Error ${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // Si no se puede parsear como JSON, usar el mensaje por defecto
+        }
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      const token = data.token;
+      
+      // Extraer rol del token JWT
+      let role = 'USER';
+      try {
+        const tokenParts = token.split('.');
+        const payload = JSON.parse(atob(tokenParts[1]));
+        role = payload.role || 'USER';
+      } catch (e) {
+        console.error('Error al extraer rol del token:', e);
+      }
+
+      // Obtener información del usuario
+      let userInfo = { username, email: `${username}@example.com`, role };
+      try {
+        const userResponse = await fetch('http://localhost:8080/api/user/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          userInfo = {
+            username: username,
+            email: userData.email || username + '@example.com',
+            role: role
+          };
+        }
+      } catch (userError) {
+        console.error('Error al obtener información del usuario:', userError);
+      }
+
+      onLogin(token, userInfo, role);
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setError(`Error al iniciar sesión: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-header">
+        <div className="login-logo">
+          <i className="fas fa-bus"></i>
+        </div>
+        <h2>Wanni Connect</h2>
+        <p>Inicia sesión para acceder al sistema</p>
+      </div>
+      
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Tipo de cuenta:</label>
+          <div className="account-type-selector">
+            <button 
+              type="button" 
+              className={`btn ${loginType === 'user' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => onToggleLoginType('user')}
+            >
+              Usuario
+            </button>
+            <button 
+              type="button" 
+              className={`btn ${loginType === 'company' ? 'btn-warning' : 'btn-outline-warning'}`}
+              onClick={() => onToggleLoginType('company')}
+            >
+              Empresa
+            </button>
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="username">Usuario:</label>
+          <input
+            type="text"
+            id="username"
+            className="form-control"
+            placeholder="Nombre de usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            className="form-control"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        
+        <div className="action-buttons">
+          <button 
+            type="submit" 
+            className="btn btn-primary" 
+            disabled={loading}
+            style={{ width: '100%' }}
+          >
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+          </button>
+        </div>
+      </form>
+      
+      <div className="text-center" style={{ marginTop: '15px' }}>
+        <small>
+          <a href="#" onClick={onToggleRegister} style={{ color: '#3498db' }}>
+            ¿No tienes cuenta? Regístrate aquí
+          </a>
+        </small>
+      </div>
+      
+      {error && <div className="error">{error}</div>}
+      
+      <div className="login-footer">
+        <p>&copy; 2023 Wanni Connect. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
