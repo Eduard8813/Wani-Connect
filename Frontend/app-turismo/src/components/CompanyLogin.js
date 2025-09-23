@@ -19,7 +19,7 @@ const CompanyLogin = ({ onLogin, onToggleRegister, onSwitchToUser }) => {
     }
 
     try {
-      const response = await fetch('http://https://aplicacion-del-hackaton.onrender.com/api/auth/signin-company', {
+      const response = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signin-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
