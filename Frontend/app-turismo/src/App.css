@@ -678,3 +678,65 @@ h1 {
     flex-direction: column;
   }
 }
+/* Estilos para filas de formulario */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group.half-width {
+  flex: 1;
+}
+
+/* Estilos para textarea */
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Estilos para selects */
+select.form-control {
+  cursor: pointer;
+}
+
+/* Estilos para placeholders */
+.form-control::placeholder {
+  color: #999;
+  opacity: 0.7;
+}
+
+/* Estilos para campos requeridos */
+.form-group label::after {
+  content: " *";
+  color: #ee4777;
+  font-weight: bold;
+}
+
+/* Estilos para validación visual */
+.form-control:focus {
+  border-color: #97d2dc;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(151, 210, 220, 0.2);
+}
+
+/* Estilos responsivos para filas */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-row .form-group.half-width {
+    margin-bottom: 20px;
+  }
+}
+

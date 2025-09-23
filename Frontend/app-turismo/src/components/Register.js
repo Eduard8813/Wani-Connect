@@ -7,7 +7,17 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
     password: '',
     email: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    phone: '',
+    address: '',
+    birthDate: '',
+    gender: 'M',
+    location: '',
+    countryOfOrigin: '',
+    language: 'Español',
+    touristInterest: '',
+    social: '',
+    description: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,11 +42,11 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
     setError('');
     setLoading(true);
 
-    const requiredFields = ['username', 'password', 'email', 'firstName', 'lastName'];
+    const requiredFields = ['username', 'password', 'email', 'firstName', 'lastName', 'phone', 'address', 'birthDate', 'location', 'countryOfOrigin'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
-      setError('Todos los campos son obligatorios');
+      setError('Todos los campos obligatorios deben ser completados');
       setLoading(false);
       return;
     }
@@ -48,16 +58,16 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
         email: formData.email,
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phone: '00000000',
-        address: 'Dirección de usuario',
-        birthDate: '1990-01-01',
-        gender: 'M',
-        location: 'Nicaragua',
-        countryOfOrigin: 'Nicaragua',
-        language: 'Español',
-        touristInterest: 'Turismo general',
-        social: 'Usuario',
-        description: 'Cuenta de usuario'
+        phone: formData.phone,
+        address: formData.address,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        location: formData.location,
+        countryOfOrigin: formData.countryOfOrigin,
+        language: formData.language,
+        touristInterest: formData.touristInterest,
+        social: formData.social,
+        description: formData.description
       };
 
       const response = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signup', {
@@ -120,9 +130,9 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
   return (
     <div className="login-container user-register">
       <div className="login-header">
-                <div className="login-logo">
-        <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
-      </div>
+        <div className="login-logo">
+          <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
+        </div>
         <h2>Registro de Usuario</h2>
         <p>Crea tu cuenta de usuario para acceder al sistema</p>
       </div>
@@ -176,29 +186,166 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
           />
         </div>
         
+        <div className="form-row">
+          <div className="form-group half-width">
+            <label htmlFor="firstName">Nombre:</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              className="form-control"
+              placeholder="Tu nombre"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group half-width">
+            <label htmlFor="lastName">Apellido:</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              className="form-control"
+              placeholder="Tu apellido"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        
         <div className="form-group">
-          <label htmlFor="firstName">Nombre:</label>
+          <label htmlFor="phone">Teléfono:</label>
           <input
-            type="text"
-            id="firstName"
-            name="firstName"
+            type="tel"
+            id="phone"
+            name="phone"
             className="form-control"
-            placeholder="Tu nombre"
-            value={formData.firstName}
+            placeholder="+505 8900 7093"
+            value={formData.phone}
             onChange={handleChange}
           />
         </div>
         
         <div className="form-group">
-          <label htmlFor="lastName">Apellido:</label>
+          <label htmlFor="address">Dirección:</label>
           <input
             type="text"
-            id="lastName"
-            name="lastName"
+            id="address"
+            name="address"
             className="form-control"
-            placeholder="Tu apellido"
-            value={formData.lastName}
+            placeholder="Cuidad jardin"
+            value={formData.address}
             onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group half-width">
+            <label htmlFor="birthDate">Fecha de Nacimiento:</label>
+            <input
+              type="date"
+              id="birthDate"
+              name="birthDate"
+              className="form-control"
+              value={formData.birthDate}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group half-width">
+            <label htmlFor="gender">Género:</label>
+            <select
+              id="gender"
+              name="gender"
+              className="form-control"
+              value={formData.gender}
+              onChange={handleChange}
+            >
+              <option value="M">Masculino (M)</option>
+              <option value="F">Femenino (F)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="location">Ubicación:</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            className="form-control"
+            placeholder="Managua, Nicaragua"
+            value={formData.location}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="countryOfOrigin">País de Origen:</label>
+          <input
+            type="text"
+            id="countryOfOrigin"
+            name="countryOfOrigin"
+            className="form-control"
+            placeholder="Nicaragua"
+            value={formData.countryOfOrigin}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="language">Idioma:</label>
+          <select
+            id="language"
+            name="language"
+            className="form-control"
+            value={formData.language}
+            onChange={handleChange}
+          >
+            <option value="Español">Español</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Francés">Francés</option>
+            <option value="Portugués">Portugués</option>
+          </select>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="touristInterest">Intereses Turísticos:</label>
+          <input
+            type="text"
+            id="touristInterest"
+            name="touristInterest"
+            className="form-control"
+            placeholder="Playas, Aventura, Gastronomía"
+            value={formData.touristInterest}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="social">Redes Sociales:</label>
+          <input
+            type="text"
+            id="social"
+            name="social"
+            className="form-control"
+            placeholder="@Eduard8813"
+            value={formData.social}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="description">Descripción:</label>
+          <textarea
+            id="description"
+            name="description"
+            className="form-control"
+            placeholder="Viajera apasionada que busca descubrir las maravillas de Centroamérica."
+            value={formData.description}
+            onChange={handleChange}
+            rows="3"
           />
         </div>
         
@@ -217,7 +364,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
       <div className="auth-switch">
         <div className="text-center" style={{ marginTop: '15px' }}>
           <small>
-            <a href="#" onClick={onToggleLogin} style={{ color: '#3498db' }}>
+            <a href="#" onClick={onToggleLogin} style={{ color: '#436cc5' }}>
               ¿Ya tienes cuenta? Inicia sesión
             </a>
           </small>

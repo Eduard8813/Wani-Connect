@@ -155,7 +155,7 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
       {error && <div className="error">{error}</div>}
       
       <div className="login-footer">
-        <p>&copy; 2023 Wanni Connect. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Wanni Connect. Todos los derechos reservados.</p>
       </div>
     </div>
   );

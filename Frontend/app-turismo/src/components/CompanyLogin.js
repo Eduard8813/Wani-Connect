@@ -85,8 +85,8 @@ const CompanyLogin = ({ onLogin, onToggleRegister, onSwitchToUser }) => {
   return (
     <div className="login-container company-login">
       <div className="login-header">
-        <div className="login-logo company-logo">
-          <i className="fas fa-building"></i>
+        <div className="login-logo">
+          <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
         </div>
         <h2>Wanni Connect Empresas</h2>
         <p>Inicia sesión como empresa para acceder al sistema</p>
@@ -155,7 +155,7 @@ const CompanyLogin = ({ onLogin, onToggleRegister, onSwitchToUser }) => {
       {error && <div className="error">{error}</div>}
       
       <div className="login-footer">
-        <p>&copy; 2023 Wanni Connect. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Wanni Connect. Todos los derechos reservados.</p>
       </div>
     </div>
   );

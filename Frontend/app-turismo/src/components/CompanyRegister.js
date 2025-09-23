@@ -119,8 +119,8 @@ const CompanyRegister = ({ onLogin, onToggleLogin, onSwitchToUser }) => {
   return (
     <div className="login-container company-register">
       <div className="login-header">
-        <div className="login-logo company-logo">
-          <i className="fas fa-building"></i>
+       <div className="login-logo">
+          <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
         </div>
         <h2>Registro de Empresa</h2>
         <p>Crea tu cuenta empresarial para acceder al sistema</p>
