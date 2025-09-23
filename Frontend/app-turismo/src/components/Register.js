@@ -74,7 +74,7 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
       }
 
       // Iniciar sesión automáticamente después del registro
-      const loginResponse = await fetch('http://localhost:8080/api/auth/signin', {
+      const loginResponse = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -120,9 +120,9 @@ const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
   return (
     <div className="login-container user-register">
       <div className="login-header">
-        <div className="login-logo">
-          <i className="fas fa-user-plus"></i>
-        </div>
+                <div className="login-logo">
+        <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
+      </div>
         <h2>Registro de Usuario</h2>
         <p>Crea tu cuenta de usuario para acceder al sistema</p>
       </div>

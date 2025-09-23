@@ -17,7 +17,7 @@ const ValidarCodigoModal = ({ onClose, authToken, onValidationSuccess }) => {
 
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/reservas-bus/validar/${codigo}`, {
+      const response = await fetch(`https://aplicacion-del-hackaton.onrender.com/api/reservas-bus/validar/${codigo}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,

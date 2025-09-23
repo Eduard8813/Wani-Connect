@@ -85,9 +85,9 @@ const Login = ({ onLogin, onToggleRegister, onSwitchToCompany }) => {
   return (
     <div className="login-container user-login">
       <div className="login-header">
-        <div className="login-logo">
-          <i className="fas fa-user"></i>
-        </div>
+          <div className="login-logo">
+        <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
+      </div>
         <h2>Wanni Connect</h2>
         <p>Inicia sesión como usuario para acceder al sistema</p>
       </div>
