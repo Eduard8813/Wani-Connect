@@ -1,22 +1,26 @@
-// src/App.js
+// src/App.js (actualizado)
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
+import CompanyLogin from './components/CompanyLogin';
+import CompanyRegister from './components/CompanyRegister';
 import Dashboard from './components/Dashboard';
+import ValidationSuccess from './components/ValidationSuccess';
 import './App.css';
 
 function App() {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
   const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo') || '{}'));
   const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'USER');
-  const [showLogin, setShowLogin] = useState(true);
-  const [loginType, setLoginType] = useState('user'); // 'user' o 'company'
+  const [authView, setAuthView] = useState('userLogin'); // 'userLogin', 'userRegister', 'companyLogin', 'companyRegister'
+  const [showValidationSuccess, setShowValidationSuccess] = useState(false);
+  const [reservationDetails, setReservationDetails] = useState(null);
 
   useEffect(() => {
     if (authToken) {
-      setShowLogin(false);
+      setAuthView('dashboard');
     } else {
-      setShowLogin(true);
+      setAuthView('userLogin');
     }
   }, [authToken]);
 
@@ -36,39 +40,73 @@ function App() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userRole');
+    setAuthView('userLogin');
+    setShowValidationSuccess(false);
+    setReservationDetails(null);
   };
 
-  const toggleLoginRegister = () => {
-    setShowLogin(!showLogin);
+  const navigateTo = (view) => {
+    setAuthView(view);
   };
 
-  const toggleLoginType = (type) => {
-    setLoginType(type);
+  const handleValidationSuccess = (details) => {
+    setReservationDetails(details);
+    setShowValidationSuccess(true);
+  };
+
+  const handleBackFromValidation = () => {
+    setShowValidationSuccess(false);
+    setReservationDetails(null);
   };
 
   return (
     <div className="app-container">
       {authToken ? (
-        <Dashboard 
-          userInfo={userInfo} 
-          userRole={userRole} 
-          onLogout={handleLogout} 
-        />
+        showValidationSuccess && reservationDetails ? (
+          <ValidationSuccess 
+            reservationDetails={reservationDetails} 
+            onBack={handleBackFromValidation}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <Dashboard 
+            userInfo={userInfo} 
+            userRole={userRole} 
+            onLogout={handleLogout}
+            onValidationSuccess={handleValidationSuccess}
+          />
+        )
       ) : (
         <div className="auth-container">
-          {showLogin ? (
+          {authView === 'userLogin' && (
             <Login 
               onLogin={handleLogin} 
-              onToggleRegister={toggleLoginRegister}
-              loginType={loginType}
-              onToggleLoginType={toggleLoginType}
+              onToggleRegister={() => navigateTo('userRegister')}
+              onSwitchToCompany={() => navigateTo('companyLogin')}
             />
-          ) : (
+          )}
+          
+          {authView === 'userRegister' && (
             <Register 
               onLogin={handleLogin}
-              onToggleLogin={toggleLoginRegister}
-              loginType={loginType}
-              onToggleLoginType={toggleLoginType}
+              onToggleLogin={() => navigateTo('userLogin')}
+              onSwitchToCompany={() => navigateTo('companyRegister')}
+            />
+          )}
+          
+          {authView === 'companyLogin' && (
+            <CompanyLogin 
+              onLogin={handleLogin} 
+              onToggleRegister={() => navigateTo('companyRegister')}
+              onSwitchToUser={() => navigateTo('userLogin')}
+            />
+          )}
+          
+          {authView === 'companyRegister' && (
+            <CompanyRegister 
+              onLogin={handleLogin}
+              onToggleLogin={() => navigateTo('companyLogin')}
+              onSwitchToUser={() => navigateTo('userRegister')}
             />
           )}
         </div>

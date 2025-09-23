@@ -1,14 +1,23 @@
 // src/components/Register.js
 import React, { useState } from 'react';
 
-const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
+const Register = ({ onLogin, onToggleLogin, onSwitchToCompany }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     email: '',
     firstName: '',
     lastName: '',
-    companyName: ''
+    phone: '',
+    address: '',
+    birthDate: '',
+    gender: 'M',
+    location: '',
+    countryOfOrigin: '',
+    language: 'Español',
+    touristInterest: '',
+    social: '',
+    description: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,10 +31,9 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
 
   const generateUsername = () => {
     const randomNum = Math.floor(Math.random() * 10000);
-    const prefix = loginType === 'company' ? 'empresa' : 'usuario';
     setFormData({
       ...formData,
-      username: `${prefix}${randomNum}`
+      username: `usuario${randomNum}`
     });
   };
 
@@ -34,60 +42,35 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
     setError('');
     setLoading(true);
 
-    const requiredFields = loginType === 'company' 
-      ? ['username', 'password', 'email', 'companyName']
-      : ['username', 'password', 'email', 'firstName', 'lastName'];
-    
+    const requiredFields = ['username', 'password', 'email', 'firstName', 'lastName', 'phone', 'address', 'birthDate', 'location', 'countryOfOrigin'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
-      setError('Todos los campos son obligatorios');
+      setError('Todos los campos obligatorios deben ser completados');
       setLoading(false);
       return;
     }
 
     try {
-      const endpoint = loginType === 'company' 
-        ? 'http://localhost:8080/api/auth/signup-company'
-        : 'http://localhost:8080/api/auth/signup';
+      const payload = {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        address: formData.address,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        location: formData.location,
+        countryOfOrigin: formData.countryOfOrigin,
+        language: formData.language,
+        touristInterest: formData.touristInterest,
+        social: formData.social,
+        description: formData.description
+      };
 
-      const payload = loginType === 'company'
-        ? {
-            username: formData.username,
-            password: formData.password,
-            email: formData.email,
-            firstName: formData.companyName,
-            lastName: 'Empresa',
-            phone: '00000000',
-            address: 'Dirección empresarial',
-            birthDate: '2000-01-01',
-            gender: 'M',
-            location: 'Nicaragua',
-            countryOfOrigin: 'Nicaragua',
-            language: 'Español',
-            touristInterest: 'Turismo empresarial',
-            social: 'Empresa',
-            description: 'Cuenta empresarial'
-          }
-        : {
-            username: formData.username,
-            password: formData.password,
-            email: formData.email,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            phone: '00000000',
-            address: 'Dirección de usuario',
-            birthDate: '1990-01-01',
-            gender: 'M',
-            location: 'Nicaragua',
-            countryOfOrigin: 'Nicaragua',
-            language: 'Español',
-            touristInterest: 'Turismo general',
-            social: 'Usuario',
-            description: 'Cuenta de usuario'
-          };
-
-      const response = await fetch(endpoint, {
+      const response = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -101,11 +84,7 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
       }
 
       // Iniciar sesión automáticamente después del registro
-      const loginEndpoint = loginType === 'company' 
-        ? 'http://localhost:8080/api/auth/signin-company'
-        : 'http://localhost:8080/api/auth/signin';
-
-      const loginResponse = await fetch(loginEndpoint, {
+      const loginResponse = await fetch('https://aplicacion-del-hackaton.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -149,36 +128,16 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container user-register">
       <div className="login-header">
         <div className="login-logo">
-          <i className="fas fa-user-plus"></i>
+          <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Wanni Connect" />
         </div>
-        <h2>Registro de {loginType === 'company' ? 'Empresa' : 'Usuario'}</h2>
-        <p>Crea tu cuenta para acceder al sistema</p>
+        <h2>Registro de Usuario</h2>
+        <p>Crea tu cuenta de usuario para acceder al sistema</p>
       </div>
       
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Tipo de cuenta:</label>
-          <div className="account-type-selector">
-            <button 
-              type="button" 
-              className={`btn ${loginType === 'user' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => onToggleLoginType('user')}
-            >
-              Usuario
-            </button>
-            <button 
-              type="button" 
-              className={`btn ${loginType === 'company' ? 'btn-warning' : 'btn-outline-warning'}`}
-              onClick={() => onToggleLoginType('company')}
-            >
-              Empresa
-            </button>
-          </div>
-        </div>
-        
         <div className="form-group">
           <label htmlFor="username">Usuario:</label>
           <div className="input-with-button">
@@ -227,48 +186,168 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
           />
         </div>
         
-        {loginType === 'company' ? (
-          <div className="form-group">
-            <label htmlFor="companyName">Nombre de la Empresa:</label>
+        <div className="form-row">
+          <div className="form-group half-width">
+            <label htmlFor="firstName">Nombre:</label>
             <input
               type="text"
-              id="companyName"
-              name="companyName"
+              id="firstName"
+              name="firstName"
               className="form-control"
-              placeholder="Nombre de la empresa"
-              value={formData.companyName}
+              placeholder="Tu nombre"
+              value={formData.firstName}
               onChange={handleChange}
             />
           </div>
-        ) : (
-          <>
-            <div className="form-group">
-              <label htmlFor="firstName">Nombre:</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                className="form-control"
-                placeholder="Tu nombre"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="lastName">Apellido:</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                className="form-control"
-                placeholder="Tu apellido"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </div>
-          </>
-        )}
+          
+          <div className="form-group half-width">
+            <label htmlFor="lastName">Apellido:</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              className="form-control"
+              placeholder="Tu apellido"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="phone">Teléfono:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            className="form-control"
+            placeholder="+505 8900 7093"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="address">Dirección:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            className="form-control"
+            placeholder="Cuidad jardin"
+            value={formData.address}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group half-width">
+            <label htmlFor="birthDate">Fecha de Nacimiento:</label>
+            <input
+              type="date"
+              id="birthDate"
+              name="birthDate"
+              className="form-control"
+              value={formData.birthDate}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group half-width">
+            <label htmlFor="gender">Género:</label>
+            <select
+              id="gender"
+              name="gender"
+              className="form-control"
+              value={formData.gender}
+              onChange={handleChange}
+            >
+              <option value="M">Masculino (M)</option>
+              <option value="F">Femenino (F)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="location">Ubicación:</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            className="form-control"
+            placeholder="Managua, Nicaragua"
+            value={formData.location}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="countryOfOrigin">País de Origen:</label>
+          <input
+            type="text"
+            id="countryOfOrigin"
+            name="countryOfOrigin"
+            className="form-control"
+            placeholder="Nicaragua"
+            value={formData.countryOfOrigin}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="language">Idioma:</label>
+          <select
+            id="language"
+            name="language"
+            className="form-control"
+            value={formData.language}
+            onChange={handleChange}
+          >
+            <option value="Español">Español</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Francés">Francés</option>
+            <option value="Portugués">Portugués</option>
+          </select>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="touristInterest">Intereses Turísticos:</label>
+          <input
+            type="text"
+            id="touristInterest"
+            name="touristInterest"
+            className="form-control"
+            placeholder="Playas, Aventura, Gastronomía"
+            value={formData.touristInterest}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="social">Redes Sociales:</label>
+          <input
+            type="text"
+            id="social"
+            name="social"
+            className="form-control"
+            placeholder="@Eduard8813"
+            value={formData.social}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="description">Descripción:</label>
+          <textarea
+            id="description"
+            name="description"
+            className="form-control"
+            placeholder="Viajera apasionada que busca descubrir las maravillas de Centroamérica."
+            value={formData.description}
+            onChange={handleChange}
+            rows="3"
+          />
+        </div>
         
         <div className="action-buttons">
           <button 
@@ -277,17 +356,32 @@ const Register = ({ onLogin, onToggleLogin, loginType, onToggleLoginType }) => {
             disabled={loading}
             style={{ width: '100%' }}
           >
-            {loading ? 'Registrando...' : 'Registrar'}
+            {loading ? 'Registrando...' : 'Registrar Usuario'}
           </button>
         </div>
       </form>
       
-      <div className="text-center" style={{ marginTop: '15px' }}>
-        <small>
-          <a href="#" onClick={onToggleLogin} style={{ color: '#3498db' }}>
-            ¿Ya tienes cuenta? Inicia sesión
-          </a>
-        </small>
+      <div className="auth-switch">
+        <div className="text-center" style={{ marginTop: '15px' }}>
+          <small>
+            <a href="#" onClick={onToggleLogin} style={{ color: '#436cc5' }}>
+              ¿Ya tienes cuenta? Inicia sesión
+            </a>
+          </small>
+        </div>
+        
+        <div className="divider">
+          <span>o</span>
+        </div>
+        
+        <div className="text-center">
+          <button 
+            className="btn btn-outline-warning"
+            onClick={onSwitchToCompany}
+          >
+            <i className="fas fa-building"></i> Acceder como Empresa
+          </button>
+        </div>
       </div>
       
       {error && <div className="error">{error}</div>}
