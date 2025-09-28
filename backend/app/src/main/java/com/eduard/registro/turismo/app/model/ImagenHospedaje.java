@@ -2,6 +2,8 @@ package com.eduard.registro.turismo.app.model;
 
 import org.hibernate.validator.constraints.URL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -19,6 +21,7 @@ public class ImagenHospedaje {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospedaje_id", nullable = false)
+    @JsonIgnore
     private Hospedaje hospedaje;
     
     // Getters y Setters
