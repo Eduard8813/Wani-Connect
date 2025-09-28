@@ -14,7 +14,7 @@ public class CreatePaymentRequest {
     public void setAmount(Double amount) { this.amount = amount; }
     
     public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
+    public void setCurrency(String currency) { this.currency = currency; } 
     
     public String getUserEmail() { return userEmail; }
     public void setUserEmail(String userEmail) { this.userEmail = userEmail; }

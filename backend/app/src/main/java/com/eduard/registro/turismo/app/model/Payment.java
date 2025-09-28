@@ -13,7 +13,7 @@ public class Payment {
     private String reservationCode;
     private Double amount;
     private String currency;
-    private String userEmail;
+    private String userEmail; 
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
