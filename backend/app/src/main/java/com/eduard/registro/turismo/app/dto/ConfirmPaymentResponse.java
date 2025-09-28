@@ -12,7 +12,7 @@ public class ConfirmPaymentResponse {
     public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
     
     public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(String status) { this.status = status; } 
     
     public LocalDateTime getCompletedAt() { return completedAt; }
     public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }

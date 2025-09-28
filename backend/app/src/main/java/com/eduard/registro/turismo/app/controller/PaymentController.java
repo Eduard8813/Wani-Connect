@@ -15,11 +15,11 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
-    
+     
     @PostMapping("/create")
     public ResponseEntity<CreatePaymentResponse> createPayment(@RequestBody CreatePaymentRequest request) {
         CreatePaymentResponse response = paymentService.createPayment(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response); 
     }
     
     @PostMapping("/confirm/{paymentId}")

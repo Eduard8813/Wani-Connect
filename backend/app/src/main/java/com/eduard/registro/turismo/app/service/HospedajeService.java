@@ -25,7 +25,7 @@ public class HospedajeService {
         Hospedaje hospedajeGuardado = repository.save(hospedaje);
         
         // Luego establecemos la relación bidireccional y guardamos las imágenes
-        if (imagenes != null && !imagenes.isEmpty()) {
+        if (imagenes != null && !imagenes.isEmpty()) { 
             for (ImagenHospedaje imagen : imagenes) {
                 imagen.setHospedaje(hospedajeGuardado);
             }

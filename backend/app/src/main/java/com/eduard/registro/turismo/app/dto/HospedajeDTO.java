@@ -19,7 +19,7 @@ public class HospedajeDTO {
         return hospedaje;
     }
 
-    public void setHospedaje(Hospedaje hospedaje) {
+    public void setHospedaje(Hospedaje hospedaje) { 
         this.hospedaje = hospedaje;
     }
 
