@@ -11,16 +11,16 @@
             
             // Función para verificar si el usuario está autenticado
             function estaAutenticado() {
-                const token = localStorage.getItem('token');
+                const authToken = localStorage.getItem('authToken');
                 const userEmail = localStorage.getItem('userEmail');
                 
                 // Depuración: Mostrar en consola el estado de autenticación
                 console.log('Verificando autenticación...');
-                console.log('Token:', token ? 'Existe' : 'No existe');
+                console.log('authToken:', authToken ? 'Existe' : 'No existe');
                 console.log('UserEmail:', userEmail ? userEmail : 'No existe');
                 
                 // Verificar que ambos existan y no estén vacíos
-                return token && token.trim() !== '' && userEmail && userEmail.trim() !== '';
+                return authToken && authToken.trim() !== '' && userEmail && userEmail.trim() !== '';
             }
             
             // Función para obtener restaurantes desde la API
@@ -34,15 +34,15 @@
                 const timeoutId = setTimeout(() => controller.abort(), 15000); // Aumentado a 15 segundos
                 
                 try {
-                    const token = localStorage.getItem('token');
+                    const authToken = localStorage.getItem('authToken');
                     const headers = {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     };
                     
                     // Si hay token, agregarlo al header
-                    if (token) {
-                        headers['Authorization'] = `Bearer ${token}`;
+                    if (authToken) {
+                        headers['Authorization'] = `Bearer ${authToken}`;
                     }
                     
                     // Agregar cache control para evitar problemas de caché
@@ -305,11 +305,11 @@
                     }
                     
                     // Obtener el token y el correo del usuario del localStorage
-                    const token = localStorage.getItem('token');
+                    const authToken = localStorage.getItem('authToken');
                     const userEmail = localStorage.getItem('userEmail');
                     
                     console.log('Usuario autenticado. Procesando reserva...');
-                    console.log('Token:', token);
+                    console.log('authToken:', authToken);
                     console.log('UserEmail:', userEmail);
                     
                     // Validar si el restaurante existe
@@ -322,7 +322,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'Authorization': `Bearer ${token}`,
+                            'Authorization': `Bearer ${authToken}`,
                             'Cache-Control': 'no-cache'
                         },
                         mode: 'cors',
@@ -515,13 +515,13 @@
                     console.log('Enviando solicitud de pago:', JSON.stringify(pagoData));
                     
                     // Enviar petición de pago
-                    const token = localStorage.getItem('token');
+                    const authToken = localStorage.getItem('authToken');
                     const response = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'Authorization': `Bearer ${token}`
+                            'Authorization': `Bearer ${authToken}`
                         },
                         body: JSON.stringify(pagoData)
                     });
