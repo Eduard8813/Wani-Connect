@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Collectors; 
 
 @Service
 public class SitioTuristicoService {
