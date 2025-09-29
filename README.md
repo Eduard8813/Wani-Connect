@@ -161,6 +161,39 @@ El proyecto utiliza un flujo de trabajo basado en ramas:
 3. Envía un pull request hacia la rama main
 4. Espera la revisión y aprobación del equipo
 
+# Flujo de Trabajo de Desarrollo
+
+# Clonar repositorio
+git clone https://github.com/Eduard8813/Wani-Connect.git
+
+# Configurar backend
+cd Backend/app
+mvn clean install
+
+# Configurar frontend
+cd ../Frontend/resource
+npm install
+
+# Proceso de Contribución:
+
+- Crear rama feature desde main
+- Desarrollar funcionalidad con pruebas unitarias
+- Solicitar Pull Request con revisión de código
+- Integración continua en GitHub Actions
+
+# Despliegue Automático:
+
+- Backend: Despliegue automático en Render al mergear a main
+- Frontend: Despliegue automático en Netlify al mergear a main
+
+# Roadmap del Proyecto
+
+## Próximas Entregas
+ - Integración con pasarelas de pago (PayPal)
+ - Aplicación Web
+ - Soporte multiidioma (español, inglés)
+ - Dashboard para administradores
+
 ##  Wiki
 
 Documentación adicional y código fuente disponible en:
@@ -170,6 +203,17 @@ Documentación adicional y código fuente disponible en:
 
 Utilizamos Git para el control de versiones. Todas las versiones están disponibles en:
 [Commits History](https://github.com/Eduard8813/Wani-Connect/commits/main)
+
+## 📹 Video Demo
+
+[![Video Demostrativo de Wani Connect](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+
+*Haga clic en la imagen para ver el video completo en YouTube*
+
+## 📹 Diagrama de flujos
+
+![Diagrama de flijo del sistema](https://raw.githubusercontent.com/Eduard8813/Wani-Connect/main/Images_proyect/diagram.svg)
+
 
 ##  Autores
 
@@ -197,4 +241,4 @@ Para consultas o colaboración:
 
 ---
 
-**Wani Connect** © 2025. Todos los derechos reservados.
+**Wani Connect** © 2025. Todos los derechos reservados. 
