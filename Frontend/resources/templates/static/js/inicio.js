@@ -871,20 +871,3 @@
         }
     });
 });
-    document.addEventListener('DOMContentLoaded', function() {
-        // Hacer que las imágenes del staff sean clicables
-        const staffPhotos = document.querySelectorAll('.staff-photo');
-        
-        staffPhotos.forEach(photo => {
-            photo.addEventListener('click', function() {
-                // Encontrar la tarjeta de staff contenedora
-                const staffCard = this.closest('.staff-card');
-                // Encontrar el botón "Más información" en esa tarjeta
-                const staffButton = staffCard.querySelector('.staff-button');
-                // Obtener la URL del botón
-                const linkUrl = staffButton.getAttribute('href');
-                // Redirigir a esa URL
-                window.location.href = linkUrl;
-            });
-        });
-    });
