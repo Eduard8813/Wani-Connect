@@ -5,7 +5,7 @@
 [![Spring Boot](https://img.shields.io/badge/spring%20boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Node.js](https://img.shields.io/badge/node.js-18.x-green.svg)](https://nodejs.org/)
 
-**Wani Connect** es una plataforma web innovadora que funciona como asistente guía personal, diseñada para transformar el turismo en Nicaragua mediante la provisión de logística completa y segura para viajes. Ofrece un mapa inteligente con rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas, facilitando la gestión de transporte, hospedaje y experiencias exclusivas.
+**Wani Connect** es una plataforma web innovadora que funciona como asistente guía personal, diseñada para transformar el turismo en Nicaragua mediante la provisión de logística completa y segura para viajes. Ofrece un mapa inteligente con rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas, facilitando la gestión de transporte, hospedaje y experiencias exclusivas.    
 
 ##  Características Principales
 
