@@ -48,7 +48,7 @@
                     // Agregar cache control para evitar problemas de caché
                     headers['Cache-Control'] = 'no-cache';
                     
-                    const response = await fetch('http://localhost:8080/api/sitios-turisticos', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/sitios-turisticos', {
                         signal: controller.signal,
                         method: 'GET',
                         headers: headers,
@@ -228,10 +228,6 @@
                 if (tipo) {
                     sitiosFiltrados = sitiosFiltrados.filter(s => s.tipoLugar === tipo);
                 }
-                
-                // Por ahora, no filtramos por fecha o número de visitantes porque no tenemos esa información
-                // En una aplicación real, deberías tener información de disponibilidad
-                
                 mostrarSitiosTuristicos(sitiosFiltrados);
             }
             
@@ -298,7 +294,7 @@
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 15000); // Aumentado a 15 segundos
                     
-                    const response = await fetch(`http://localhost:8080/api/sitios-turisticos/${codigo}`, {
+                    const response = await fetch(`https://wani-connect.onrender.com/api/sitios-turisticos/${codigo}`, {
                         signal: controller.signal,
                         method: 'GET',
                         headers: {
@@ -485,7 +481,7 @@
                     
                     // Enviar petición de pago
                     const token = localStorage.getItem('token');
-                    const response = await fetch('http://localhost:8080/api/payments/create', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

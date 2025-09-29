@@ -50,7 +50,7 @@
                     // Agregar cache control para evitar problemas de caché
                     headers['Cache-Control'] = 'no-cache';
                     
-                    const response = await fetch('http://localhost:8080/api/alquiler-vehiculos', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/alquiler-vehiculos', {
                         signal: controller.signal,
                         method: 'GET',
                         headers: headers,
@@ -352,7 +352,7 @@
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 15000); // Aumentado a 15 segundos
                     
-                    const response = await fetch(`http://localhost:8080/api/alquiler-vehiculos/${codigo}`, {
+                    const response = await fetch(`https://wani-connect.onrender.com/api/alquiler-vehiculos/${codigo}`, {
                         signal: controller.signal,
                         method: 'GET',
                         headers: {
@@ -526,7 +526,7 @@
                     
                     // Enviar petición de pago
                     const token = localStorage.getItem('token');
-                    const response = await fetch('http://localhost:8080/api/payments/create', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -44,7 +44,7 @@
                         headers['Authorization'] = `Bearer ${token}`;
                     }
                     
-                    const response = await fetch('http://localhost:8080/api/hospedajes', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/hospedajes', {
                         signal: controller.signal,
                         method: 'GET',
                         headers: headers
@@ -216,18 +216,14 @@
                     hospedajesFiltrados = hospedajesFiltrados.filter(h => h.tipo === tipo);
                 }
                 
-                // Filtrar por habitaciones (simulado, ya que no tenemos esta info en el objeto)
-                // Esto es solo un ejemplo, en una aplicación real necesitarías tener esta información
+
                 if (habitaciones) {
-                    // Por ahora, no filtramos por habitaciones porque no tenemos esa información
-                    // En una aplicación real, deberías tener un campo para el número de habitaciones
+                
                 }
                 
-                // Filtrar por fechas (simulado, ya que no tenemos esta info en el objeto)
-                // Esto es solo un ejemplo, en una aplicación real necesitarías tener esta información
+                
                 if (fechaEntrada && fechaSalida) {
-                    // Por ahora, no filtramos por fechas porque no tenemos esa información
-                    // En una aplicación real, deberías tener información de disponibilidad
+                
                 }
                 
                 mostrarHospedajes(hospedajesFiltrados);
@@ -317,7 +313,7 @@
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos de timeout
                     
-                    const response = await fetch(`http://localhost:8080/api/hospedajes/${codigo}`, {
+                    const response = await fetch(`https://wani-connect.onrender.com/api/hospedajes/${codigo}`, {
                         signal: controller.signal,
                         method: 'GET',
                         headers: {
@@ -493,7 +489,7 @@
                     
                     // Enviar petición de pago
                     const token = localStorage.getItem('token');
-                    const response = await fetch('http://localhost:8080/api/payments/create', {
+                    const response = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

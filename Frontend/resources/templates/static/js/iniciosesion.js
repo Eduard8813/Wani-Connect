@@ -76,8 +76,8 @@
             try {
                 // Determinar endpoint según tipo de registro
                 const endpoint = loginType === 'company' ? 
-                    'http://localhost:8080/api/auth/signup-company' : 
-                    'http://localhost:8080/api/auth/signup';
+                    'https://wani-connect.onrender.com/api/auth/signup-company' : 
+                    'https://wani-connect.onrender.com/api/auth/signup';
                 
                 const response = await fetch(endpoint, {
                     method: 'POST',
@@ -144,8 +144,8 @@
             
             // Determinar endpoint según tipo de login
             const endpoint = loginType === 'company' ? 
-                'http://localhost:8080/api/auth/signin-company' : 
-                'http://localhost:8080/api/auth/signin';
+                'https://wani-connect.onrender.com/api/auth/signin-company' : 
+                'https://wani-connect.onrender.com/api/auth/signin';
             
             try {
                 const response = await fetch(endpoint, {
@@ -184,7 +184,7 @@
                 
                 // Obtener información del usuario
                 try {
-                    const userResponse = await fetch('http://localhost:8080/api/user/me', {
+                    const userResponse = await fetch('https://wani-connect.onrender.com/api/user/me', {
                         headers: {
                             'Authorization': `Bearer ${data.token}`,
                             'Content-Type': 'application/json'
