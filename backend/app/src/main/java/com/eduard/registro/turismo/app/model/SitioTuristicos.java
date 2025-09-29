@@ -15,7 +15,7 @@ public class SitioTuristicos {
     private Long id;
     
     @Column(unique = true, nullable = false, updatable = false)
-    private String codigoUnico;
+    private String codigoUnico; 
     
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
