@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Sitios Turísticos - Descubre los mejores lugares de Nicaragua</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/reservas.css">
+</head>
+<body>
+    <!-- Encabezado con estilo nicaragüense -->
+    <div class="hero-section">
+        <div class="container">
+            <h1><span class="nicaragua-flag"></span>Sitios Turísticos</h1>
+            <p>Descubre los mejores lugares para visitar en Nicaragua</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sección de búsqueda -->
+        <div class="search-section">
+            <h2 class="search-title">
+                <i class="bi bi-search"></i>
+                Buscar Sitios Turísticos
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="tipo" class="form-label">Tipo de Lugar</label>
+                    <select class="form-select" id="tipo">
+                        <option value="">Todos los tipos</option>
+                        <option value="museo">Museo</option>
+                        <option value="parque">Parque</option>
+                        <option value="playa">Playa</option>
+                        <option value="volcan">Volcán</option>
+                        <option value="iglesia">Iglesia</option>
+                        <option value="reserva natural">Reserva Natural</option>
+                        <option value="zona arqueológica">Zona Arqueológica</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="fecha-visita" class="form-label">Fecha de Visita <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="fecha-visita" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="visitantes" class="form-label">Número de Visitantes</label>
+                    <select class="form-select" id="visitantes">
+                        <option value="">Cualquiera</option>
+                        <option value="1">1 Visitante</option>
+                        <option value="2">2 Visitantes</option>
+                        <option value="3-5">3-5 Visitantes</option>
+                        <option value="6+">6+ Visitantes</option>
+                    </select>
+                </div>
+                <div class="col-12 d-grid">
+                    <button class="btn btn-primary" id="buscar-btn">
+                        <i class="bi bi-search me-2"></i> Buscar sitios turísticos
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenedor de resultados -->
+        <div id="cargando" class="text-center my-5 d-none">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3">Buscando sitios turísticos en Nicaragua...</p>
+        </div>
+        
+        <div id="resultados" class="row g-4">
+            <!-- Las tarjetas de sitios turísticos se insertarán aquí -->
+        </div>
+        
+        <div id="sin-resultados" class="alert alert-info text-center my-5 d-none">
+            <i class="bi bi-info-circle me-2"></i> No hay sitios turísticos disponibles.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2025 Wani Connect Nicaragua <span class="nicaragua-flag"></span> Todos los derechos reservados</p>
+            <p class="small">Descubre la belleza de Nicaragua en cada destino</p>
+        </div>
+    </div>
+
+    <!-- Modal de Reserva -->
+    <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaModalLabel">Comprar Entrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="reserva-form">
+                        <h5><i class="bi bi-ticket-perforated me-2"></i>Detalles de la Compra</h5>
+                        <div class="reserva-detalles">
+                            <h6>Información del Sitio Turístico</h6>
+                            <p><strong>Nombre:</strong> <span id="reserva-nombre"></span></p>
+                            <p><strong>Tipo:</strong> <span id="reserva-tipo"></span></p>
+                            <p><strong>Ubicación:</strong> <span id="reserva-ubicacion"></span></p>
+                        </div>
+                        <div class="reserva-detalles">
+                            <h6>Información de la Visita</h6>
+                            <p><strong>Fecha de visita:</strong> <span id="reserva-fecha-visita"></span></p>
+                            <p><strong>Número de visitantes:</strong> <span id="reserva-visitantes"></span></p>
+                        </div>
+                        <div class="reserva-detalles">
+                            <h6>Información de Pago</h6>
+                            <p><strong>Precio por entrada:</strong> $<span id="reserva-precio-entrada"></span></p>
+                            <p><strong>Subtotal:</strong> $<span id="reserva-subtotal"></span></p>
+                            <p><strong>IVA (15%):</strong> $<span id="reserva-iva"></span></p>
+                            <p><strong>Total a pagar:</strong> $<span id="reserva-total"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="procesar-pago-btn">
+                        <i class="bi bi-credit-card me-2"></i> Procesar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pago -->
+    <div class="modal fade" id="pagoModal" tabindex="-1" aria-labelledby="pagoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pagoModalLabel">Procesar Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="pago-email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="pago-email" placeholder="tu@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pago-metodo" class="form-label">Método de Pago</label>
+                        <select class="form-select" id="pago-metodo">
+                            <option value="paypal">PayPal</option>
+                            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pago-monedas" class="form-label">Moneda</label>
+                        <select class="form-select" id="pago-monedas">
+                            <option value="USD">Dólares Americanos (USD)</option>
+                            <option value="NIO">Córdobas Nicaragüenses (NIO)</option>
+                        </select>
+                    </div>
+                    <div class="reserva-detalles">
+                        <h6>Resumen del Pago</h6>
+                        <p><strong>Sitio Turístico:</strong> <span id="pago-sitio"></span></p>
+                        <p><strong>Fecha de visita:</strong> <span id="pago-fecha"></span></p>
+                        <p><strong>Número de visitantes:</strong> <span id="pago-visitantes"></span></p>
+                        <p><strong>Subtotal:</strong> $<span id="pago-subtotal"></span></p>
+                        <p><strong>IVA (15%):</strong> $<span id="pago-iva"></span></p>
+                        <p><strong>Total:</strong> $<span id="pago-total"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmar-pago-btn">
+                        <i class="bi bi-lock me-2"></i> Confirmar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacionModalLabel">Compra Confirmada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <strong>¡Compra realizada con éxito!</strong>
+                    </div>
+                    <div class="reserva-detalles">
+                        <h6>Detalles de la Compra</h6>
+                        <p><strong>Código de Reserva:</strong> <span id="confirmacion-codigo"></span></p>
+                        <p><strong>Sitio Turístico:</strong> <span id="confirmacion-sitio"></span></p>
+                        <p><strong>Fecha de visita:</strong> <span id="confirmacion-fecha"></span></p>
+                        <p><strong>Total Pagado:</strong> $<span id="confirmacion-total"></span></p>
+                        <p><strong>Método de Pago:</strong> <span id="confirmacion-metodo"></span></p>
+                    </div>
+                    <div class="mt-3">
+                        <p>Hemos enviado un correo electrónico con los detalles de tu compra. Por favor, guarda el código de reserva para futuras referencias.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/reservas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9fb;
+            color: #432766;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .content-area {
+            min-height: 500px;
+            margin-bottom: 60px;
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.8rem;
+            color: #432766;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #ee4777, #97d2dc);
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            text-align: justify;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(67, 39, 102, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(67, 39, 102, 0.25);
+        }
+        
+        .nicaragua-highlight {
+            background: linear-gradient(135deg, rgba(151, 210, 220, 0.2), rgba(67, 108, 197, 0.1));
+            border-left: 5px solid #97d2dc;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 5px 15px rgba(151, 210, 220, 0.2);
+        }
+        
+        .nicaragua-highlight h3 {
+            color: #436cc5;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nicaragua-highlight h3 i {
+            margin-right: 10px;
+            color: #ee4777;
+        }
+        
+        .nicaragua-highlight p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-text p {
+                font-size: 1rem;
+            }
+            
+            .nicaragua-highlight {
+                padding: 20px;
+            }
+            
+            .nicaragua-highlight h3 {
+                font-size: 1.3rem;
+            }
+        }

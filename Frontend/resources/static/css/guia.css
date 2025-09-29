@@ -1,0 +1,500 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9fb;
+            color: #432766;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(67, 39, 102, 0.15);
+            border-bottom: 2px solid #97d2dc;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #432766;
+            text-shadow: 1px 1px 2px rgba(67, 39, 102, 0.2);
+            text-decoration: none;
+        }
+        
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 4px rgba(67, 39, 102, 0.3);
+        }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 101;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #432766;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(67, 39, 102, 0.15);
+            width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            margin-top: 10px;
+        }
+        
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #432766;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f0f9fb;
+            color: #ee4777;
+        }
+        
+        .dropdown-item i {
+            margin-right: 15px;
+            font-size: 18px;
+            color: #436cc5;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .dropdown-item:hover i {
+            color: #ee4777;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(151, 210, 220, 0.7), rgba(67, 108, 197, 0.7));
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(67, 39, 102, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            text-shadow: 1px 1px 2px rgba(67, 39, 102, 0.5);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Sección de Mapas */
+        .mapas-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f0f9fb, #e1f0f7);
+            position: relative;
+        }
+        
+        .mapas-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0097b2, #ff6b35, #f7931e);
+        }
+        
+        .mapas-title {
+            font-size: 2.5rem;
+            color: #432766;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .mapas-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ee4777, #97d2dc);
+            border-radius: 2px;
+        }
+        
+        .mapas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .mapa-item {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(67, 39, 102, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .mapa-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(67, 39, 102, 0.2);
+        }
+        
+        .mapa-header {
+            background: linear-gradient(90deg, #0097b2, #436cc5);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .mapa-header i {
+            font-size: 1.8rem;
+        }
+        
+        .mapa-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .mapa {
+            height: 400px;
+            position: relative;
+        }
+        
+        .mapa-footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        
+        .btn-mapa {
+            background: linear-gradient(90deg, #ee4777, #e775a2);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-mapa:hover {
+            background: linear-gradient(90deg, #e775a2, #ee4777);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(238, 71, 119, 0.3);
+        }
+        
+        .btn-mapa i {
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-mapa:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Bandera de Nicaragua decorativa */
+        .mapas-section::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            width: 40px;
+            height: 24px;
+            background: linear-gradient(to bottom, 
+                #0097b2 0%, #0097b2 33%, 
+                white 33%, white 66%, 
+                #0097b2 66%, #0097b2 100%);
+            border-radius: 3px;
+            opacity: 0.3;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 50px 0 30px;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0097b2, #ff6b35, #f7931e);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #0097b2;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #f7931e;
+        }
+        
+        .footer-column p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            padding: 8px 0;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-column ul li i {
+            width: 20px;
+            text-align: center;
+            color: #f7931e;
+            font-size: 1.2rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .brand {
+                margin-bottom: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .mapas-section {
+                padding: 40px 15px;
+            }
+            
+            .mapas-title {
+                font-size: 2rem;
+            }
+            
+            .mapas-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mapa-item {
+                max-width: 100%;
+            }
+            
+            .mapa {
+                height: 300px;
+            }
+            
+            .mapa-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .mapa-header i {
+                font-size: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .footer-column:first-child {
+                grid-column: span 2;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mapas-section {
+                padding: 30px 10px;
+            }
+            
+            .mapas-title {
+                font-size: 1.8rem;
+            }
+            
+            .mapa {
+                height: 250px;
+            }
+            
+            .mapa-header {
+                padding: 15px;
+            }
+            
+            .mapa-header h3 {
+                font-size: 1rem;
+            }
+            
+            .mapa-header i {
+                font-size: 1.3rem;
+            }
+            
+            .btn-mapa {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column:first-child {
+                grid-column: span 1;
+            }
+        }

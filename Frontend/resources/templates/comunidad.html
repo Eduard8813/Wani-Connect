@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Wani Connect - Comunidad Turística</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/comunidad.css">
+</head>
+<body>
+    <!-- Indicador de desarrollo -->
+    <div class="development-indicator">
+        <i class="fas fa-tools"></i> Red Social en Desarrollo - Versión Beta 2.0
+    </div>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="Inicio.html" class="navbar-brand">
+            <i class="fas fa-dove"></i>
+            <span>Wani Connect</span>
+        </a>
+        
+        <div class="navbar-search">
+            <input type="text" placeholder="Buscar destinos, experiencias o usuarios...">
+            <i class="fas fa-search"></i>
+        </div>
+        
+        <div class="navbar-nav">
+            <div class="nav-item">
+                <a href="#" class="nav-link" id="notificationsBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <div class="nav-item user-menu">
+                <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="user-avatar">
+                <a href="perfil.html" class="user-name">María García</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#"><i class="fas fa-compass"></i> Explorar</a></li>
+                <li><a href="#"><i class="fas fa-bookmark"></i> Guardados</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Grupos</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+            </ul>
+            
+            <div class="trends">
+                <h3 class="trends-title">Tendencias en Nicaragua</h3>
+                <div class="trend-item">
+                    <div class="trend-name">#VolcánMasaya</div>
+                    <div class="trend-posts">1,245 publicaciones</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-name">#Ometepe</div>
+                    <div class="trend-posts">987 publicaciones</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-name">#SanJuanDelSur</div>
+                    <div class="trend-posts">756 publicaciones</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-name">#GranadaColonial</div>
+                    <div class="trend-posts">632 publicaciones</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-name">#LeónHistoria</div>
+                    <div class="trend-posts">521 publicaciones</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Estadísticas de la red social -->
+            <div class="network-stats">
+                <div class="stat-item">
+                    <div class="stat-number">24.5K</div>
+                    <div class="stat-label">Usuarios Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8.2K</div>
+                    <div class="stat-label">Publicaciones</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Destinos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Eventos Activos</div>
+                </div>
+            </div>
+
+            <!-- Crear publicación -->
+            <div class="create-post">
+                <div class="create-post-header">
+                    <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="create-post-avatar">
+                    <input type="text" class="create-post-input" placeholder="¿Qué estás planeando en Nicaragua?" id="createPostInput">
+                </div>
+                <div class="create-post-actions">
+                    <div class="post-options">
+                        <div class="post-option">
+                            <i class="fas fa-image"></i>
+                            <span>Foto</span>
+                        </div>
+                        <div class="post-option">
+                            <i class="fas fa-video"></i>
+                            <span>Video</span>
+                        </div>
+                        <div class="post-option">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Ubicación</span>
+                        </div>
+                    </div>
+                    <button class="post-button" id="createPostBtn">Publicar</button>
+                </div>
+            </div>
+
+            <!-- Publicaciones -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodríguez" class="post-avatar">
+                    <div class="post-user-info">
+                        <div class="post-user-name">Carlos Rodríguez</div>
+                        <div class="post-time">Hace 2 horas · Managua</div>
+                    </div>
+                    <div class="post-options-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">¡Increíble experiencia en el Volcán Masaya! Ver el lago de lava burbujeante desde el borde del cráter es algo que nunca olvidaré. Nicaragua tiene una belleza natural impresionante que todos deberían conocer. #VolcánMasaya #Nicaragua #Naturaleza</p>
+                    <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Volcán Masaya" class="post-image">
+                </div>
+                <div class="post-stats">
+                    <span><i class="fas fa-heart"></i> 245 personas</span>
+                    <span><i class="fas fa-comment"></i> 32 comentarios</span>
+                    <span><i class="fas fa-share"></i> 18 veces compartido</span>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Me gusta</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comentar</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Compartir</span>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Ana Martínez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Ana Martínez</div>
+                            <div class="comment-text">¡Qué experiencia tan increíble! Yo estuve allí el mes pasado y realmente es impresionante.</div>
+                            <div class="comment-time">Hace 1 hora</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="José López" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">José López</div>
+                            <div class="comment-text">¿Se necesita guía para llegar ahí? Estoy planeando visitar Nicaragua el próximo mes.</div>
+                            <div class="comment-time">Hace 45 minutos</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="add-comment-avatar">
+                        <input type="text" class="add-comment-input" placeholder="Escribe un comentario...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Laura Sánchez" class="post-avatar">
+                    <div class="post-user-info">
+                        <div class="post-user-name">Laura Sánchez</div>
+                        <div class="post-time">Hace 5 horas · Isla de Ometepe</div>
+                    </div>
+                    <div class="post-options-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">Amanecer en la Isla de Ometepe, uno de los lugares más mágicos de Nicaragua. La vista de los dos volcanes desde el lago es simplemente espectacular. Siempre soñé con conocer este lugar y finalmente lo logré. #Ometepe #Nicaragua #Paisajes</p>
+                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Isla de Ometepe" class="post-image">
+                </div>
+                <div class="post-stats">
+                    <span><i class="fas fa-heart"></i> 189 personas</span>
+                    <span><i class="fas fa-comment"></i> 24 comentarios</span>
+                    <span><i class="fas fa-share"></i> 12 veces compartido</span>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="fas fa-heart"></i>
+                        <span>Me gusta</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comentar</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Compartir</span>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodríguez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Carlos Rodríguez</div>
+                            <div class="comment-text">¡Hermosa foto! Yo estuve allí el año pasado y es realmente un lugar mágico.</div>
+                            <div class="comment-time">Hace 3 horas</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="add-comment-avatar">
+                        <input type="text" class="add-comment-input" placeholder="Escribe un comentario...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Pedro Mendoza" class="post-avatar">
+                    <div class="post-user-info">
+                        <div class="post-user-name">Pedro Mendoza</div>
+                        <div class="post-time">Hace 1 día · San Juan del Sur</div>
+                    </div>
+                    <div class="post-options-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">Las puestas de sol en San Juan del Sur son simplemente espectaculares. Después de un día de surf, no hay nada mejor que relajarse en la playa y disfrutar de este espectáculo natural. Nicaragua realmente tiene paraísos escondidos. #SanJuanDelSur #Nicaragua #Playas</p>
+                    <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="San Juan del Sur" class="post-image">
+                </div>
+                <div class="post-stats">
+                    <span><i class="fas fa-heart"></i> 312 personas</span>
+                    <span><i class="fas fa-comment"></i> 41 comentarios</span>
+                    <span><i class="fas fa-share"></i> 27 veces compartido</span>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Me gusta</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comentar</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Compartir</span>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Ana Martínez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Ana Martínez</div>
+                            <div class="comment-text">¡Qué lugar tan hermoso! Definitivamente tengo que visitar Nicaragua pronto.</div>
+                            <div class="comment-time">Hace 12 horas</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Laura Sánchez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Laura Sánchez</div>
+                            <div class="comment-text">¿Hay buenas opciones de hospedaje cerca de la playa? Estoy planeando un viaje.</div>
+                            <div class="comment-time">Hace 8 horas</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="add-comment-avatar">
+                        <input type="text" class="add-comment-input" placeholder="Escribe un comentario...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Ana Martínez" class="post-avatar">
+                    <div class="post-user-info">
+                        <div class="post-user-name">Ana Martínez</div>
+                        <div class="post-time">Hace 2 días · León</div>
+                    </div>
+                    <div class="post-options-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">Recorriendo las calles coloniales de León, Nicaragua. La arquitectura de esta ciudad es simplemente impresionante. Cada rincón cuenta una historia de nuestro pasado. La Catedral de León, con su fachada barroca, es una joya arquitectónica que no puedes dejar de visitar. #León #Nicaragua #Historia</p>
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Catedral de León" class="post-image">
+                </div>
+                <div class="post-stats">
+                    <span><i class="fas fa-heart"></i> 278 personas</span>
+                    <span><i class="fas fa-comment"></i> 35 comentarios</span>
+                    <span><i class="fas fa-share"></i> 22 veces compartido</span>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Me gusta</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comentar</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Compartir</span>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodríguez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Carlos Rodríguez</div>
+                            <div class="comment-text">¡León es una ciudad fascinante! La historia que se respira en cada calle es increíble.</div>
+                            <div class="comment-time">Hace 1 día</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="add-comment-avatar">
+                        <input type="text" class="add-comment-input" placeholder="Escribe un comentario...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="José López" class="post-avatar">
+                    <div class="post-user-info">
+                        <div class="post-user-name">José López</div>
+                        <div class="post-time">Hace 3 días · Granada</div>
+                    </div>
+                    <div class="post-options-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">Disfrutando de un atardecer en el lago de Granada. Los colores del reflejo del agua en las casas coloniales crean un escenario mágico. Nicaragua tiene una belleza que enamora a primera vista. #Granada #Nicaragua #Atardecer</p>
+                    <img src="https://images.unsplash.com/photo-1564564267028-f0e28c3b42d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Lago de Granada" class="post-image">
+                </div>
+                <div class="post-stats">
+                    <span><i class="fas fa-heart"></i> 421 personas</span>
+                    <span><i class="fas fa-comment"></i> 53 comentarios</span>
+                    <span><i class="fas fa-share"></i> 38 veces compartido</span>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Me gusta</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comentar</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Compartir</span>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Laura Sánchez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Laura Sánchez</div>
+                            <div class="comment-text">¡Qué foto tan hermosa! Granada es realmente uno de los tesoros de Nicaragua.</div>
+                            <div class="comment-time">Hace 2 días</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Ana Martínez" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-user">Ana Martínez</div>
+                            <div class="comment-text">¿Cuál es el mejor lugar para tomar fotos del atardecer en Granada?</div>
+                            <div class="comment-time">Hace 1 día</div>
+                        </div>
+                    </div>
+                    <div class="add-comment">
+                        <img src="https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="María García" class="add-comment-avatar">
+                        <input type="text" class="add-comment-input" placeholder="Escribe un comentario...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat lateral -->
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="chat-title">Mensajes</div>
+                <div class="chat-close" id="chatClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="chat-search">
+                <input type="text" placeholder="Buscar conversaciones...">
+            </div>
+            <div class="chat-conversations">
+                <div class="conversation unread">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Carlos Rodríguez" class="conversation-avatar">
+                    <div class="conversation-info">
+                        <div class="conversation-name">Carlos Rodríguez</div>
+                        <div class="conversation-preview">¿Vamos juntos al Volcán Masaya el fin de semana?</div>
+                    </div>
+                    <div class="conversation-time">12:30</div>
+                </div>
+                <div class="conversation">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Ana Martínez" class="conversation-avatar">
+                    <div class="conversation-info">
+                        <div class="conversation-name">Ana Martínez</div>
+                        <div class="conversation-preview">Gracias por las recomendaciones de Ometepe</div>
+                    </div>
+                    <div class="conversation-time">Ayer</div>
+                </div>
+                <div class="conversation unread">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Laura Sánchez" class="conversation-avatar">
+                    <div class="conversation-info">
+                        <div class="conversation-name">Laura Sánchez</div>
+                        <div class="conversation-preview">Te envié la información de los hoteles en San Juan del Sur</div>
+                    </div>
+                    <div class="conversation-time">Lunes</div>
+                </div>
+                <div class="conversation">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="José López" class="conversation-avatar">
+                    <div class="conversation-info">
+                        <div class="conversation-name">José López</div>
+                        <div class="conversation-preview">¿Conoces algún buen restaurante en Granada?</div>
+                    </div>
+                    <div class="conversation-time">Domingo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de chat flotante -->
+    <button class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">3</span>
+    </button>
+
+    <!-- Notificaciones -->
+    <div class="notifications-container" id="notificationsContainer">
+        <div class="notifications-header">
+            <div class="notifications-title">Notificaciones</div>
+            <div class="notifications-mark-read">Marcar todas como leídas</div>
+        </div>
+        <div class="notification unread">
+            <div class="notification-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-text">A <strong>Carlos Rodríguez</strong> le gustó tu publicación del Volcán Masaya</div>
+                <div class="notification-time">Hace 2 horas</div>
+            </div>
+        </div>
+        <div class="notification unread">
+            <div class="notification-icon">
+                <i class="fas fa-comment"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-text"><strong>Ana Martínez</strong> comentó tu publicación</div>
+                <div class="notification-time">Hace 5 horas</div>
+            </div>
+        </div>
+        <div class="notification unread">
+            <div class="notification-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-text"><strong>Laura Sánchez</strong> empezó a seguirte</div>
+                <div class="notification-time">Hace 1 día</div>
+            </div>
+        </div>
+        <div class="notification">
+            <div class="notification-icon">
+                <i class="fas fa-share"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-text"><strong>José López</strong> compartió tu publicación</div>
+                <div class="notification-time">Hace 2 días</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de nueva publicación -->
+    <div class="modal" id="createPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Crear publicación</div>
+                <div class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <textarea class="modal-textarea" placeholder="¿Qué estás planeando en Nicaragua?"></textarea>
+                <div class="modal-options">
+                    <div class="modal-post-options">
+                        <div class="modal-post-option">
+                            <i class="fas fa-image"></i>
+                            <span>Foto</span>
+                        </div>
+                        <div class="modal-post-option">
+                            <i class="fas fa-video"></i>
+                            <span>Video</span>
+                        </div>
+                        <div class="modal-post-option">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Ubicación</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-cancel" id="modalCancel">Cancelar</button>
+                <button class="modal-post" id="modalPost">Publicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bandera de Nicaragua decorativa -->
+    <div class="nicaragua-flag"></div>
+
+    <script src="../static/js/comunidad.js"></script>
+</body>
+</html>

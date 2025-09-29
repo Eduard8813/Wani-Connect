@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Sistema de Reservas de Terminales - Wanni Connect</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/terminales-nacionales.css">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div id="appContainer" style="display: none;">
+        <div class="user-info">
+            <img src="https://picsum.photos/seed/user123/30/30.jpg" alt="Usuario">
+            <span id="userInfo">Usuario</span>
+            <button class="btn btn-danger btn-sm" onclick="logout()">Salir</button>
+        </div>
+        
+        <div class="container">
+            <header>
+                <h1>Sistema de Reservas de Terminales</h1>
+                <p class="subtitle">Wanni Connect - Reserva tu lugar en las terminales de buses de Nicaragua</p>
+            </header>
+            
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            
+            <div id="loadingMessage" class="loading">Cargando datos...</div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+            <div id="endpointStatus"></div>
+        </div>
+    </div>
+
+    <!-- Modal para detalles de la terminal -->
+    <div id="terminalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTerminalModal()">&times;</span>
+            <div class="terminal-details">
+                <div class="terminal-image">
+                    <img id="terminalImage" src="" alt="Terminal">
+                </div>
+                <div class="terminal-info">
+                    <h2 class="terminal-name" id="terminalName"></h2>
+                    <p class="terminal-location" id="terminalLocation"></p>
+                    <div class="terminal-codigo" id="terminalCodigo"></div>
+                    
+                    <div class="terminal-extra-info">
+                        <div class="info-row">
+                            <span class="info-label">Latitud:</span>
+                            <span class="info-value" id="terminalLatitud"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Longitud:</span>
+                            <span class="info-value" id="terminalLongitud"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Dirección:</span>
+                            <span class="info-value" id="terminalDireccion">No especificada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de buses disponibles -->
+            <div class="bus-details" id="busDetails" style="display: none;">
+                <h3 class="bus-title">Buses Disponibles</h3>
+                <div id="busesList"></div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-info" onclick="mostrarValidarCodigo()">Validar Reserva</button>
+                <button class="btn btn-warning" onclick="mostrarConductorModal()">Liberar Bus</button>
+                <button class="btn btn-success" onclick="irATerminal()">🗺️ Ir a Terminal</button>
+                <button class="btn btn-secondary" onclick="closeTerminalModal()">Cerrar</button>
+            </div>
+            
+            <div class="lugares-container" id="lugaresContainer" style="display: none;">
+                <h3>Selecciona un lugar:</h3>
+                
+                <!-- Resumen de selección -->
+                <div class="resumen-seleccion" id="resumenSeleccion" style="display: none;">
+                    <h4>Resumen de tu selección:</h4>
+                    <div class="resumen-item">
+                        <span class="resumen-label">Bus:</span>
+                        <span class="resumen-valor" id="resumenBus">-</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span class="resumen-label">Destino:</span>
+                        <span class="resumen-valor" id="resumenDestino">-</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span class="resumen-label">Hora de salida:</span>
+                        <span class="resumen-valor" id="resumenHora">-</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span class="resumen-label">Lugar seleccionado:</span>
+                        <span class="resumen-valor" id="resumenLugar">-</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span class="resumen-label">Precio por asiento:</span>
+                        <span class="resumen-valor" id="resumenPrecio">-</span>
+                    </div>
+                </div>
+                
+                <!-- Contador de lugares disponibles -->
+                <div class="lugares-info">
+                    <div class="lugares-contador">
+                        <div class="lugares-contador-valor" id="lugaresDisponiblesValor">0</div>
+                        <div>Lugares disponibles</div>
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-disponible"></div>
+                        <span>Disponible</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-reservado"></div>
+                        <span>Reservado</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-seleccionado"></div>
+                        <span>Seleccionado</span>
+                    </div>
+                </div>
+                
+                <div class="lugares-grid" id="lugaresGrid"></div>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="closeLugares()">Cancelar</button>
+                    <button class="btn btn-success" id="confirmarReservaBtn" onclick="confirmarReserva()" disabled>Confirmar Reserva</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div id="confirmacionModal" class="modal confirmacion-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeConfirmacionModal()">&times;</span>
+            <h2>Reserva Confirmada</h2>
+            <p>Tu reserva ha sido realizada con éxito.</p>
+            <div class="codigo-reserva" id="codigoReserva"></div>
+            <p>Hemos enviado un correo electrónico con los detalles de tu reserva.</p>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="closeConfirmacionModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para pago -->
+    <div id="pagoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePagoModal()">&times;</span>
+            <h2>💳 Procesar Pago</h2>
+            
+            <div class="resumen-pago" style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h4>📋 Resumen de tu reserva:</h4>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>Bus:</strong></span>
+                    <span id="pagoBus">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>Destino:</strong></span>
+                    <span id="pagoDestino">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>Asientos:</strong></span>
+                    <span id="pagoAsientos">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>Cantidad:</strong></span>
+                    <span id="pagoCantidadAsientos">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>Subtotal:</strong></span>
+                    <span id="pagoSubtotal">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span><strong>IVA:</strong></span>
+                    <span id="pagoIVA">C$50.00 NIO</span>
+                </div>
+                <hr>
+                <div style="display: flex; justify-content: space-between; margin: 10px 0; font-size: 1.2em; font-weight: bold;">
+                    <span>Total a pagar:</span>
+                    <span id="pagoMonto" style="color: #1976d2;">$0.00 USD</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="pagoMoneda">Moneda:</label>
+                <select id="pagoMoneda" class="form-control" onchange="actualizarMontoTotal()">
+                    <option value="USD">Dólares (USD)</option>
+                    <option value="NIO">Córdobas (NIO)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="pagoEmail">Email:</label>
+                <input type="email" id="pagoEmail" class="form-control" placeholder="tu@email.com" required>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="closePagoModal()">Cancelar</button>
+                <button class="btn btn-success" onclick="procesarPago()">💳 Procesar Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para conductor -->
+    <div id="conductorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeConductorModal()">&times;</span>
+            <h2>Panel del Conductor</h2>
+            <p>Selecciona el bus que ha salido de la terminal para liberar todos sus asientos:</p>
+            
+            <div id="conductorBusesList" class="mb-3">
+                <div class="loading">Cargando buses...</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="closeConductorModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para validar código -->
+    <div id="validarCodigoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeValidarCodigoModal()">&times;</span>
+            <h2>Validar Reserva</h2>
+            
+            <!-- Selector de método de validación -->
+            <div class="validation-method-selector">
+                <button class="btn btn-primary method-btn active" onclick="selectValidationMethod('codigo')" id="btnCodigo">
+                    <i class="fas fa-keyboard"></i> Código
+                </button>
+                <button class="btn btn-secondary method-btn" onclick="selectValidationMethod('qr')" id="btnQR">
+                    <i class="fas fa-qrcode"></i> QR
+                </button>
+            </div>
+            
+            <!-- Validación por código -->
+            <div id="validacionCodigo" class="validation-section">
+                <div class="form-group">
+                    <label for="codigoValidar">Código de Reserva:</label>
+                    <input type="text" id="codigoValidar" class="form-control" placeholder="Ingresa el código de reserva">
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="validarCodigo()">Validar Código</button>
+                </div>
+            </div>
+            
+            <!-- Validación por QR -->
+            <div id="validacionQR" class="validation-section" style="display: none;">
+                <div class="form-group">
+                    <label for="qrFile">Seleccionar imagen QR:</label>
+                    <input type="file" id="qrFile" class="form-control" accept="image/*" onchange="previewQR(this)">
+                </div>
+                <div id="qrPreview" class="qr-preview" style="display: none;">
+                    <img id="qrImage" src="" alt="QR Preview" style="max-width: 200px; max-height: 200px; border-radius: 8px;">
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="validarQR()" id="validarQRBtn" disabled>Validar QR</button>
+                </div>
+            </div>
+            
+            <div id="resultadoValidacion" class="" style="display: none; margin: 15px 0; padding: 10px; border-radius: 5px;"></div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="closeValidarCodigoModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificación -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Pantalla de carga global -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loadingText">Cargando...</div>
+            <div class="loading-subtext" id="loadingSubtext">Por favor espera</div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Routing Machine -->
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="../static/js/terminales-nacionales.js"></script>
+</body>
+</html>

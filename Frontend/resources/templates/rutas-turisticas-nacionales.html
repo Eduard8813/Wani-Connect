@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Mapa de Sitios Turísticos</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="../static/css/rutas-turisticas-nacionales.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Contenido principal -->
+        <div id="mainContent">
+            <div class="container">
+                <div class="navbar">
+                    <div class="user-info" id="userInfo">Usuario</div>
+                    <div>
+                        <button class="btn btn-primary" onclick="validarReserva()">Validar Reserva</button>
+                        <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+                    </div>
+                </div>
+                
+                <header>
+                    <h1>Mapa de Sitios Turísticos</h1>
+                    <p class="subtitle">Explora los lugares más interesantes de la región</p>
+                </header>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalSites">0</div>
+                        <div class="stat-label">Sitios Totales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="loadedSites">0</div>
+                        <div class="stat-label">Sitios Cargados</div>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <div id="map"></div>
+                    <div id="routePanel" class="route-panel" style="display: none;">
+                        <button class="close-route" onclick="clearRoute()">×</button>
+                        <h4>Información de la ruta</h4>
+                        <div class="route-info">
+                            <div class="route-distance">Distancia: <span id="routeDistance">-</span></div>
+                            <div class="route-time">Tiempo estimado: <span id="routeTime">-</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-panel">
+                    <h2>Lista de Sitios Turísticos</h2>
+                    <div id="loadingMessage" class="loading">Cargando sitios turísticos...</div>
+                    <div id="errorMessage" class="error" style="display: none;"></div>
+                    <ul id="siteList" class="site-list" style="display: none;"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para detalles del sitio -->
+    <div id="siteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="siteDetailsContainer"></div>
+        </div>
+    </div>
+
+    <!-- Modal de opciones de reserva -->
+    <div id="reservationOptionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReservationOptionsModal()">&times;</span>
+            <h2>💳 Opciones de Reserva</h2>
+            
+            <div class="reservation-options">
+                <h3>Selecciona una opción:</h3>
+                
+                <div class="reservation-option selected" onclick="selectReservationOption('payment')">
+                    <input type="radio" name="reservationOption" value="payment" checked>
+                    <div>
+                        <strong>Reservar y Pagar</strong>
+                        <p>Realiza el pago con PayPal para confirmar tu reserva</p>
+                    </div>
+                </div>
+                
+                <div class="reservation-option" onclick="selectReservationOption('direct')">
+                    <input type="radio" name="reservationOption" value="direct">
+                    <div>
+                        <strong>Reserva Directa</strong>
+                        <p>Realiza la reserva sin procesar pago (para uso administrativo)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulario de información del usuario -->
+            <div class="user-info-form">
+                <label for="userEmailInput">Email:</label>
+                <input type="email" id="userEmailInput" class="form-control" placeholder="tu@email.com" value="">
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-danger" onclick="closeReservationOptionsModal()">Cancelar</button>
+                <button class="btn btn-success" onclick="proceedWithReservation()">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de pago -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-header">
+                <h2>💳 Procesar Pago</h2>
+                <span class="close" onclick="closePaymentModal()">&times;</span>
+            </div>
+            
+            <div id="paymentError" class="error-message" style="display: none;"></div>
+            
+            <div class="payment-summary">
+                <h3>Resumen de la Reserva</h3>
+                <div class="payment-summary-row">
+                    <span>Sitio Turístico:</span>
+                    <span id="paymentSiteName">-</span>
+                </div>
+                <div class="payment-summary-row">
+                    <span>Código:</span>
+                    <span id="paymentSiteCode">-</span>
+                </div>
+                
+                <div class="ticket-quantity">
+                    <label for="ticketQuantity">Cantidad de entradas:</label>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="ticketQuantity" class="quantity-input" value="1" min="1" max="10" onchange="updatePaymentSummary()">
+                        <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+                
+                <div class="currency-selector">
+                    <label>Moneda:</label>
+                    <div class="currency-options">
+                        <div class="currency-option selected" onclick="selectCurrency('USD')">
+                            <input type="radio" name="currency" value="USD" checked>
+                            <span>Dólares (USD)</span>
+                        </div>
+                        <div class="currency-option" onclick="selectCurrency('NIO')">
+                            <input type="radio" name="currency" value="NIO">
+                            <span>Córdobas (NIO)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-summary-row">
+                    <span>Precio por entrada:</span>
+                    <span id="paymentTicketPrice">-</span>
+                </div>
+                <div class="payment-summary-row">
+                    <span>Subtotal:</span>
+                    <span id="paymentSubtotal">-</span>
+                </div>
+                <div class="payment-summary-row">
+                    <span>IVA (15%):</span>
+                    <span id="paymentTax">-</span>
+                </div>
+                <div class="payment-summary-row total">
+                    <span>Total a Pagar:</span>
+                    <span id="paymentTotal">-</span>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h3>Métodos de Pago</h3>
+                <div class="payment-method selected" onclick="selectPaymentMethod('paypal')">
+                    <div class="payment-method-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="#003087">
+                            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .759-.657h3.932c2.6 0 4.49 1.21 4.49 3.738 0 1.48-.669 2.554-1.6 3.311-.8.65-1.874.958-3.096.958h-1.647l-.631 3.738a.77.77 0 0 1-.759.657H5.73a.641.641 0 0 1-.633-.74l.631-3.738h1.647c1.223 0 2.297-.308 3.096-.958.931-.757 1.6-1.831 1.6-3.311 0-2.528-1.89-3.738-4.49-3.738H5.701L3.103 20.597h3.973a.641.641 0 0 1 .633.74.641.641 0 0 1-.633.74zm9.633-7.483h-2.845a.641.641 0 0 0-.633.74l.316 1.869a.77.77 0 0 0 .759.657h2.845a.641.641 0 0 0 .633-.74l-.316-1.869a.77.77 0 0 0-.759-.657zm-1.9-11.243a.641.641 0 0 0-.633.74l.316 1.869a.77.77 0 0 0 .759.657h2.845a.641.641 0 0 0 .633-.74l-.316-1.869a.77.77 0 0 0-.759-.657h-2.845zm5.386 0a.641.641 0 0 0-.633.74l.316 1.869a.77.77 0 0 0 .759.657h2.845a.641.641 0 0 0 .633-.74l-.316-1.869a.77.77 0 0 0-.759-.657h-2.845z"/>
+                        </svg>
+                    </div>
+                    <div class="payment-method-info">
+                        <div class="payment-method-name">PayPal</div>
+                        <div class="payment-method-description">Paga de forma segura con tu cuenta de PayPal</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-actions">
+                <button class="btn btn-danger" onclick="closePaymentModal()">Cancelar</button>
+                <button class="paypal-button" onclick="processPayment()">Pagar con PayPal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de reserva -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeConfirmationModal()">&times;</span>
+            <h2>✅ Reserva Confirmada</h2>
+            <div id="confirmationDetails"></div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="closeConfirmationModal()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Procesando...</div>
+    </div>
+
+    <!-- Mensaje de procesamiento -->
+    <div id="processingMessage" class="processing-message" style="display: none;">
+        <h3>Procesando tu reserva...</h3>
+        <p>Por favor espera mientras procesamos tu solicitud y enviamos el correo de confirmación.</p>
+        <p>Esto puede tardar unos minutos.</p>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    
+    <script src="../static/js/rutas-turisticas-nacionales.js"></script>
+</body>
+</html>

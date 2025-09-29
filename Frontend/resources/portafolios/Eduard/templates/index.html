@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduard Mora - Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="https://github.com/Eduard8813">Eduard Mora</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#curriculum">Curriculum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Floating Text -->
+    <section id="home" class="floating-text">
+    <canvas id="network"></canvas>
+        <div class="text-center">
+            <h1 class="name-text">EDUARD MORA</h1>
+            <p class="title-text">Ingeniería Electrónica & Backend</p>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Backend Development</h3>
+                        <p>Desarrollador en formación en programación del lado del servidor, con experiencia inicial en tecnologías como Java, Spring Boot, Django y PHP. Aunque mi camino en el backend está en constante evolución, ya combino precisión técnica con una sensibilidad creativa que transforma cada proyecto en una experiencia significativa. He trabajado con frameworks como Spring Boot y Django, diseñando arquitecturas escalables y eficientes que responden con elegancia a los desafíos del mundo real. Mi experiencia incluye la gestión avanzada de entornos, estructuras de plantillas, y la integración de sistemas IoT con ESP32, firmware y protocolos de bajo nivel.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>Electrónica</h3>
+                        <p>Me especializo en dar vida a los circuitos y comprender el lenguaje silencioso de los dispositivos. Tengo experiencia práctica con microcontroladores como el ESP32, dominando procesos de programación, comunicación serial, y  protocolos de bajo nivel asi como controles automatizados con PLC, Redes y Comunicaciones. Enfrento cada reto con paciencia y método. Mi enfoque combina análisis riguroso con intuición técnica, permitiéndome resolver fallos complejos y optimizar el rendimiento de sistemas embebidos.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Front-end Development</h3>
+                        <p>Desarrollador en formación en el área de diseño web, con experiencia inicial en tecnologías modernas como React. Actualmente me enfoco en construir interfaces dinámicas y responsivas, explorando buenas prácticas de diseño, componentes reutilizables y gestión de estado. Mi objetivo es crear experiencias visuales que no solo funcionen bien, sino que conecten con el usuario. Aunque estoy dando mis primeros pasos en el frontend, aplico la misma dedicación y curiosidad que me caracterizan en el backend, buscando siempre aprender, iterar y mejorar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2 class="section-title">Portfolio</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <img src="../static/images/Tecnoterra.png" alt="Dashboard de monitoreo industrial con gráficos en tiempo real y paneles de control" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Sitio web para el monitoreo de cultivos.</h3>
+                            <p>Sitio web para visualización de datos de sensores en tiempo real con alertas y activacion de sistemas de riego.</p>
+                            <h4>Lenguajes de desarrollo usados</h4>
+                            <p>HTML/CSS/JavaScript/PHP/C++/Apache/MySQL/Git</p>
+                            <!--<button class="btn btn-light" data-bs-toggle="modal" data-bs-l="portafolio/portafolio1">Ver detalles</button>-->
+                            <a href="portafolio1.html" class="btn btn-secondary">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <img src="../static/images/clinica.png" alt="Arquitectura de microservicios con nodos conectados y base de datos distribuida" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Control de terminal para citas medicas</h3>
+                            <p>Pequeño programa de consola para registro y manejo de doctores en una localidad.</p>
+                            <h4>Lenguajes de desarrollo usados</h4>
+                            <p>Python/Sqlite3</p>
+                            <!--<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#projectModal2">Ver detalles</button>-->
+                            <a href="portafolio2.html" class="btn btn-secondary">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <img src="../static/images/webventa.png" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Sitio web para la venta de pithaya</h3>
+                            <p>Pagina para la venta del cultivo de pithaya.</p>
+                            <h4>Lenguajes de desarrollo usados</h4>
+                            <p>HTML/CSS</p>
+                            <!--<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#projectModal3">Ver detalles</button>-->
+                            <a href="portafolio3.html" class="btn btn-secondary">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-item">
+                        <img src="../static/images/web.png" class="portfolio-img">
+                        <div class="portfolio-overlay">
+                            <h3>Sitio web de la empresa Concrelisto S.A</h3>
+                            <p>Pagina de la empresa Concrelisto para visualizar sus productos, localidad entre otros puntos.</p>
+                            <h4>Lenguajes de desarrollo usados</h4>
+                            <p>HTML/CSS/JavaScript/PHP/C++/Apache/MySQL/Git</p>
+                            <!--<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#projectModal4">Ver detalles</button>-->
+                            <a href="portafolio4.html" class="btn btn-secondary">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row about-content">
+                <div class="col-md-6">
+                    <img src="../static/images/perfil.png" alt="Retrato profesional de Eduard Mora, ingeniero electrónico y desarrollador backend" class="profile-img">
+                </div>
+                <div class="col-md-6">
+                    <h3>Ingeniero Electrónico & Backend</h3>
+                    <p>Soy un profesional apasionado por la intersección entre la tecnología electrónica y el desarrollo de software. con cierta experiencia en el diseño de sistemas embebidos y el desarrollo de Paginas, sitios y aplicaciones web.</p>
+                    <p>Mi enfoque combina conocimientos en hardware y software para crear soluciones completas que abordan problemas complejos. Me especializo en arquitecturas de microcontroladores, monitoreo de sistemas industriales, automatización de procesos, y Control de sistema de redes.</p>
+                    <p>Cuando no estoy programando o diseñando circuitos, disfruto de la música electrónica y participar en comunidades de desarrollo tecnológico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="section">
+        <div class="container">
+            <h2 class="section-title">Curriculum</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Ingeniero Senior de Sistemas</h3>
+                    <span class="timeline-date">2021 - Presente</span>
+                    <p>TechSolutions Corp.</p>
+                    <p>Liderazgo en el desarrollo de sistemas de monitoreo industrial y arquitectura de microservicios para plataformas IoT.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Ingeniero Electrónico</h3>
+                    <span class="timeline-date">2018 - 2021</span>
+                    <p>Industrial Automation Inc.</p>
+                    <p>Diseño e implementación de sistemas de control y automatización para procesos industriales.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Desarrollador Backend</h3>
+                    <span class="timeline-date">2016 - 2018</span>
+                    <p>DevTech Solutions</p>
+                    <p>Desarrollo de APIs y servicios backend para aplicaciones empresariales.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Educación</h3>
+                    <span class="timeline-date">2011 - 2016</span>
+                    <p>Universidad Tecnológica Nacional</p>
+                    <p>Licenciatura en Ingeniería Electrónica con especialización en Sistemas Embebidos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Correo electrónico">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Asunto">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Mensaje"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-custom">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 contact-info">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div>
+                            <h5>Ubicación</h5>
+                            <p>Managua, Nicaragua</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div>
+                            <h5>Correo</h5>
+                            <p>Eduardmora88@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <div>
+                            <h5>Teléfono</h5>
+                            <p>+505 8900 - 7093</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-icons mb-3">
+                <a href="https://discord.gg/eduardmora8813"><i class="fab fa-discord"></i></a>
+                <a href="https://github.com/Eduard8813"><i class="fab fa-github"></i></a>
+                <a href="https://tiktok.com/@eduardmora920"><i class="fab fa-tiktok"></i></a>
+                <a href="https://instagram.com/eduard.573"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2023 Eduard Mora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Similar modals for other projects would go here -->
+
+    <script src="../static/js/src.js"></script>
+</body>
+</html>
