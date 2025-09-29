@@ -213,10 +213,6 @@ Utilizamos Git para el control de versiones. Todas las versiones están disponib
 
 *Haga clic en la imagen para ver el video completo en YouTube*
 
-## 📹 Diagrama de flujos
-
-![Diagrama de flijo del sistema](https://drive.google.com/file/d/1Z-j-fwnknF3AzvfZIcz3zqr7qf0_DiCI/view?usp=drive_link)
-
 ##  Autores
 
 El proyecto fue desarrollado por un equipo multidisciplinario:
