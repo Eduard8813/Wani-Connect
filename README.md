@@ -15,6 +15,10 @@
 - **Enfoque en UX**: Experiencia de usuario optimizada para un turismo auténtico y transformador
 - **Seguridad Avanzada**: Protocolos robustos de protección de datos
 
+## Utilidada
+
+Wani Connect es una plataforma web con un enorme potencial para transformar la experiencia turística en Nicaragua. Su principal utilidad radica en centralizar toda la información relevante para turistas nacionales e internacionales, permitiéndoles planificar sus viajes de forma eficiente y personalizada. La app integra sitios históricos, culturales y turísticos del país, ofreciendo una vitrina digital que promueve tanto destinos populares como aquellos menos conocidos, fomentando así un turismo más sostenible y distribuido. Además, facilita la gestión del transporte público mediante rutas, horarios y paradas actualizadas, al tiempo que conecta a los usuarios con agencias de vehículos privados para reservas rápidas. Uno de sus mayores aportes es el impulso al comercio local: cada emprendedor o comerciante puede registrar su negocio en la plataforma, aumentando su visibilidad ante miles de potenciales clientes. Desde el punto de vista técnico, Wani Connect puede incorporar funcionalidades como perfiles de usuario, recomendaciones inteligentes, integración con APIs externas (mapas, clima, pagos), y un panel administrativo para comerciantes. También puede escalar fácilmente hacia nuevas áreas como reservas de hospedaje, experiencias gastronómicas o contratación de guías turísticos. En conjunto, esta aplicación no solo mejora la experiencia del viajero, sino que también dinamiza la economía local, digitaliza negocios rurales y ofrece datos valiosos para la toma de decisiones estratégicas en el sector turismo.
+
 ##  Estructura del Repositorio
 
 ```
