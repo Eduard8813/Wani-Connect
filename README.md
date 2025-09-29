@@ -7,7 +7,7 @@
 
 **Wani Connect** es una plataforma web innovadora que funciona como asistente guía personal, diseñada para transformar el turismo en Nicaragua mediante la provisión de logística completa y segura para viajes. Ofrece un mapa inteligente con rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas, facilitando la gestión de transporte, hospedaje y experiencias exclusivas.
 
-## 🌟 Características Principales
+##  Características Principales
 
 - **Mapa Inteligente**: Rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas
 - **Gestión Integral**: Facilita transporte, hospedaje y experiencias exclusivas
@@ -15,7 +15,7 @@
 - **Enfoque en UX**: Experiencia de usuario optimizada para un turismo auténtico y transformador
 - **Seguridad Avanzada**: Protocolos robustos de protección de datos
 
-## 📁 Estructura del Repositorio
+##  Estructura del Repositorio
 
 ```
 /Backend
@@ -23,34 +23,34 @@
     ├── src
     │   └── main
     │       ├── java/com/eduard/registro/turismo/app
-    │       │   ├── config        # 🔐 Círculo de protección (CORS, beans, seguridad)
-    │       │   ├── controller    # 🧭 Guías del flujo (rutas y APIs)
-    │       │   ├── dto           # 📦 Mensajeros entre capas
-    │       │   ├── model         # 🏞️ Entidades del dominio turístico
-    │       │   ├── repository    # 🗃️ Portales de acceso a datos
-    │       │   ├── security      # 🛡️ Guardianes de autenticación y filtros
-    │       │   └── service       # ⚙️ Alquimia de la lógica de negocio
+    │       │   ├── config        #     Círculo de protección (CORS, beans, seguridad)
+    │       │   ├── controller    #     Guías del flujo (rutas y APIs)
+    │       │   ├── dto           #     Mensajeros entre capas
+    │       │   ├── model         #     Entidades del dominio turístico
+    │       │   ├── repository    #     Portales de acceso a datos
+    │       │   ├── security      #     Guardianes de autenticación y filtros
+    │       │   └── service       #     Alquimia de la lógica de negocio
     │       └── resources
-    │           └── application.properties # 📜 Configuración del entorno
-    ├── Dockerfile     # 🚢 Contenedor para despliegue ritual
-    ├── pom.xml        # 🧬 ADN del proyecto (dependencias Maven)
-    └── README.md      # 📖 Este mapa espiritual y técnico
+    │           └── application.properties #    Configuración del entorno
+    ├── Dockerfile     #    Contenedor para despliegue ritual
+    ├── pom.xml        #    ADN del proyecto (dependencias Maven)
+    └── README.md      #    Este mapa espiritual y técnico
 
 /Frontend
-├── resource           # 📚 Recursos compartidos
-├── templates          # 🖼️ Vistas generales
-├── portafolios        # 🧑‍🎨 Altares personalizados
-│   ├── Eduard         # 🧠 Arquitectura simbólica y mentoría
-│   ├── Mercedez       # 💃 Estética emocional
-│   ├── Julisa         # 🌸 Narrativa visual
-│   ├── Farubich       # 🔍 Exploración cultural
-│   └── Marjuri        # 🎭 Expresión espiritual
-│       └── static     # 🎨 Imágenes, estilos, scripts únicos
-│       └── templates  # 🖼️ Vistas personalizadas
-└── static             # 🌐 Recursos globales (CSS, JS, imágenes, videos)
+├── resource           #    Recursos compartidos
+├── templates          #    Vistas generales
+├── portafolios        #    Altares personalizados
+│   ├── Eduard         #    Arquitectura simbólica y mentoría
+│   ├── Mercedez       #    Estética emocional
+│   ├── Julisa         #    Narrativa visual
+│   ├── Farubich       #    Exploración cultural
+│   └── Marjuri        #    Expresión espiritual
+│       └── static     #    Imágenes, estilos, scripts únicos
+│       └── templates  #    Vistas personalizadas
+└── static             #    Recursos globales (CSS, JS, imágenes, videos)
 ```
 
-## ⚙️ Pre-requisitos y Configuración
+##  Pre-requisitos y Configuración
 
 ### Entorno de Despliegue
 
@@ -80,7 +80,7 @@
 - **Maven/Gradle**: para gestión de dependencias  
 - **Node.js**: para compilación del frontend (si aplica)
 
-### 🔒 Seguridad del Sistema
+### Seguridad del Sistema
 
 #### Actualizaciones Críticas
 
@@ -98,7 +98,7 @@ CORS (Cross-Origin Resource Sharing) regula cómo el navegador permite que un fr
 - **Credenciales**: Envío seguro de cookies y tokens solo para orígenes confiables  
 - **Cabeceras**: Control estricto de cabeceras para prevenir fugas de información
 
-## 🚀 Guía de Inicio Rápido
+##  Guía de Inicio Rápido
 
 ### Paso 1: Encender el servidor (Backend)
 
@@ -125,11 +125,11 @@ Realiza una acción que consuma datos (inicio de sesión, consulta de lista).
 - Si los datos se muestran correctamente, la integración está funcionando.
 - Si hay problemas, revisa los pasos anteriores para asegurar el funcionamiento.
 
-## 🌐 Despliegue
+## Despliegue
 
 Una vez iniciados los servicios, la aplicación establecerá comunicación entre el frontend y backend. **Nota importante**: Si el servidor no recibe peticiones durante 15 minutos, se apagará automáticamente y deberás repetir los pasos de la guía de inicio.
 
-## ♿ Accesibilidad y Usabilidad
+##  Accesibilidad y Usabilidad
 
 Buenas prácticas implementadas:
 
@@ -138,7 +138,7 @@ Buenas prácticas implementadas:
 - **Rendimiento**: Optimizado para baja latencia y manejo eficiente de datos
 - **Diseño Responsivo**: Interfaz adaptable a diferentes dispositivos y tamaños de pantalla
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 ### Frontend
 - HTML5, CSS3, JavaScript (ES6+)
@@ -152,7 +152,7 @@ Buenas prácticas implementadas:
 - Docker para contenedorización
 - JPA/Hibernate para persistencia de datos
 
-## 🤝 Contribuyendo
+##  Contribuyendo
 
 El proyecto utiliza un flujo de trabajo basado en ramas:
 
@@ -161,17 +161,17 @@ El proyecto utiliza un flujo de trabajo basado en ramas:
 3. Envía un pull request hacia la rama main
 4. Espera la revisión y aprobación del equipo
 
-## 📖 Wiki
+##  Wiki
 
 Documentación adicional y código fuente disponible en:
 [GitHub Repository](https://github.com/Eduard8813/Wani-Connect.git)
 
-## 📦 Versionado
+##  Versionado
 
 Utilizamos Git para el control de versiones. Todas las versiones están disponibles en:
 [Commits History](https://github.com/Eduard8813/Wani-Connect/commits/main)
 
-## 👥 Autores
+##  Autores
 
 El proyecto fue desarrollado por un equipo multidisciplinario:
 
@@ -183,15 +183,15 @@ El proyecto fue desarrollado por un equipo multidisciplinario:
 | **Marjiori Jimenaz**| Administración de Empresas | [Ver Portafolio](#) *(En construcción)*         |
 | **Mercedez Bermudez**| Diseño Gráfico Multimedia  | [Ver Portafolio](#) *(En construcción)*         |
 
-## 📄 Licencia
+##  Licencia
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles.
 
-## 📞 Contacto
+##  Contacto
 
 Para consultas o colaboración:
 
-- **Email**: contacto@wanniconnect.com
+- **Email**: Eduardmora88@gmail.com
 - **Web**: [https://wanniconnect.netlify.app/](https://wanniconnect.netlify.app/)
 - **GitHub**: [https://github.com/Eduard8813/Wani-Connect](https://github.com/Eduard8813/Wani-Connect)
 
