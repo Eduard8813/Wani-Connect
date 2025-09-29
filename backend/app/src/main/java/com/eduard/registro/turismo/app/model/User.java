@@ -3,14 +3,13 @@ package com.eduard.registro.turismo.app.model;
 import lombok.Data;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -37,6 +36,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference("user-profile")
     private UserProfile profile;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.List<Payment> payments = new java.util.ArrayList<>();
     
     public enum UserRole {
         USER, COMPANY

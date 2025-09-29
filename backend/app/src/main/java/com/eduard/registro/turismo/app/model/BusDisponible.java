@@ -45,6 +45,11 @@ public class BusDisponible {
     @Column(nullable = false)
     private Double precio;
     
+    @NotNull(message = "El precio es obligatorio")
+    @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
+    @Column(name = "precio", nullable = false)
+    private Double precio;
+    
     // Getters y Setters
     public Long getId() {
         return id; 

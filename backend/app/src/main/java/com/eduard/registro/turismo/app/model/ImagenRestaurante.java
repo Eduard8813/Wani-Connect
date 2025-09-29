@@ -3,6 +3,8 @@ package com.eduard.registro.turismo.app.model;
 
 import org.hibernate.validator.constraints.URL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -20,6 +22,7 @@ public class ImagenRestaurante {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurante_id", nullable = false)
+    @JsonIgnore
     private Restaurante restaurante;
     
     // Getters y Setters
