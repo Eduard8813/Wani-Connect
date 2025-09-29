@@ -5,7 +5,7 @@
 [![Spring Boot](https://img.shields.io/badge/spring%20boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Node.js](https://img.shields.io/badge/node.js-18.x-green.svg)](https://nodejs.org/)
 
-**Wani Connect** es una plataforma web innovadora que funciona como asistente guía personal, diseñada para transformar el turismo en Nicaragua mediante la provisión de logística completa y segura para viajes. Ofrece un mapa inteligente con rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas, facilitando la gestión de transporte, hospedaje y experiencias exclusivas.    
+**Wani Connect** es una plataforma web innovadora que funciona como asistente guía personal, diseñada para transformar el turismo en Nicaragua mediante la provisión de logística completa y segura para viajes. Ofrece un mapa inteligente con rutas verificadas que conectan sitios patrimoniales y Ciudades Creativas, facilitando la gestión de transporte, hospedaje y experiencias exclusivas.
 
 ##  Características Principales
 
@@ -40,11 +40,11 @@
 ├── resource           #    Recursos compartidos
 ├── templates          #    Vistas generales
 ├── portafolios        #    Altares personalizados
-│   ├── Eduard         #    Arquitectura simbólica y mentoría
-│   ├── Mercedez       #    Estética emocional
-│   ├── Julisa         #    Narrativa visual
-│   ├── Farubich       #    Exploración cultural
-│   └── Marjuri        #    Expresión espiritual
+│   ├── Eduard         #    Desarrollador del sistema
+│   ├── Mercedez       #    Diseñadora
+│   ├── Julisa         #    Comunicadora
+│   ├── Farubich       #    Desarrollador
+│   └── Marjuri        #    Markenting
 │       └── static     #    Imágenes, estilos, scripts únicos
 │       └── templates  #    Vistas personalizadas
 └── static             #    Recursos globales (CSS, JS, imágenes, videos)
@@ -54,38 +54,39 @@
 
 ### Entorno de Despliegue
 
-| Componente    | Plataforma         |
-|---------------|--------------------|
-| Backend       | Render             |
-| Frontend      | Netlify            |
+| Componente    | Plataforma             |
+|---------------|------------------------|
+| Backend       | Render                 |
+| Frontend      | Netlify                |
 | Base de Datos | somee.com (SQL Server) |
 
 ### Recursos del Servidor
 
-- **CPU**: 2 núcleos  
-- **RAM**: 4 GB  
-- **Almacenamiento**: 20 GB SSD  
-- **Ancho de banda**: 100 Mbps  
+El sistema se esta ejecutando como **Version gratuita**
+- **CPU**: 0.1 núcleos
+- **RAM**: 512 MB
+- **Almacenamiento**: 1 GB SSD 
+- **Ancho de banda**: 50 Mbps
 
 ### Puertos Abiertos (Firewall)
 
-- `80` – HTTP  
-- `443` – HTTPS  
+- `80` – HTTP
+- `443` – HTTPS
 - `1433` – SQL Server (somee.com)
 
 ### Dependencias Técnicas
 
-- **Java**: versión 17 o superior  
-- **Spring Boot**: versión estable recomendada  
-- **Maven/Gradle**: para gestión de dependencias  
+- **Java**: versión 17 o superior
+- **Spring Boot**: versión estable recomendada
+- **Maven/Gradle**: para gestión de dependencias
 - **Node.js**: para compilación del frontend (si aplica)
 
 ### Seguridad del Sistema
 
 #### Actualizaciones Críticas
 
-- **Sistema Operativo**: actualizaciones automáticas activadas  
-- **Java**: versión 17+ con parches de seguridad vigentes  
+- **Sistema Operativo**: actualizaciones automáticas activadas
+- **Java**: versión 17+ con parches de seguridad vigentes
 
 #### Políticas de Seguridad
 
@@ -93,9 +94,9 @@
 
 CORS (Cross-Origin Resource Sharing) regula cómo el navegador permite que un frontend (Netlify) se comunique con un backend en otro dominio (Render). Implementamos las siguientes medidas de seguridad:
 
-- **Origen permitido**: Solo el dominio oficial (`https://wanniconnect.netlify.app/`) puede realizar peticiones  
-- **Métodos permitidos**: Definición explícita de métodos HTTP (GET, POST, PUT, DELETE)  
-- **Credenciales**: Envío seguro de cookies y tokens solo para orígenes confiables  
+- **Origen permitido**: Solo el dominio oficial (`https://wanniconnect.netlify.app/`) puede realizar peticiones
+- **Métodos permitidos**: Definición explícita de métodos HTTP (GET, POST, PUT, DELETE)
+- **Credenciales**: Envío seguro de cookies y tokens solo para orígenes confiables
 - **Cabeceras**: Control estricto de cabeceras para prevenir fugas de información
 
 ##  Guía de Inicio Rápido
@@ -141,9 +142,9 @@ Buenas prácticas implementadas:
 ##  Tecnologías Utilizadas
 
 ### Frontend
-- HTML5, CSS3, JavaScript (ES6+)
+- HTML5, CSS, JavaScript
 - Bootstrap 5 para diseño responsivo
-- Librerías de mapas interactivos
+- Librerías de mapas interactivos con openstreetmap
 
 ### Backend
 - Java 17+
@@ -151,15 +152,6 @@ Buenas prácticas implementadas:
 - Maven para gestión de dependencias
 - Docker para contenedorización
 - JPA/Hibernate para persistencia de datos
-
-##  Contribuyendo
-
-El proyecto utiliza un flujo de trabajo basado en ramas:
-
-1. Crea una nueva rama para tu feature
-2. Realiza los cambios necesarios
-3. Envía un pull request hacia la rama main
-4. Espera la revisión y aprobación del equipo
 
 # Flujo de Trabajo de Desarrollo
 
@@ -174,6 +166,15 @@ mvn clean install
 cd ../Frontend/resource
 npm install
 
+##  Contribuyendo
+
+El proyecto utiliza un flujo de trabajo basado en ramas:
+
+1. Crea una nueva rama para tu feature
+2. Realiza los cambios necesarios
+3. Envía un pull request hacia la rama main
+4. Espera la revisión y aprobación del equipo
+
 # Proceso de Contribución:
 
 - Crear rama feature desde main
@@ -185,6 +186,8 @@ npm install
 
 - Backend: Despliegue automático en Render al mergear a main
 - Frontend: Despliegue automático en Netlify al mergear a main
+
+**Nota importante:** Los servidores realizan automáticamente el despliegue de actualizaciones provenientes de las ramas backend y frontend de forma independiente. Es importante destacar que, en caso de que alguna actualización contenga errores, el servidor cancelará el despliegue y restaurará la versión estable anterior de manera automática.
 
 # Roadmap del Proyecto
 
@@ -212,7 +215,7 @@ Utilizamos Git para el control de versiones. Todas las versiones están disponib
 
 ## 📹 Diagrama de flujos
 
-![Diagrama de flijo del sistema](https://raw.githubusercontent.com/Eduard8813/Wani-Connect/main/Images_proyect/diagram.svg)
+![Diagrama de flijo del sistema](https://github.com/Eduard8813/Wani-Connect/main/Images_proyect/diagram.svg)
 
 
 ##  Autores
@@ -227,10 +230,6 @@ El proyecto fue desarrollado por un equipo multidisciplinario:
 | **Marjiori Jimenaz**| Administración de Empresas | [Ver Portafolio](#) *(En construcción)*         |
 | **Mercedez Bermudez**| Diseño Gráfico Multimedia  | [Ver Portafolio](#) *(En construcción)*         |
 
-##  Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles.
-
 ##  Contacto
 
 Para consultas o colaboración:
@@ -241,4 +240,4 @@ Para consultas o colaboración:
 
 ---
 
-**Wani Connect** © 2025. Todos los derechos reservados. 
+**Wani Connect** © 2025. Todos los derechos reservados.
