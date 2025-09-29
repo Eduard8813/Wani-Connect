@@ -1,22 +1,22 @@
     // Array con los videos locales, sus títulos y tiempos de visualización (en milisegundos)
         const videos = [
         {
-            src: '../static/Videos/managua.mp4',
+            src: '/static/Videos/managua.mp4',
             titulo: 'Nicaragua',
             duracion: 8000 // 8 segundos
         },
         {
-            src: '../static/Videos/nicaragua.mp4',
+            src: '/static/Videos/nicaragua.mp4',
             titulo: 'Nicaragua',
             duracion: 12000 // 12 segundos
         },
         {
-            src: '../static/Videos/Granada.mp4',
+            src: '/static/Videos/Granada.mp4',
             titulo: 'Granada',
             duracion: 10000 // 10 segundos
         },
         {
-            src: '../static/Videos/managua1.mp4',
+            src: '/static/Videos/managua1.mp4',
             titulo: 'Managua',
             duracion: 15000 // 15 segundos
         }

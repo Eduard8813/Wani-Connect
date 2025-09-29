@@ -123,7 +123,7 @@
             markerArray = [];
             
             // Obtener las ubicaciones de los sitios turísticos desde la API
-            fetch('http://localhost:8080/api/sitios-turisticos/ubicaciones', {
+            fetch('https://wani-connect.onrender.com/api/sitios-turisticos/ubicaciones', {
                 headers: {
                     'Authorization': `Bearer ${authToken}`
                 }
@@ -231,7 +231,7 @@
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 segundos de timeout
             
-            fetch(`http://localhost:8080/api/sitios-turisticos/${codigoUnico}`, {
+            fetch(`https://wani-connect.onrender.com/api/sitios-turisticos/${codigoUnico}`, {
                 signal: controller.signal,
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -733,7 +733,7 @@
                 
                 console.log('Enviando datos de pago:', paymentData);
                 
-                const paymentResponse = await fetch('http://localhost:8080/api/payments/create', {
+                const paymentResponse = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -817,7 +817,7 @@
                 
                 console.log('Enviando datos de reserva directa:', reservationData);
                 
-                const reservationResponse = await fetch('http://localhost:8080/api/reservas', {
+                const reservationResponse = await fetch('https://wani-connect.onrender.com/api/reservas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -877,7 +877,7 @@
             
             try {
                 // Confirmar el pago con validación de token
-                const confirmResponse = await fetch(`http://localhost:8080/api/payments/confirm/${currentPaymentId}`, {
+                const confirmResponse = await fetch(`https://wani-connect.onrender.com/api/payments/confirm/${currentPaymentId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -910,7 +910,7 @@
                     cantidadEntradas: quantity
                 };
                 
-                const reservationResponse = await fetch('http://localhost:8080/api/reservas', {
+                const reservationResponse = await fetch('https://wani-connect.onrender.com/api/reservas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -977,7 +977,7 @@
             
             showLoadingOverlay();
             
-            fetch(`http://localhost:8080/api/reservas/validar/${codigoReserva}`, {
+            fetch(`https://wani-connect.onrender.com/api/reservas/validar/${codigoReserva}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${authToken}`

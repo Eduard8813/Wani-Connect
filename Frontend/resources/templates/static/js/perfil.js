@@ -7,7 +7,7 @@
         let editModal;
 
         // API URLs
-        const API_BASE_URL = 'http://localhost:8080/api';
+        const API_BASE_URL = 'https://wani-connect.onrender.com/api';
         const PROFILE_URL = `${API_BASE_URL}/user/profile`;
         const UPLOAD_PHOTO_URL = `${API_BASE_URL}/fotos/subir`;
         const VIEW_PHOTO_URL = `${API_BASE_URL}/fotos/ver`;

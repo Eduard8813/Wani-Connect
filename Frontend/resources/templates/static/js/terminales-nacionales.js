@@ -144,7 +144,7 @@
             
             try {
                 // Cargar terminales
-                const terminalesResponse = await verificarEndpoint('http://localhost:8080/api/terminales-buses', 'Terminales');
+                const terminalesResponse = await verificarEndpoint('https://wani-connect.onrender.com/api/terminales-buses', 'Terminales');
                 
                 if (terminalesResponse.success) {
                     terminalesData = terminalesResponse.data;
@@ -341,7 +341,7 @@
             
             try {
                 // Primero intentar con el endpoint de código único
-                let response = await fetch(`http://localhost:8080/api/buses/terminal/codigo/${codigoUnico}`, {
+                let response = await fetch(`https://wani-connect.onrender.com/api/buses/terminal/codigo/${codigoUnico}`, {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -354,7 +354,7 @@
                     // Buscar la terminal por código único en los datos cargados
                     const terminal = terminalesData.find(t => t.codigoUnico === codigoUnico);
                     if (terminal && terminal.id) {
-                        response = await fetch(`http://localhost:8080/api/buses/terminal/${terminal.id}`, {
+                        response = await fetch(`https://wani-connect.onrender.com/api/buses/terminal/${terminal.id}`, {
                             headers: {
                                 'Authorization': `Bearer ${authToken}`
                             }
@@ -512,7 +512,7 @@
                     throw new Error('No se ha seleccionado un bus válido');
                 }
                 
-                const response = await fetch(`http://localhost:8080/api/reservas-bus/buses/${selectedBus.id}/lugares`, {
+                const response = await fetch(`https://wani-connect.onrender.com/api/reservas-bus/buses/${selectedBus.id}/lugares`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
@@ -797,7 +797,7 @@
                     userEmail: email
                 };
                 
-                const paymentResponse = await fetch('http://localhost:8080/api/payments/create', {
+                const paymentResponse = await fetch('https://wani-connect.onrender.com/api/payments/create', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(paymentData)
@@ -897,7 +897,7 @@
                     emailUsuario: typeof reservaRequest.emailUsuario
                 });
                 
-                const response = await fetch('http://localhost:8080/api/reservas-bus', {
+                const response = await fetch('https://wani-connect.onrender.com/api/reservas-bus', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1073,7 +1073,7 @@
                     showLoadingScreen(true, 'Validando código...', 'Verificando en el servidor');
                     
                     // Validar el código extraído
-                    const response = await fetch(`http://localhost:8080/api/reservas-bus/validar/${codigoExtraido}`, {
+                    const response = await fetch(`https://wani-connect.onrender.com/api/reservas-bus/validar/${codigoExtraido}`, {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${authToken}`,
@@ -1137,7 +1137,7 @@
                     throw new Error('No hay terminal seleccionada');
                 }
                 
-                const response = await fetch(`http://localhost:8080/api/buses/terminal/codigo/${selectedTerminal.codigoUnico}`, {
+                const response = await fetch(`https://wani-connect.onrender.com/api/buses/terminal/codigo/${selectedTerminal.codigoUnico}`, {
                     headers: {
                         'Authorization': `Bearer ${authToken}`
                     }
@@ -1193,7 +1193,7 @@
             showLoadingScreen(true, 'Liberando bus...', 'Eliminando todas las reservas');
             
             try {
-                const response = await fetch(`http://localhost:8080/api/reservas-bus/conductor/liberar-bus/${busId}`, {
+                const response = await fetch(`https://wani-connect.onrender.com/api/reservas-bus/conductor/liberar-bus/${busId}`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
@@ -1253,7 +1253,7 @@
             showLoadingScreen(true, 'Validando código...', 'Verificando reserva en el sistema');
             
             try {
-                const response = await fetch(`http://localhost:8080/api/reservas-bus/validar/${codigo}`, {
+                const response = await fetch(`https://wani-connect.onrender.com/api/reservas-bus/validar/${codigo}`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,

@@ -753,3 +753,121 @@
                 });
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const menuItems = dropdownMenu.querySelectorAll('.dropdown-item');
+    
+    // Mapeo de categorías para búsqueda más efectiva
+    const categoryMap = {
+        'reservas': ['reservas', 'booking', 'reservar'],
+        'hospedaje': ['hospedaje', 'hotel', 'alojamiento', 'hospedarse'],
+        'transporte': ['transporte', 'bus', 'coche', 'moverse', 'viajar'],
+        'restaurantes': ['restaurantes', 'comida', 'gastronomía', 'comer'],
+        'guia': ['guía', 'turismo', 'visitar', 'atractivos'],
+        'comunidad': ['comunidad', 'foro', 'opiniones', 'experiencias'],
+        'perfil': ['perfil', 'cuenta', 'usuario'],
+        'sobre nosotros': ['sobre nosotros', 'información', 'empresa'],
+        'actualizaciones': ['actualizaciones', 'novedades', 'noticias']
+    };
+
+    // Función para mostrar resultados
+    function showResults(query) {
+        // Limpiar resultados anteriores
+        searchResults.innerHTML = '';
+        
+        if (query.trim() === '') {
+            searchResults.style.display = 'none';
+            return;
+        }
+        
+        const normalizedQuery = query.toLowerCase();
+        const matchedItems = [];
+        
+        // Buscar coincidencias en los elementos del menú
+        menuItems.forEach(item => {
+            const itemText = item.textContent.toLowerCase();
+            const itemHref = item.getAttribute('href');
+            
+            // Verificar si hay coincidencia directa
+            if (itemText.includes(normalizedQuery)) {
+                matchedItems.push({
+                    text: itemText,
+                    href: itemHref,
+                    icon: item.querySelector('i').className,
+                    exactMatch: true
+                });
+            }
+            
+            // Verificar coincidencias en categorías
+            for (const [category, keywords] of Object.entries(categoryMap)) {
+                if (itemText.includes(category) && keywords.some(keyword => keyword.includes(normalizedQuery))) {
+                    matchedItems.push({
+                        text: itemText,
+                        href: itemHref,
+                        icon: item.querySelector('i').className,
+                        exactMatch: false
+                    });
+                }
+            }
+        });
+        
+        // Eliminar duplicados
+        const uniqueItems = matchedItems.filter((item, index, self) => 
+            index === self.findIndex(t => t.href === item.href)
+        );
+        
+        if (uniqueItems.length === 0) {
+            const noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = 'No se encontraron resultados para "' + query + '"';
+            searchResults.appendChild(noResults);
+        } else {
+            // Ordenar: coincidencias exactas primero
+            uniqueItems.sort((a, b) => b.exactMatch - a.exactMatch);
+            
+            uniqueItems.forEach(item => {
+                const resultItem = document.createElement('a');
+                resultItem.href = item.href;
+                resultItem.className = 'search-result-item';
+                
+                // Capitalizar primera letra
+                const displayText = item.text.charAt(0).toUpperCase() + item.text.slice(1);
+                
+                resultItem.innerHTML = `
+                    <i class="${item.icon}"></i>
+                    <span>${displayText}</span>
+                `;
+                
+                searchResults.appendChild(resultItem);
+            });
+        }
+        
+        searchResults.style.display = 'block';
+    }
+    
+    // Evento input en el campo de búsqueda
+    searchInput.addEventListener('input', function() {
+        showResults(this.value);
+    });
+    
+    // Ocultar resultados al hacer clic fuera
+    document.addEventListener('click', function(event) {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+    
+    // Prevenir el envío del formulario
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Si hay resultados, redirigir al primero
+        const firstResult = searchResults.querySelector('.search-result-item');
+        if (firstResult) {
+            window.location.href = firstResult.href;
+        }
+    });
+});
