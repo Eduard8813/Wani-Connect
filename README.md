@@ -50,7 +50,6 @@
 └── static             # 🌐 Recursos globales (CSS, JS, imágenes, videos)
 ```
 
-
 ## ⚙️ Pre-requisitos y Configuración
 
 ### Entorno de Despliegue
@@ -79,7 +78,7 @@
 - **Java**: versión 17 o superior  
 - **Spring Boot**: versión estable recomendada  
 - **Maven/Gradle**: para gestión de dependencias  
-- **Node.js**: para compilación del frontend
+- **Node.js**: para compilación del frontend (si aplica)
 
 ### 🔒 Seguridad del Sistema
 
@@ -92,12 +91,12 @@
 
 **CORS Restringido – Panel de Protección de Origen**
 
-CORS (Cross-Origin Resource Sharing) regula cómo el navegador permite que un frontend (Netlify) se comunique con un backend en otro dominio (Render). Implementamos:
+CORS (Cross-Origin Resource Sharing) regula cómo el navegador permite que un frontend (Netlify) se comunique con un backend en otro dominio (Render). Implementamos las siguientes medidas de seguridad:
 
-- **Origen permitido**: Solo el dominio oficial (`https://wanniconnect.netlify.app/`)
-- **Métodos permitidos**: Definición explícita de métodos HTTP (GET, POST, PUT, DELETE)
-- **Credenciales**: Envío seguro de cookies y tokens solo para orígenes confiables
-- **Cabeceras**: Control estricto de cabeceras para evitar fugas de información
+- **Origen permitido**: Solo el dominio oficial (`https://wanniconnect.netlify.app/`) puede realizar peticiones  
+- **Métodos permitidos**: Definición explícita de métodos HTTP (GET, POST, PUT, DELETE)  
+- **Credenciales**: Envío seguro de cookies y tokens solo para orígenes confiables  
+- **Cabeceras**: Control estricto de cabeceras para prevenir fugas de información
 
 ## 🚀 Guía de Inicio Rápido
 
