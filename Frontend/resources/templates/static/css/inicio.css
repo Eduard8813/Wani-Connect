@@ -509,7 +509,7 @@
             margin: 40px auto;
             max-width: 1200px;
             position: relative;
-            height: 400px; /* Reducido al quitar las descripciones */
+            height: 550px; /* Reducido al quitar las descripciones */
             background-color: rgba(44, 62, 80, 0.05);
             border-radius: 20px;
             padding: 20px 0;
