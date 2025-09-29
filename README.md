@@ -194,7 +194,7 @@ El proyecto utiliza un flujo de trabajo basado en ramas:
 ## Próximas Entregas
  - Integración con pasarelas de pago (PayPal)
  - Aplicación Web
- - Soporte multiidioma (español, inglés)
+ - Soporte multiidioma (español, inglés) 
  - Dashboard para administradores
 
 ##  Wiki
