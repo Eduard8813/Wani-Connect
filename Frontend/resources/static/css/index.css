@@ -1,0 +1,175 @@
+    /* Reset básico */
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+
+        body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #000;
+        color: #333;
+        line-height: 1.6;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+        }
+
+        .hero {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        text-align: center;
+        color: white;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .background-video {
+        position: absolute;
+        top: 0; 
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        background-color: #000;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .video-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+        transition: transform 0.5s ease-in-out, opacity 0.4s ease-in-out; /* Tiempos reducidos */
+        transform-origin: center center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        object-fit: cover;
+        background-color: #000;
+        }
+
+        .hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        }
+
+        .hero h1 {
+        font-size: 3em;
+        margin-bottom: 1.2em;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .btn-principal {
+        background-color: #e67e22;
+        color: white;
+        padding: 0.9em 2em;
+        border: none;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: background 0.3s, transform 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        z-index: 10;
+        position: relative;
+        display: inline-block;
+        }
+
+        .btn-principal:hover {
+        background-color: #d35400;
+        transform: translateY(-2px);
+        }
+
+        .video-titulo-actual {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        color: white;
+        padding: 1.5em 1em 1em;
+        font-weight: bold;
+        font-size: 1.8em;
+        text-align: center;
+        z-index: 10;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        transition: opacity 0.5s ease-in-out; /* Tiempo reducido */
+        opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        text-align: center;
+        padding: 1.2em;
+        z-index: 10;
+        }
+
+        /* Mensaje de carga */
+        .loading-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.2em;
+        z-index: 20;
+        display: none;
+        }
+
+        /* Contenedor para transición de video */
+        .transition-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        z-index: 5;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease-in-out; /* Tiempo reducido */
+        }
+
+        .transition-overlay.active {
+        opacity: 1;
+        }
+        
+        /* Clases para la animación de deformación */
+        .video-container.zoom-out {
+        transform: scale(1.05); /* Zoom reducido */
+        opacity: 0.8;
+        }
+        
+        .video-container.zoom-in {
+        transform: scale(1);
+        opacity: 1;
+        }

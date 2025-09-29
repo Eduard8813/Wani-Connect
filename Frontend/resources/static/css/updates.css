@@ -1,0 +1,234 @@
+  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9fb;
+            color: #432766;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .content-area {
+            min-height: 500px;
+            margin-bottom: 60px;
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.8rem;
+            color: #432766;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #ee4777, #97d2dc);
+            border-radius: 2px;
+        }
+        
+        .updates-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .updates-row {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            width: 100%;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #97d2dc #f0f9fb;
+        }
+        
+        .updates-row::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .updates-row::-webkit-scrollbar-track {
+            background: #f0f9fb;
+            border-radius: 10px;
+        }
+        
+        .updates-row::-webkit-scrollbar-thumb {
+            background: #97d2dc;
+            border-radius: 10px;
+        }
+        
+        .update-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(67, 39, 102, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            min-width: 320px;
+            max-width: 380px;
+            flex: 0 0 auto;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .update-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(67, 39, 102, 0.2);
+        }
+        
+        .update-card section {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .update-header {
+            background: linear-gradient(90deg, #436cc5, #97d2dc);
+            color: white;
+            padding: 25px 30px;
+            font-weight: bold;
+            font-size: 1.4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .update-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+        
+        .update-header i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        .update-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .update-date {
+            color: #9d599f;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .update-date i {
+            margin-right: 10px;
+            color: #ee4777;
+        }
+        
+        .update-content {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            flex-grow: 1;
+            color: #555;
+        }
+        
+        .update-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #ee4777, #e775a2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            box-shadow: 0 5px 15px rgba(238, 71, 119, 0.3);
+        }
+        
+        .update-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(238, 71, 119, 0.4);
+            background: linear-gradient(90deg, #e775a2, #ee4777);
+        }
+        
+        .update-button i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .update-button:hover i {
+            transform: translateX(3px);
+        }
+        
+        .scroll-indicator {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .scroll-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .scroll-dot.active {
+            background-color: #97d2dc;
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+            
+            .update-card {
+                min-width: 280px;
+                max-width: 320px;
+                height: 450px;
+            }
+            
+            .update-header {
+                font-size: 1.2rem;
+                padding: 20px 25px;
+            }
+            
+            .update-body {
+                padding: 25px;
+            }
+            
+            .update-content {
+                font-size: 1rem;
+            }
+        }

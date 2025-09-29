@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Hospedaje - Encuentra el lugar perfecto para tu estadía en Nicaragua</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/hospedaje.css">
+</head>
+<body>
+    <!-- Encabezado con estilo nicaragüense -->
+    <div class="hero-section">
+        <div class="container">
+            <h1><span class="nicaragua-flag"></span>Hospedaje</h1>
+            <p>Encuentra el lugar perfecto para tu estadía en Nicaragua</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sección de búsqueda -->
+        <div class="search-section">
+            <h2 class="search-title">
+                <i class="bi bi-search"></i>
+                Buscar Alojamiento
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <select class="form-select" id="tipo">
+                        <option value="">Todos los tipos</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="apartamento">Apartamento</option>
+                        <option value="casa">Casa</option>
+                        <option value="hostal">Hostal</option>
+                        <option value="resort">Resort</option>
+                        <option value="hotel boutique">Hotel Boutique</option>
+                        <option value="resort de lujo">Resort de Lujo</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="fecha-entrada" class="form-label">Fecha de entrada</label>
+                    <input type="date" class="form-control" id="fecha-entrada">
+                </div>
+                <div class="col-md-3">
+                    <label for="fecha-salida" class="form-label">Fecha de salida</label>
+                    <input type="date" class="form-control" id="fecha-salida">
+                </div>
+                <div class="col-md-3">
+                    <label for="habitaciones" class="form-label">Habitaciones</label>
+                    <select class="form-select" id="habitaciones">
+                        <option value="">Cualquiera</option>
+                        <option value="1">1 Habitación</option>
+                        <option value="2">2 Habitaciones</option>
+                        <option value="3">3 Habitaciones</option>
+                        <option value="4+">4+ Habitaciones</option>
+                    </select>
+                </div>
+                <div class="col-12 d-grid">
+                    <button class="btn btn-primary" id="buscar-btn">
+                        <i class="bi bi-search me-2"></i> Buscar hospedajes
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenedor de resultados -->
+        <div id="cargando" class="text-center my-5 d-none">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3">Buscando hospedajes en Nicaragua...</p>
+        </div>
+        
+        <div id="resultados" class="row g-4">
+            <!-- Las tarjetas de hospedaje se insertarán aquí -->
+        </div>
+        
+        <div id="sin-resultados" class="alert alert-info text-center my-5 d-none">
+            <i class="bi bi-info-circle me-2"></i> No hay hospedajes disponibles.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2025 Wani Connect Nicaragua <span class="nicaragua-flag"></span> Todos los derechos reservados</p>
+            <p class="small">Descubre la belleza de Nicaragua en cada hospedaje</p>
+        </div>
+    </div>
+
+    <!-- Modal de Reserva -->
+    <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaModalLabel">Confirmar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="reserva-form">
+                        <h5><i class="bi bi-calendar-check me-2"></i>Detalles de la Reserva</h5>
+                        <div class="reserva-detalles">
+                            <h6>Información del Hospedaje</h6>
+                            <p><strong>Nombre:</strong> <span id="reserva-nombre"></span></p>
+                            <p><strong>Tipo:</strong> <span id="reserva-tipo"></span></p>
+                            <p><strong>Ubicación:</strong> <span id="reserva-ubicacion"></span></p>
+                        </div>
+                        <div class="reserva-detalles">
+                            <h6>Fechas de Estadía</h6>
+                            <p><strong>Fecha de entrada:</strong> <span id="reserva-fecha-entrada"></span></p>
+                            <p><strong>Fecha de salida:</strong> <span id="reserva-fecha-salida"></span></p>
+                            <p><strong>Número de noches:</strong> <span id="reserva-noches"></span></p>
+                        </div>
+                        <div class="reserva-detalles">
+                            <h6>Información de Pago</h6>
+                            <p><strong>Precio por noche:</strong> $<span id="reserva-precio-noche"></span></p>
+                            <p><strong>Subtotal:</strong> $<span id="reserva-subtotal"></span></p>
+                            <p><strong>IVA (15%):</strong> $<span id="reserva-iva"></span></p>
+                            <p><strong>Total a pagar:</strong> $<span id="reserva-total"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="procesar-pago-btn">
+                        <i class="bi bi-credit-card me-2"></i> Procesar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pago -->
+    <div class="modal fade" id="pagoModal" tabindex="-1" aria-labelledby="pagoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pagoModalLabel">Procesar Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="pago-email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="pago-email" placeholder="tu@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pago-metodo" class="form-label">Método de Pago</label>
+                        <select class="form-select" id="pago-metodo">
+                            <option value="paypal">PayPal</option>
+                            <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pago-monedas" class="form-label">Moneda</label>
+                        <select class="form-select" id="pago-monedas">
+                            <option value="USD">Dólares Americanos (USD)</option>
+                            <option value="NIO">Córdobas Nicaragüenses (NIO)</option>
+                        </select>
+                    </div>
+                    <div class="reserva-detalles">
+                        <h6>Resumen del Pago</h6>
+                        <p><strong>Hospedaje:</strong> <span id="pago-hospedaje"></span></p>
+                        <p><strong>Fechas:</strong> <span id="pago-fechas"></span></p>
+                        <p><strong>Número de noches:</strong> <span id="pago-noches"></span></p>
+                        <p><strong>Subtotal:</strong> $<span id="pago-subtotal"></span></p>
+                        <p><strong>IVA (15%):</strong> $<span id="pago-iva"></span></p>
+                        <p><strong>Total:</strong> $<span id="pago-total"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmar-pago-btn">
+                        <i class="bi bi-lock me-2"></i> Confirmar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacionModalLabel">Reserva Confirmada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        <strong>¡Reserva realizada con éxito!</strong>
+                    </div>
+                    <div class="reserva-detalles">
+                        <h6>Detalles de la Reserva</h6>
+                        <p><strong>Código de Reserva:</strong> <span id="confirmacion-codigo"></span></p>
+                        <p><strong>Hospedaje:</strong> <span id="confirmacion-hospedaje"></span></p>
+                        <p><strong>Fechas:</strong> <span id="confirmacion-fechas"></span></p>
+                        <p><strong>Total Pagado:</strong> $<span id="confirmacion-total"></span></p>
+                        <p><strong>Método de Pago:</strong> <span id="confirmacion-metodo"></span></p>
+                    </div>
+                    <div class="mt-3">
+                        <p>Hemos enviado un correo electrónico con los detalles de tu reserva. Por favor, guarda el código de reserva para futuras referencias.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/hospedaje.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Wani Connect - Turismo Nicaragua</title>
+    <link rel="stylesheet" href="../static/css/inicio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="Inicio.html" class="brand">
+            <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Logo Wani Connect" class="brand-logo">
+            <span>Wani Connect Nicaragua</span>
+        </a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="Inicio.html" class="dropdown-item">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="reservas.html" class="dropdown-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Reservas</span>
+            </a>
+            <a href="hospedaje.html" class="dropdown-item">
+                <i class="fas fa-bed"></i>
+                <span>Hospedaje</span>
+            </a>
+            <a href="transporte.html" class="dropdown-item">
+                <i class="fas fa-bus"></i>
+                <span>Transporte</span>
+            </a>
+            <a href="restaurantes.html" class="dropdown-item">
+                <i class="fas fa-utensils"></i>
+                <span>Restaurantes</span>
+            </a>
+            <a href="guia.html" class="dropdown-item">
+                <i class="fas fa-book"></i>
+                <span>Guía</span>
+            </a>
+            <a href="comunidad.html" class="dropdown-item">
+                <i class="fas fa-comments"></i>
+                <span>Comunidad</span>
+            </a>
+            <a href="perfil.html" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="about.html" class="dropdown-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Sobre Nosotros</span>
+            </a>
+            <a href="updates.html" class="dropdown-item">
+                <i class="fas fa-bell"></i>
+                <span>Actualizaciones</span>
+            </a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Conectando experiencias, creando recuerdos</h1>
+        <p>Descubre Nicaragua con Wani Connect, tu plataforma turística integral para reservas, hospedaje, transporte y guías de viaje.</p>
+        
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar destinos, hoteles, actividades en Nicaragua...">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="mision-vision-section">
+        <h2>Misión, Visión y Concepto</h2>
+        <div class="cards">
+            <div>
+                <h3>Misión</h3>
+                <p>Promover el turismo sostenible en Nicaragua, conectando a los viajeros con la auténtica belleza natural, riqueza cultural y calidez de su gente, mientras contribuimos al desarrollo económico local y la conservación del patrimonio.</p>
+            </div>
+
+            <div>
+                <h3>Visión</h3>
+                <p>Ser la aplicación de referencia para el turismo en Centroamérica, transformando la manera en que los visitantes experimentan Nicaragua.</p>
+            </div>
+
+            <div>
+                <h3>Concepto</h3>
+                <p>Nicaragua Travel App es una plataforma digital integral que funciona como guía personalizada para explorar Nicaragua, ofreciendo experiencias auténticas y herramientas prácticas para viajeros conscientes.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="welcome-section">
+        <h2 class="welcome-title">Bienvenido a Nicaragua</h2>
+        <p class="welcome-subtitle">Explora la belleza de nuestros departamentos, cada uno con su propia magia, cultura y paisajes únicos que te esperan.</p>
+        
+        <div class="filters-container" id="filtersContainer">
+            <div class="scroll-indicators">
+                <div class="scroll-indicator">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="scroll-indicator">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            <div class="filters-scroll" id="filtersScroll">
+                <span class="filter-tag">Managua</span>
+                <span class="filter-tag">Granada</span>
+                <span class="filter-tag">León</span>
+                <span class="filter-tag">Masaya</span>
+                <span class="filter-tag">Rivas</span>
+                <span class="filter-tag">Carazo</span>
+                <span class="filter-tag">Chinandega</span>
+                <span class="filter-tag">Estelí</span>
+                <span class="filter-tag">Matagalpa</span>
+                <span class="filter-tag">Jinotega</span>
+                <span class="filter-tag">Nueva Segovia</span>
+                <span class="filter-tag">Madriz</span>
+                <span class="filter-tag">Boaco</span>
+                <span class="filter-tag">Chontales</span>
+                <span class="filter-tag">Río San Juan</span>
+                <span class="filter-tag">Atlántico Norte</span>
+                <span class="filter-tag">Atlántico Sur</span>
+                <!-- Duplicamos los filtros para un movimiento continuo -->
+                <span class="filter-tag">Managua</span>
+                <span class="filter-tag">Granada</span>
+                <span class="filter-tag">León</span>
+                <span class="filter-tag">Masaya</span>
+                <span class="filter-tag">Rivas</span>
+                <span class="filter-tag">Carazo</span>
+                <span class="filter-tag">Chinandega</span>
+                <span class="filter-tag">Estelí</span>
+                <span class="filter-tag">Matagalpa</span>
+                <span class="filter-tag">Jinotega</span>
+                <span class="filter-tag">Nueva Segovia</span>
+                <span class="filter-tag">Madriz</span>
+                <span class="filter-tag">Boaco</span>
+                <span class="filter-tag">Chontales</span>
+                <span class="filter-tag">Río San Juan</span>
+                <span class="filter-tag">Atlántico Norte</span>
+                <span class="filter-tag">Atlántico Sur</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección para mostrar el video y la información del departamento -->
+    <div class="department-content" id="departmentContent">
+        <button class="close-content" id="closeContent">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="video-container">
+            <iframe id="departmentVideo" src="" allowfullscreen></iframe>
+        </div>
+        <div class="info-container">
+            <h3 class="info-title" id="infoTitle">Departamento</h3>
+            <p class="info-text" id="infoText">Texto descriptivo del departamento.</p>
+            <div class="info-highlights">
+                <h4>Atractivos Turísticos</h4>
+                <ul id="attractionsList">
+                    <!-- La lista de atractivos se generará con JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sección del Staff -->
+    <section class="staff-section">
+        <h2 class="staff-title">Acerca del Staff</h2>
+        <p class="staff-subtitle">Conoce a nuestro equipo de profesionales dedicados a hacer de tu viaje a Nicaragua una experiencia inolvidable.</p>
+        
+        <div class="staff-container" id="staffContainer">
+            <div class="scroll-indicators">
+                <div class="scroll-indicator">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="scroll-indicator">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            <div class="staff-scroll" id="staffScroll">
+                <!-- Tarjetas del staff sin descripción -->
+                <div class="staff-card">
+                    <img src="../portafolios/Eduard/static/images/perfil.png" alt="Eduard Mora" class="staff-photo">
+                    <h3 class="staff-name">Eduard Mora</h3>
+                    <p class="staff-position">Ingeniero electronico <br>
+                                             y Desarrollador backend</p>
+                    <a href="../portafolios/Eduard/templates/index.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="../portafolios/Mercedez/static/images/perfil.jpg" alt="Mereces Bermudez" class="staff-photo">
+                    <h3 class="staff-name">Mereces Bermudez</h3>
+                    <p class="staff-position">Diseñadora</p>
+                    <a href="staff/carlos-lopez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="María García" class="staff-photo">
+                    <h3 class="staff-name">María García</h3>
+                    <p class="staff-position">Especialista en Hospedaje</p>
+                    <a href="staff/maria-garcia.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="José Rodríguez" class="staff-photo">
+                    <h3 class="staff-name">José Rodríguez</h3>
+                    <p class="staff-position">Guía Turístico Principal</p>
+                    <a href="staff/jose-rodriguez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Laura Sánchez" class="staff-photo">
+                    <h3 class="staff-name">Laura Sánchez</h3>
+                    <p class="staff-position">Atención al Cliente</p>
+                    <a href="staff/laura-sanchez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <!-- Duplicamos las tarjetas para un movimiento continuo -->
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Martínez" class="staff-photo">
+                    <h3 class="staff-name">Ana Martínez</h3>
+                    <p class="staff-position">Directora General</p>
+                    <a href="staff/ana-martinez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos López" class="staff-photo">
+                    <h3 class="staff-name">Carlos López</h3>
+                    <p class="staff-position">Coordinador de Tours</p>
+                    <a href="staff/carlos-lopez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="María García" class="staff-photo">
+                    <h3 class="staff-name">María García</h3>
+                    <p class="staff-position">Especialista en Hospedaje</p>
+                    <a href="staff/maria-garcia.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="José Rodríguez" class="staff-photo">
+                    <h3 class="staff-name">José Rodríguez</h3>
+                    <p class="staff-position">Guía Turístico Principal</p>
+                    <a href="staff/jose-rodriguez.html" class="staff-button">Más información</a>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Laura Sánchez" class="staff-photo">
+                    <h3 class="staff-name">Laura Sánchez</h3>
+                    <p class="staff-position">Atención al Cliente</p>
+                    <a href="staff/laura-sanchez.html" class="staff-button">Más información</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="comunidad-section">
+        <h2 class="section-title">Acerca de la comunidad</h2>
+        
+        <div class="carrusel-container">
+            <!-- Carrusel superior -->
+            <div class="carrusel-superior">
+                <!-- Grupo 1 -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">M</div>
+                        <div class="user-info">
+                            <h3>Marta López</h3>
+                            <div class="ubicacion">España</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Isla de Ometepe en Nicaragua es simplemente mágica. Las vistas de los volcanes desde la laguna son impresionantes."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">C</div>
+                        <div class="user-info">
+                            <h3>Carlos Ramírez</h3>
+                            <div class="ubicacion">México</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Granada es una joya colonial. Pasear en coche tirado por caballos por sus calles empedradas es una experiencia única."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">A</div>
+                        <div class="user-info">
+                            <h3>Ana Silva</h3>
+                            <div class="ubicacion">Brasil</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El Volcán Masaya es impresionante. Ver el magma burbujeante desde el borde del cráter fue una experiencia inolvidable."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">J</div>
+                        <div class="user-info">
+                            <h3>Juan Pérez</h3>
+                            <div class="ubicacion">Argentina</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"San Juan del Sur tiene las puestas de sol más hermosas. Surfear por la mañana y relajarse por la tarde es perfecto."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">L</div>
+                        <div class="user-info">
+                            <h3>Laura Gómez</h3>
+                            <div class="ubicacion">Colombia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las Corn Islands son un paraíso caribeño. Aguas turquesas y arena blanca, lejos del bullicio turístico."</p>
+                </div>
+                <!-- Duplicado para continuidad -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">M</div>
+                        <div class="user-info">
+                            <h3>Marta López</h3>
+                            <div class="ubicacion">España</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Isla de Ometepe en Nicaragua es simplemente mágica. Las vistas de los volcanes desde la laguna son impresionantes."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">C</div>
+                        <div class="user-info">
+                            <h3>Carlos Ramírez</h3>
+                            <div class="ubicacion">México</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Granada es una joya colonial. Pasear en coche tirado por caballos por sus calles empedradas es una experiencia única."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">A</div>
+                        <div class="user-info">
+                            <h3>Ana Silva</h3>
+                            <div class="ubicacion">Brasil</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El Volcán Masaya es impresionante. Ver el magma burbujeante desde el borde del cráter fue una experiencia inolvidable."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">J</div>
+                        <div class="user-info">
+                            <h3>Juan Pérez</h3>
+                            <div class="ubicacion">Argentina</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"San Juan del Sur tiene las puestas de sol más hermosas. Surfear por la mañana y relajarse por la tarde es perfecto."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">L</div>
+                        <div class="user-info">
+                            <h3>Laura Gómez</h3>
+                            <div class="ubicacion">Colombia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las Corn Islands son un paraíso caribeño. Aguas turquesas y arena blanca, lejos del bullicio turístico."</p>
+                </div>
+                <!-- Duplicado extra -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">M</div>
+                        <div class="user-info">
+                            <h3>Marta López</h3>
+                            <div class="ubicacion">España</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Isla de Ometepe en Nicaragua es simplemente mágica. Las vistas de los volcanes desde la laguna son impresionantes."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">C</div>
+                        <div class="user-info">
+                            <h3>Carlos Ramírez</h3>
+                            <div class="ubicacion">México</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Granada es una joya colonial. Pasear en coche tirado por caballos por sus calles empedradas es una experiencia única."</p>
+                </div>
+            </div>
+
+            <!-- Carrusel medio -->
+            <div class="carrusel-medio">
+                <!-- Grupo 1 -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">R</div>
+                        <div class="user-info">
+                            <h3>Ricardo Torres</h3>
+                            <div class="ubicacion">Perú</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"León tiene una energía increíble. Subir al techo de la catedral para ver el volcán Momotombo al atardecer es espectacular."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">S</div>
+                        <div class="user-info">
+                            <h3>Sofía Chen</h3>
+                            <div class="ubicacion">China</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El mercado de artesanías en Masaya es un tesoro. Compré hermosas piezas de cerámica y tejidos tradicionales."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">P</div>
+                        <div class="user-info">
+                            <h3>Pedro Mendoza</h3>
+                            <div class="ubicacion">España</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Hacer canopy en la selva de Mombacho fue una aventura increíble. Las vistas del lago Nicaragua desde arriba son impresionantes."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">I</div>
+                        <div class="user-info">
+                            <h3>Isabella Rossi</h3>
+                            <div class="ubicacion">Italia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La gastronomía nicaragüense es deliciosa. El gallo pinto con queso frito y tortillas se convirtió en mi desayuno favorito."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">D</div>
+                        <div class="user-info">
+                            <h3>Daniel Kim</h3>
+                            <div class="ubicacion">Corea del Sur</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las playas de Poneloya son perfectas para relajarse. Poco turísticas y con un ambiente auténtico y tranquilo."</p>
+                </div>
+                <!-- Duplicado -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">R</div>
+                        <div class="user-info">
+                            <h3>Ricardo Torres</h3>
+                            <div class="ubicacion">Perú</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"León tiene una energía increíble. Subir al techo de la catedral para ver el volcán Momotombo al atardecer es espectacular."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">S</div>
+                        <div class="user-info">
+                            <h3>Sofía Chen</h3>
+                            <div class="ubicacion">China</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El mercado de artesanías en Masaya es un tesoro. Compré hermosas piezas de cerámica y tejidos tradicionales."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">P</div>
+                        <div class="user-info">
+                            <h3>Pedro Mendoza</h3>
+                            <div class="ubicacion">España</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Hacer canopy en la selva de Mombacho fue una aventura increíble. Las vistas del lago Nicaragua desde arriba son impresionantes."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">I</div>
+                        <div class="user-info">
+                            <h3>Isabella Rossi</h3>
+                            <div class="ubicacion">Italia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La gastronomía nicaragüense es deliciosa. El gallo pinto con queso frito y tortillas se convirtió en mi desayuno favorito."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">D</div>
+                        <div class="user-info">
+                            <h3>Daniel Kim</h3>
+                            <div class="ubicacion">Corea del Sur</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las playas de Poneloya son perfectas para relajarse. Poco turísticas y con un ambiente auténtico y tranquilo."</p>
+                </div>
+                <!-- Duplicado extra -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">R</div>
+                        <div class="user-info">
+                            <h3>Ricardo Torres</h3>
+                            <div class="ubicacion">Perú</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"León tiene una energía increíble. Subir al techo de la catedral para ver el volcán Momotombo al atardecer es espectacular."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">S</div>
+                        <div class="user-info">
+                            <h3>Sofía Chen</h3>
+                            <div class="ubicacion">China</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El mercado de artesanías en Masaya es un tesoro. Compré hermosas piezas de cerámica y tejidos tradicionales."</p>
+                </div>
+            </div>
+
+            <!-- Carrusel inferior -->
+            <div class="carrusel-inferior">
+                <!-- Grupo 1 -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">E</div>
+                        <div class="user-info">
+                            <h3>Elena Fernández</h3>
+                            <div class="ubicacion">Chile</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Reserva Biosfera de Bosawás es un tesoro natural. La diversidad de flora y fauna es simplemente asombrosa."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">F</div>
+                        <div class="user-info">
+                            <h3>Fatima Al-Farsi</h3>
+                            <div class="ubicacion">EAU</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las ruinas de León Viejo son fascinantes. Caminar por lo que fue una ciudad española del siglo XVI es como viajar en el tiempo."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">G</div>
+                        <div class="user-info">
+                            <h3>Giovanni Rossi</h3>
+                            <div class="ubicacion">Italia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El archipiélago de Solentiname es un paraíso para los amantes del arte y la naturaleza. Las pinturas primitivistas son únicas."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">H</div>
+                        <div class="user-info">
+                            <h3>Hannah Johnson</h3>
+                            <div class="ubicacion">Reino Unido</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las cascadas de El Chocoyero son impresionantes. El sendero hasta la cascada principal es una caminata corta pero hermosa."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">K</div>
+                        <div class="user-info">
+                            <h3>Kenji Tanaka</h3>
+                            <div class="ubicacion">Japón</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La calidez de la gente nicaragüense es increíble. En cada pueblo me recibieron con una sonrisa y historias fascinantes."</p>
+                </div>
+                <!-- Duplicado -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">E</div>
+                        <div class="user-info">
+                            <h3>Elena Fernández</h3>
+                            <div class="ubicacion">Chile</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Reserva Biosfera de Bosawás es un tesoro natural. La diversidad de flora y fauna es simplemente asombrosa."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">F</div>
+                        <div class="user-info">
+                            <h3>Fatima Al-Farsi</h3>
+                            <div class="ubicacion">EAU</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las ruinas de León Viejo son fascinantes. Caminar por lo que fue una ciudad española del siglo XVI es como viajar en el tiempo."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">G</div>
+                        <div class="user-info">
+                            <h3>Giovanni Rossi</h3>
+                            <div class="ubicacion">Italia</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"El archipiélago de Solentiname es un paraíso para los amantes del arte y la naturaleza. Las pinturas primitivistas son únicas."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">H</div>
+                        <div class="user-info">
+                            <h3>Hannah Johnson</h3>
+                            <div class="ubicacion">Reino Unido</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las cascadas de El Chocoyero son impresionantes. El sendero hasta la cascada principal es una caminata corta pero hermosa."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">K</div>
+                        <div class="user-info">
+                            <h3>Kenji Tanaka</h3>
+                            <div class="ubicacion">Japón</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La calidez de la gente nicaragüense es increíble. En cada pueblo me recibieron con una sonrisa y historias fascinantes."</p>
+                </div>
+                <!-- Duplicado extra -->
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">E</div>
+                        <div class="user-info">
+                            <h3>Elena Fernández</h3>
+                            <div class="ubicacion">Chile</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"La Reserva Biosfera de Bosawás es un tesoro natural. La diversidad de flora y fauna es simplemente asombrosa."</p>
+                </div>
+                <div class="comentario-card">
+                    <div class="comentario-header">
+                        <div class="avatar">F</div>
+                        <div class="user-info">
+                            <h3>Fatima Al-Farsi</h3>
+                            <div class="ubicacion">EAU</div>
+                        </div>
+                    </div>
+                    <p class="comentario-text">"Las ruinas de León Viejo son fascinantes. Caminar por lo que fue una ciudad española del siglo XVI es como viajar en el tiempo."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wani Connect Nicaragua</h3>
+                    <p>Tu plataforma turística para descubrir la belleza de Nicaragua, el país de lagos y volcanes.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="reservas.html">Reservas</a></li>
+                        <li><a href="hospedaje.html">Hospedaje</a></li>
+                        <li><a href="transporte.html">Transporte</a></li>
+                        <li><a href="guia.html">Guía</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="mailto:info@waniconnect.com.ni"><i class="fas fa-envelope"></i> info@waniconnect.com.ni</a></li>
+                        <li><a href="tel:+50512345678"><i class="fas fa-phone"></i> +505 1234 5678</a></li>
+                        <li><a href="ubicacion.html"><i class="fas fa-map-marker-alt"></i> Managua, Nicaragua</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Wani Connect Nicaragua. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/inicio.js"></script>
+</body>
+</html>

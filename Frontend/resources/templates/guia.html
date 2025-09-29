@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../static/images/bird-vector-modren-logo-600nw-2457229219.webp">
+    <title>Mapas de Nicaragua - Wani Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/guia.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="Inicio.html" class="brand">
+            <img src="https://www.shutterstock.com/image-vector/bird-vector-modren-logo-600nw-2457229219.jpg" alt="Logo Wani Connect" class="brand-logo">
+            <span>Wani Connect Nicaragua</span>
+        </a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="Inicio.html" class="dropdown-item">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="reservas.html" class="dropdown-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Reservas</span>
+            </a>
+            <a href="hospedaje.html" class="dropdown-item">
+                <i class="fas fa-bed"></i>
+                <span>Hospedaje</span>
+            </a>
+            <a href="transporte.html" class="dropdown-item">
+                <i class="fas fa-bus"></i>
+                <span>Transporte</span>
+            </a>
+            <a href="restaurantes.html" class="dropdown-item">
+                <i class="fas fa-utensils"></i>
+                <span>restaurantes</span>
+            </a>
+            <a href="guia.html" class="dropdown-item">
+                <i class="fas fa-book"></i>
+                <span>Guía</span>
+            </a>
+            <a href="comunidad.html" class="dropdown-item">
+                <i class="fas fa-comments"></i>
+                <span>Comunidad</span>
+            </a>
+            <a href="perfil.html" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="about.html" class="dropdown-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Sobre Nosotros</span>
+            </a>
+            <a href="updates.html" class="dropdown-item">
+                <i class="fas fa-bell"></i>
+                <span>Actualizaciones</span>
+            </a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Mapas de Nicaragua</h1>
+        <p>Explora nuestras terminales de transporte y rutas turísticas a nivel nacional</p>
+    </section>
+    
+    <!-- Sección de Mapas de Nicaragua -->
+    <section class="mapas-section">
+        <div class="container">
+            <h2 class="mapas-title">Mapas de Nicaragua</h2>
+            <div class="mapas-container">
+                <div class="mapa-item">
+                    <div class="mapa-header">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Mapa de Terminales a Nivel Nacional</h3>
+                    </div>
+                    <div id="mapa-terminales" class="mapa"></div>
+                    <div class="mapa-footer">
+                        <button class="btn-mapa" onclick="window.location.href='terminales-nacionales.html'">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mapa-item">
+                    <div class="mapa-header">
+                        <i class="fas fa-route"></i>
+                        <h3>Mapa de Rutas Turísticas a Nivel Nacional</h3>
+                    </div>
+                    <div id="mapa-rutas" class="mapa"></div>
+                    <div class="mapa-footer">
+                        <button class="btn-mapa" onclick="window.location.href='rutas-turisticas-nacionales.html'">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wani Connect Nicaragua</h3>
+                    <p>Tu plataforma turística para descubrir la belleza de Nicaragua, el país de lagos y volcanes.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="reservas.html">Reservas</a></li>
+                        <li><a href="hospedaje.html">Hospedaje</a></li>
+                        <li><a href="transporte.html">Transporte</a></li>
+                        <li><a href="guia.html">Guía</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="mailto:info@waniconnect.com.ni"><i class="fas fa-envelope"></i> info@waniconnect.com.ni</a></li>
+                        <li><a href="tel:+50512345678"><i class="fas fa-phone"></i> +505 1234 5678</a></li>
+                        <li><a href="ubicacion.html"><i class="fas fa-map-marker-alt"></i> Managua, Nicaragua</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Wani Connect Nicaragua. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../static/js/guia.js"></script>
+</body>
+</html>
