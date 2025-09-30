@@ -688,10 +688,9 @@ function showDepartmentInfo(dept, filterElement) {
     
     // Establecer un pequeño retraso antes de cargar el nuevo video
     setTimeout(() => {
+        // Forzar la recarga del iframe cambiando el src
+        departmentVideo.src = '';
         departmentVideo.src = dept.video;
-        
-        // Forzar la recarga del iframe
-        departmentVideo.load();
     }, 100);
     
     infoText.textContent = dept.description;
