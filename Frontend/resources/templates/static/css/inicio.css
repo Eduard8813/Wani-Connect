@@ -525,7 +525,7 @@
         .staff-scroll {
             display: flex;
             position: absolute;
-            animation: staffScroll 35s linear infinite;
+            animation: staffScroll 10s linear infinite;
             white-space: nowrap;
             will-change: transform;
         }
