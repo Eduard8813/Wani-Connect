@@ -209,7 +209,7 @@ Utilizamos Git para el control de versiones. Todas las versiones están disponib
 
 ## 📹 Video Demo
 
-[![Video Demostrativo de Wani Connect](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+[![Video Demostrativo de Wani Connect](https://youtu.be/PIL1UY0GyPM)
 
 *Haga clic en la imagen para ver el video completo en YouTube*
 
