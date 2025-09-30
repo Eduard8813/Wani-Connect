@@ -175,7 +175,7 @@ searchForm.addEventListener('submit', function(e) {
 const departments = [
     {
         name: 'Managua',
-        video: 'https://www.youtube-nocookie.com/embed/4q0gGqY2K5A?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/YQatPqt3RJk?si=018FGlQY8PNjql77',
         description: 'Managua es la capital de Nicaragua, una ciudad vibrante que combina historia moderna con cultura tradicional. Ubicada junto al lago Xolotlán, ofrece una mezcla única de arquitectura colonial y contemporánea. Es el centro político, económico y cultural del país, con una vida nocturna activa y numerosos centros comerciales.',
         attractions: [
             'Plaza de la Revolución',
@@ -188,7 +188,7 @@ const departments = [
     },
     {
         name: 'Granada',
-        video: 'https://www.youtube-nocookie.com/embed/2s2t3v5tX7c?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://www.youtube.com/watch?si=KCKG8leTawK1LKbM&v=W7uG3lGeMZ8&feature=youtu.be',
         description: 'Granada es una de las ciudades más antiguas de América, fundada en 1524. Con su arquitectura colonial bien conservada, iglesias históricas y coloridas casas, es uno de los destinos turísticos más populares de Nicaragua. Su casco antiguo es un tesoro histórico con calles empedradas y hermosos edificios coloniales.',
         attractions: [
             'Iglesia La Merced',
@@ -201,7 +201,7 @@ const departments = [
     },
     {
         name: 'León',
-        video: 'https://www.youtube-nocookie.com/embed/6s6t7v7uY9d?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/7GI4i56AFtw?si=rphpygOFjxE_9Jrv',
         description: 'León es la segunda ciudad más antigua de Nicaragua y fue la capital del país hasta 1852. Conocida por su rica historia, sus impresionantes iglesias coloniales y su vibrante vida cultural y estudiantil. Es la cuna de poetas y revolucionarios, con una fuerte identidad cultural.',
         attractions: [
             'Catedral de León',
@@ -214,7 +214,7 @@ const departments = [
     },
     {
         name: 'Masaya',
-        video: 'https://www.youtube-nocookie.com/embed/8s8t9v9wY1e?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/JNqMQvpP8tM?si=C0ZLvyIUzOzICNmp',
         description: 'Masaya es conocida como la "Ciudad de las Flores" y es famosa por su artesanía, especialmente los hamacas y cerámicas. El Parque Nacional Volcán Masaya es una de sus principales atracciones, donde se puede ver un lago de lava activo. Es el corazón del folclore nicaragüense.',
         attractions: [
             'Volcán Masaya',
@@ -227,7 +227,7 @@ const departments = [
     },
     {
         name: 'Rivas',
-        video: 'https://www.youtube-nocookie.com/embed/9s9t0v0xY2f?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/54KPudtOBj4?si=1NKcdiP0yfYVSmuY',
         description: 'Rivas es un departamento con una gran diversidad geográfica que incluye playas del Pacífico, islas en el lago Cocibolca y áreas agrícolas. San Juan del Sur es su destino más famoso, conocido por sus playas ideales para el surf y su vibrante vida nocturna. La isla de Ometepe, con sus dos volcanes, es una joya natural.',
         attractions: [
             'San Juan del Sur',
@@ -240,7 +240,7 @@ const departments = [
     },
     {
         name: 'Carazo',
-        video: 'https://www.youtube-nocookie.com/embed/1s1t2v3yY4g?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/G9OxnWCxLco?si=ncz_MdGglkZQ8gSa',
         description: 'Carazo es conocido por su clima fresco y sus paisajes montañosos. La ciudad de Diriamba es su cabecera departamental, famosa por su arquitectura colonial y tradiciones culturales. Es una región cafetalera con hermosas cascadas y reservas naturales.',
         attractions: [
             'Cascada Blanca',
@@ -253,7 +253,7 @@ const departments = [
     },
     {
         name: 'Chinandega',
-        video: 'https://www.youtube-nocookie.com/embed/2s2t3v4zY5h?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/fZeRRgZ3sn8?si=6avHapqEnWgK7p40',
         description: 'Chinandega es un departamento agrícola conocido como la "Capital del Azúcar". Sus playas en el Pacífico, como Jiquilillo y Poneloya, son populares entre los surfistas. El volcán San Cristóbal es el más alto de Nicaragua y la reserva natural Cosigüina ofrece un impresionante paisaje.',
         attractions: [
             'Volcán San Cristóbal',
@@ -266,7 +266,7 @@ const departments = [
     },
     {
         name: 'Estelí',
-        video: 'https://www.youtube-nocookie.com/embed/3s3t4v5aY6j?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/IZ3tCkm-3FE?si=HeUV3_uge8GiSsoy',
         description: 'Estelí es conocido como el "Diamante de las Segovias" por su belleza natural y su importancia económica. Es famoso por sus cigarros puros y su producción de café de alta calidad. La reserva natural Miraflor es un paraíso para los amantes del ecoturismo.',
         attractions: [
             'Reserva Natural Miraflor',
@@ -279,7 +279,7 @@ const departments = [
     },
     {
         name: 'Matagalpa',
-        video: 'https://www.youtube-nocookie.com/embed/4s4t5v6bY7k?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtube.com/watch?v=NsmeC61VZXA&feature=shared',
         description: 'Matagalpa es conocido como la "Perla del Septentrión" por su belleza natural. Es el principal productor de café de Nicaragua y tiene un clima fresco y montañoso. La reserva natural Selva Negra es un ejemplo de conservación y turismo sostenible.',
         attractions: [
             'Reserva Natural Selva Negra',
@@ -292,7 +292,7 @@ const departments = [
     },
     {
         name: 'Jinotega',
-        video: 'https://www.youtube-nocookie.com/embed/5s5t6v7cY8l?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/T_kqEGzzL-c?si=Ch25vl5g91QtF-Nf',
         description: 'Jinotega es conocido como la "Ciudad de las Brumas" por su clima fresco y neblinoso. Es uno de los principales productores de café de Nicaragua y tiene impresionantes paisajes montañosos. El lago Apanás es un importante recurso hídrico y atractivo turístico.',
         attractions: [
             'Reserva Natural Datanlí - El Diablo',
@@ -305,7 +305,7 @@ const departments = [
     },
     {
         name: 'Nueva Segovia',
-        video: 'https://www.youtube-nocookie.com/embed/6s6t7v8dY9m?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtube.com/watch?v=2sNzOO64oE8&feature=shared',
         description: 'Nueva Segovia es conocido por sus montañas y su producción de café. Ocotal es su cabecera departamental y la ciudad de Jalapa es famosa por sus artesanías y su clima fresco. El Mogotón es el punto más alto de Nicaragua.',
         attractions: [
             'Reserva Natural Tisey-Estanzuela',
@@ -318,7 +318,7 @@ const departments = [
     },
     {
         name: 'Madriz',
-        video: 'https://www.youtube-nocookie.com/embed/7s7t8v9eY0n?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtube.com/watch?v=2sNzOO64oE8&feature=shared',
         description: 'Madriz es conocido como la "Tierra de los Acuerdos" por su historia de paz y reconciliación. Somoto es su cabecera departamental y es famosa por el cañón del río Coco, una formación geológica impresionante. Es una región con gran producción de tabaco y café.',
         attractions: [
             'Cañón de Somoto',
@@ -331,7 +331,7 @@ const departments = [
     },
     {
         name: 'Boaco',
-        video: 'https://www.youtube-nocookie.com/embed/8s8t9v0fY1p?autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&showinfo=0',
+        video: 'https://youtu.be/2w4XTT3DIs0?si=Dmklmjb04B0nB227',
         description: 'Boaco es conocido como la "Ciudad de las Dos Piernas" por su topografía montañosa. Tiene un clima agradable y es famoso por su ganado y productos lácteos. La región combina paisajes de montaña con valles fértiles.',
         attractions: [
             'Cerro La Vieja',
