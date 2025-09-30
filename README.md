@@ -213,10 +213,6 @@ Utilizamos Git para el control de versiones. Todas las versiones están disponib
 
 *Haga clic en la imagen para ver el video completo en YouTube*
 
-## 📹 Diagrama de flujos
-
-![Diagrama de flijo del sistema](https://github.com/Eduard8813/Wani-Connect/Images_proyect/diagram.png)
-
 ##  Autores
 
 El proyecto fue desarrollado por un equipo multidisciplinario:
