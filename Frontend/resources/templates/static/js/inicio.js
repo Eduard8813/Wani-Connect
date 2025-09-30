@@ -737,7 +737,7 @@
                 const deptName = this.textContent;
                 const dept = departments.find(d => d.name === deptName);
                 if (dept) {
-                    showDepartmentInfo(dept, this);
+                    showDepartmentInfo.src(dept, this);
                 }
             });
         });
