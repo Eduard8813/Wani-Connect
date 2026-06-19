@@ -26,4 +26,6 @@ public class Company {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+        
 }

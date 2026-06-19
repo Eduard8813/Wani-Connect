@@ -116,7 +116,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional> <!-- No se incluye en producción -->
+            <version>1.18.34</version>
+            <scope>provided</scope> <!-- No se incluye en producción -->
         </dependency>
 
         <!-- Herramientas de desarrollo (auto-restart, etc.) -->

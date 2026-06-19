@@ -11,7 +11,7 @@ import com.eduard.registro.turismo.app.repository.CompanyRepository;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder; 
 
     public Company createCompany(Company company) {
         company.setPassword(passwordEncoder.encode(company.getPassword()));
